@@ -13,15 +13,18 @@ public class Fish implements GameObject {
     private int color;
     private int x;
     private int y;
-    private int velocity = 0;
-    private int gravity = 1;
+    private double velocity;
+    private double gravity;
+    private double lift;
 
-    public Fish(Rect rectangle, int color, int x, int y) {
+    public Fish(Rect rectangle, int color, int x, int y, double gravity, double lift) {
         this.rectangle = rectangle;
         this.color = color;
-        this.x = y;
+        this.x = x;
         this.y = y;
-
+        this.velocity = 0;
+        this.gravity = gravity;
+        this.lift = lift;
     }
 
     @Override
@@ -56,6 +59,6 @@ public class Fish implements GameObject {
 
 
     public void swimUp() {
-        this.velocity -= this.gravity*20;
+        this.velocity -= this.lift;
     }
 }

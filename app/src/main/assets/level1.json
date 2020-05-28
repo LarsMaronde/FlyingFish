@@ -1,16 +1,39 @@
 {
   "number": 1,
-  "gravity": 1,
+  "gravity": 0.7,
+  "lift": 20,
   "obstacles": [
     {
       "orientation":"TOP",
       "type": 1,
-      "spawnTime": 3
+      "spawnTime": 3,
+      "height": 500,
+      "width": 200,
+      "speed": 5
     },
     {
       "orientation":"BOTTOM",
       "type": 1,
-      "spawnTime": 3
+      "spawnTime": 3,
+      "height": 900,
+      "width": 200,
+      "speed": 5
+    },
+    {
+      "orientation":"TOP",
+      "type": 1,
+      "spawnTime": 5,
+      "height": 500,
+      "width": 300,
+      "speed": 5
+    },
+    {
+      "orientation":"BOTTOM",
+      "type": 1,
+      "spawnTime": 5,
+      "height": 1100,
+      "width": 400,
+      "speed": 5
     }
   ],
   "coins": [
@@ -18,6 +41,11 @@
       "value": 1,
       "y": 233,
       "spawnTime": 7
+    },
+    {
+      "value": 1,
+      "y": 250,
+      "spawnTime": 7.2
     }
   ]
 }

@@ -1,25 +1,66 @@
 package com.example.flyingfish.gameObjects;
 
+import android.graphics.Canvas;
+
 import androidx.annotation.NonNull;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Level {
 
+    private Fish playerFish;
+
     private int number;
     private double gravity;
-    private Fish playerFish;
+    private double velocity;
+    private double lift;
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Coin> coins;
 
+
     public Level() {/*empty*/}
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "Level numbers:"+ this.number + "/"+this.gravity+"/"
-                +obstacles.size()+"/"+coins.size();
+
+    public void update (long elapsedSeconds) {
+        this.playerFish.update();
+
+        Iterator<Obstacle> it = obstacles.iterator();
+        while(it.hasNext()) {
+            Obstacle ob = it.next();
+            if(ob.getSpawnTime() <= elapsedSeconds) {
+                ob.setVisible(true);
+                ob.update();
+                if(ob.getRectangle().right <= 0) { //if rectangle is out of the screen
+                    System.out.println("removed AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    it.remove();
+                }
+            }
+        }
     }
+
+    public void setRectangles() {
+        for(Obstacle ob: obstacles) {
+            ob.createRectangle();
+        }
+    }
+
+    public void draw(Canvas canvas) {
+        this.playerFish.draw(canvas);
+        for(Obstacle ob: obstacles) {
+            ob.draw(canvas);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     public int getNumber() {
         return number;
@@ -60,4 +101,22 @@ public class Level {
     public void setCoins(LinkedList<Coin> coins) {
         this.coins = coins;
     }
+
+    public double getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
+    }
+
+    public double getLift() {
+        return lift;
+    }
+
+    public void setLift(double lift) {
+        this.lift = lift;
+    }
+
+
 }

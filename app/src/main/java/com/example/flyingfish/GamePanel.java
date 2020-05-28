@@ -24,28 +24,34 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
 
-    private Fish playerFish;
 
     private Level currentLevel;
 
     public GamePanel(Context context) {
         super(context);
         getHolder().addCallback(this);
+
         this.loadLevel(context, 1);
+
         this.thread = new MainThread(getHolder(), this);
 
         this.startingTime = System.currentTimeMillis();
 
 
         //place the player in the middle of the level
-        this.playerFish = new Fish(new Rect(100,100,200,200), Color.rgb(255,0,0),
-                Constants.SCREEN_HEIGHT/2, Constants.SCREEN_WIDTH/5);
+        this.currentLevel.setPlayerFish(new Fish(
+                new Rect(100,100,200,200), //100px cube
+                Color.rgb(255,0,0),
+                Constants.SCREEN_WIDTH/5,
+                Constants.SCREEN_HEIGHT/2,
+                this.currentLevel.getGravity(),
+                this.currentLevel.getLift()));
+
 
         setFocusable(true);
-
     }
 
-    //
+
     private void loadLevel(Context context, int levelNumber) {
         ObjectMapper om = new ObjectMapper();
 
@@ -55,6 +61,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.currentLevel.setRectangles();
     }
 
      private String readFile(InputStream inputStream) {
@@ -103,9 +110,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        System.out.println(event.getX()+"/"+event.getY());
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                this.playerFish.swimUp();
+                this.currentLevel.getPlayerFish().swimUp();
                 break;
         }
 
@@ -114,13 +122,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         this.elapsedSeconds = (System.currentTimeMillis()-this.startingTime)/1000;
-        System.out.println(elapsedSeconds);
-        playerFish.update();
+        this.currentLevel.update(this.elapsedSeconds);
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        playerFish.draw(canvas);
+        this.currentLevel.draw(canvas);
     }
 }
