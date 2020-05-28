@@ -29,6 +29,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public GamePanel(Context context) {
         super(context);
+        Constants.CURRENT_CONTEXT = context;
         getHolder().addCallback(this);
 
         this.loadLevel(context, 1);
@@ -40,8 +41,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         //place the player in the middle of the level
         this.currentLevel.setPlayerFish(new Fish(
-                new Rect(100,100,200,200), //100px cube
-                Color.rgb(255,0,0),
                 Constants.SCREEN_WIDTH/5,
                 Constants.SCREEN_HEIGHT/2,
                 this.currentLevel.getGravity(),

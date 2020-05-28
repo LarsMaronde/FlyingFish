@@ -30,11 +30,8 @@ public class Obstacle implements GameObject {
 
     public Obstacle() {/*empty*/}
 
-    public boolean collision(GameObject obj) {
-        return rectangle.contains(obj.getRectangle().left, obj.getRectangle().top) ||
-                rectangle.contains(obj.getRectangle().right, obj.getRectangle().top) ||
-                rectangle.contains(obj.getRectangle().left, obj.getRectangle().bottom) ||
-                rectangle.contains(obj.getRectangle().right, obj.getRectangle().bottom);
+    public boolean collides(GameObject obj) {
+        return Rect.intersects(rectangle, obj.getRectangle());
     }
 
 

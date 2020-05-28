@@ -1,14 +1,19 @@
 package com.example.flyingfish.gameObjects;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.example.flyingfish.Constants;
+import com.example.flyingfish.R;
 
 
 public class Fish implements GameObject {
 
+    Bitmap graphic;
     private Rect rectangle;
     private int color;
     private int x;
@@ -17,21 +22,28 @@ public class Fish implements GameObject {
     private double gravity;
     private double lift;
 
-    public Fish(Rect rectangle, int color, int x, int y, double gravity, double lift) {
-        this.rectangle = rectangle;
-        this.color = color;
+    private final int width = 150;
+
+    public Fish(int x, int y, double gravity, double lift) {
+        this.rectangle = new Rect(0,0, width, width);
+        this.color = Color.rgb(255, 255,0);
         this.x = x;
         this.y = y;
         this.velocity = 0;
         this.gravity = gravity;
         this.lift = lift;
+
+        BitmapFactory bf = new BitmapFactory();
+        graphic = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.fish);
+
     }
 
     @Override
     public void draw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(this.color);
-        canvas.drawRect(this.rectangle, paint);
+//        Paint paint = new Paint();
+//        paint.setColor(this.color);
+//        canvas.drawRect(this.rectangle, paint);
+        canvas.drawBitmap(graphic, null, this.rectangle, new Paint());
     }
 
     @Override
@@ -50,6 +62,7 @@ public class Fish implements GameObject {
             this.y = 0;
             this.velocity = 0;
         }
+
     }
 
     @Override
@@ -57,8 +70,9 @@ public class Fish implements GameObject {
         return this.rectangle;
     }
 
-
     public void swimUp() {
         this.velocity -= this.lift;
     }
+
+
 }

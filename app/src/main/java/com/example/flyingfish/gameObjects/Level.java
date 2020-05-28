@@ -1,8 +1,7 @@
 package com.example.flyingfish.gameObjects;
 
 import android.graphics.Canvas;
-
-import androidx.annotation.NonNull;
+import android.graphics.Color;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,6 +17,8 @@ public class Level {
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Coin> coins;
 
+    private int collectedCoins;
+
 
     public Level() {/*empty*/}
 
@@ -32,8 +33,11 @@ public class Level {
                 ob.setVisible(true);
                 ob.update();
                 if(ob.getRectangle().right <= 0) { //if rectangle is out of the screen
-                    System.out.println("removed AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                     it.remove();
+                }
+                if(ob.collides(this.playerFish)) {
+                    // TODO GAME OVER
+                    ob.setColor(Color.rgb(255,0,0));
                 }
             }
         }
@@ -46,10 +50,10 @@ public class Level {
     }
 
     public void draw(Canvas canvas) {
-        this.playerFish.draw(canvas);
         for(Obstacle ob: obstacles) {
             ob.draw(canvas);
         }
+        this.playerFish.draw(canvas);
     }
 
 
