@@ -1,0 +1,23 @@
+{
+  "number": 1,
+  "gravity": 1,
+  "obstacles": [
+    {
+      "orientation":"TOP",
+      "type": 1,
+      "spawnTime": 3
+    },
+    {
+      "orientation":"BOTTOM",
+      "type": 1,
+      "spawnTime": 3
+    }
+  ],
+  "coins": [
+    {
+      "value": 1,
+      "y": 233,
+      "spawnTime": 7
+    }
+  ]
+}
