@@ -11,7 +11,7 @@ import com.example.flyingfish.Constants;
 import com.example.flyingfish.R;
 
 
-public class Fish implements GameObject, CircleHitbox {
+public class Fish extends GameObject implements CircleHitbox {
 
     private Bitmap graphic;
     private Rect rectangle;
@@ -20,8 +20,7 @@ public class Fish implements GameObject, CircleHitbox {
     private double gravity;
     private double lift;
     private int color;
-    private int x;
-    private int y;
+    private int x, y;
     private float width;
 
     public Fish(int x, int y, double gravity, double lift) {
@@ -44,8 +43,9 @@ public class Fish implements GameObject, CircleHitbox {
         Paint paint = new Paint();
         paint.setColor(this.color);
         paint.setAntiAlias(false);
+
+        //drawing the collision box
         canvas.drawCircle(this.x, this.y, this.width/2, paint);
-//        canvas.drawRect(this.rectangle, paint);
         canvas.drawBitmap(graphic, null, this.rectangle, paint);
     }
 
@@ -71,7 +71,6 @@ public class Fish implements GameObject, CircleHitbox {
 
     }
 
-    @Override
     public Rect getRectangle() {
         return this.rectangle;
     }

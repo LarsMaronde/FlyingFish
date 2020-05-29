@@ -115,12 +115,14 @@
     {
       "value": 1,
       "y": 233,
-      "spawnTime": 7
+      "spawnTime": 3,
+      "speed": 5
     },
     {
       "value": 1,
       "y": 250,
-      "spawnTime": 7.2
+      "spawnTime": 3.3,
+      "speed": 5
     }
   ]
 }

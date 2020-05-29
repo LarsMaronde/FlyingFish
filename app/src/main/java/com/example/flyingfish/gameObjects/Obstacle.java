@@ -3,12 +3,11 @@ package com.example.flyingfish.gameObjects;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 
 import com.example.flyingfish.Constants;
 
-public class Obstacle implements GameObject {
+public class Obstacle extends GameObject implements Interactable, RectHitbox {
 
 
     private enum Orientation {
@@ -25,12 +24,12 @@ public class Obstacle implements GameObject {
     private int width;
     private double speed;
 
-
     private boolean visible;
 
 
     public Obstacle() {/*empty*/}
 
+    @Override
     public boolean collides(GameObject obj) {
         if(obj instanceof CircleHitbox) {
             float radius = ((CircleHitbox) obj).getWidth()/2;
@@ -45,13 +44,14 @@ public class Obstacle implements GameObject {
                 }
             }
             return false;
-        }else {
-            return Rect.intersects(rectangle, obj.getRectangle());
+        }else if(obj instanceof RectHitbox) {
+            return Rect.intersects(rectangle, ((RectHitbox) obj).getRectangle());
         }
+        return false;
     }
 
 
-    public void createRectangle() {
+    public void initialize() {
         if(this.orientation.equals(Orientation.TOP)) {
             this.rectangle = new Rect(Constants.SCREEN_WIDTH, 0, Constants.SCREEN_WIDTH+this.width, this.height);
             this.color = Color.rgb(0,255,0);
@@ -59,6 +59,7 @@ public class Obstacle implements GameObject {
             this.rectangle = new Rect(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-this.height, Constants.SCREEN_WIDTH+this.width, Constants.SCREEN_HEIGHT);
             this.color = Color.rgb(0,0,255);
         }
+        this.visible = false;
     }
 
 
@@ -89,7 +90,6 @@ public class Obstacle implements GameObject {
 
 
 
-    @Override
     public Rect getRectangle() {
         return this.rectangle;
     }

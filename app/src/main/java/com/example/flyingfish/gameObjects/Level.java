@@ -2,6 +2,9 @@ package com.example.flyingfish.gameObjects;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+
+import com.example.flyingfish.Constants;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -26,6 +29,32 @@ public class Level {
     public void update (long elapsedSeconds) {
         this.playerFish.update();
 
+        this.updateObstacles(elapsedSeconds);
+        this.updateCoins(elapsedSeconds);
+
+    }
+
+    private void updateCoins(long elapsedSeconds) {
+        Iterator<Coin> it = coins.iterator();
+        while(it.hasNext()) {
+            Coin co = it.next();
+            if(co.getSpawnTime() <= elapsedSeconds) {
+                co.setVisible(true);
+                co.update();
+                if(co.getX()+co.getWidth()/2 <= 0) { //if rectangle is out of the screen
+                    it.remove();
+                }
+                if(co.collides(this.playerFish)) {
+                    co.setColor(Color.rgb(255,0,0));
+                    this.collectedCoins++;
+                    co.setVisible(false);
+                    it.remove();
+                }
+            }
+        }
+    }
+
+    private void updateObstacles(long elapsedSeconds) {
         Iterator<Obstacle> it = obstacles.iterator();
         while(it.hasNext()) {
             Obstacle ob = it.next();
@@ -45,7 +74,11 @@ public class Level {
 
     public void setRectangles() {
         for(Obstacle ob: obstacles) {
-            ob.createRectangle();
+            ob.initialize();
+        }
+
+        for(Coin co: coins) {
+            co.initialize();
         }
     }
 
@@ -53,17 +86,24 @@ public class Level {
         for(Obstacle ob: obstacles) {
             ob.draw(canvas);
         }
+        for(Coin co: coins){
+            co.draw(canvas);
+        }
         this.playerFish.draw(canvas);
+
+        this.drawCoinsCounter(canvas);
     }
 
+    private void drawCoinsCounter(Canvas canvas) {
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setTextSize(100);
 
 
+        canvas.drawText(Integer.toString(this.collectedCoins), Constants.SCREEN_WIDTH/2, Constants.SCREEN_HEIGHT/9, paint);
 
-
-
-
-
-
+    }
 
 
     public int getNumber() {

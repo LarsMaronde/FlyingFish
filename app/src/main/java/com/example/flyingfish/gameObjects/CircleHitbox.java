@@ -5,4 +5,5 @@ public interface CircleHitbox {
     public int getX();
     public int getY();
     public float getWidth();
+
 }
