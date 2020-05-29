@@ -3,6 +3,7 @@ package com.example.flyingfish.gameObjects;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 
 import com.example.flyingfish.Constants;
@@ -31,7 +32,22 @@ public class Obstacle implements GameObject {
     public Obstacle() {/*empty*/}
 
     public boolean collides(GameObject obj) {
-        return Rect.intersects(rectangle, obj.getRectangle());
+        if(obj instanceof CircleHitbox) {
+            float radius = ((CircleHitbox) obj).getWidth()/2;
+            float x = ((CircleHitbox) obj).getX();
+            float y = ((CircleHitbox) obj).getY();
+
+            for(int i = 0; i < 360; i++) {
+                double cX = Math.cos(i) * radius + x;
+                double cY = Math.sin(i) * radius + y;
+                if(rectangle.contains((int)cX, (int)(cY))){
+                    return true;
+                }
+            }
+            return false;
+        }else {
+            return Rect.intersects(rectangle, obj.getRectangle());
+        }
     }
 
 
