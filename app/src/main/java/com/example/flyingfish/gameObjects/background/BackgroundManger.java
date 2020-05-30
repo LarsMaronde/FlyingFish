@@ -1,8 +1,8 @@
 package com.example.flyingfish.gameObjects.background;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.ViewGroup;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.R;
@@ -13,19 +13,25 @@ public class BackgroundManger {
 
     private LinkedList<Background> backgrounds;
 
-    public BackgroundManger() {
-        this.backgrounds = new LinkedList<Background>();
-        backgrounds.add(new Background(BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.backbackground),
-                Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-500, 1));
-        backgrounds.add(new Background(BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.middlebackround),
-                Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-300, 2));
-        backgrounds.add(new Background(BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.background2),
-                Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-200, 3));
-        backgrounds.add(new Background(BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.frontbottom),
-                Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-100, 5));
-        backgrounds.add(new Background(BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.fronttop),
-                Constants.SCREEN_WIDTH, 0, 5));
+    public BackgroundManger(ViewGroup container, double globalSpeed) {
+        Context context = container.getContext();
 
+        this.backgrounds = new LinkedList<Background>();
+
+        Drawable bg1 = context.getResources().getDrawable(R.drawable.backbackground);
+        backgrounds.add(new Background(bg1, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-500, globalSpeed, container));
+
+        Drawable bg2 = context.getResources().getDrawable(R.drawable.middlebackround);
+        backgrounds.add(new Background(bg2, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-300, globalSpeed, container));
+
+        Drawable bg3 = context.getResources().getDrawable(R.drawable.background2);
+        backgrounds.add(new Background(bg3, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-200, globalSpeed, container));
+
+        Drawable bg4 = context.getResources().getDrawable(R.drawable.frontbottom);
+        backgrounds.add(new Background(bg4, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-100, globalSpeed, container));
+
+        Drawable bg5 = context.getResources().getDrawable(R.drawable.fronttop);
+        backgrounds.add(new Background(bg5, Constants.SCREEN_WIDTH, bg5.getIntrinsicHeight() , globalSpeed, container));
     }
 
     public void updateBackgrounds() {
@@ -34,9 +40,9 @@ public class BackgroundManger {
         }
     }
 
-    public void drawBackgrounds(Canvas canvas){
+    public void drawBackgrounds() {
         for(Background bg: backgrounds) {
-            bg.draw(canvas);
+            bg.draw();
         }
     }
 }

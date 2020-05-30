@@ -1,7 +1,9 @@
 {
   "number": 1,
-  "gravity": 1.2,
-  "lift": 24,
+  "gravity": 0.05,
+  "lift": 5,
+  "velocityCap": -5,
+  "globalSpeed": 1,
   "obstacles": [
     {
       "orientation":"TOP",
@@ -9,7 +11,7 @@
       "spawnTime": 3,
       "height": 844,
       "width": 200,
-      "speed": 5
+      "speed": 1
     },
     {
       "orientation":"BOTTOM",
@@ -17,7 +19,7 @@
       "spawnTime": 3,
       "height": 500,
       "width": 200,
-      "speed": 5
+      "speed": 1
     },
     {
       "orientation":"TOP",
@@ -25,7 +27,7 @@
       "spawnTime": 5,
       "height": 500,
       "width": 300,
-      "speed": 5
+      "speed": 1
     },
     {
       "orientation":"BOTTOM",
@@ -33,14 +35,14 @@
       "spawnTime": 5,
       "height": 900,
       "width": 200,
-      "speed": 5
+      "speed": 1
     },{
       "orientation":"TOP",
       "type": 1,
       "spawnTime": 7,
       "height": 500,
       "width": 300,
-      "speed": 5
+      "speed": 1
     },
     {
       "orientation":"BOTTOM",
@@ -48,14 +50,14 @@
       "spawnTime": 7,
       "height": 900,
       "width": 200,
-      "speed": 5
+      "speed": 1
     },{
       "orientation":"TOP",
       "type": 1,
       "spawnTime": 9,
       "height": 500,
       "width": 300,
-      "speed": 5
+      "speed": 1
     },
     {
       "orientation":"BOTTOM",
@@ -63,14 +65,14 @@
       "spawnTime": 9,
       "height": 900,
       "width": 200,
-      "speed": 5
+      "speed": 1
     },{
       "orientation":"TOP",
       "type": 1,
       "spawnTime": 11,
       "height": 500,
       "width": 300,
-      "speed": 5
+      "speed": 1
     },
     {
       "orientation":"BOTTOM",
@@ -78,14 +80,14 @@
       "spawnTime": 11,
       "height": 900,
       "width": 200,
-      "speed": 5
+      "speed": 1
     },{
       "orientation":"TOP",
       "type": 1,
       "spawnTime": 13,
       "height": 500,
       "width": 300,
-      "speed": 5
+      "speed": 1
     },
     {
       "orientation":"BOTTOM",
@@ -93,14 +95,14 @@
       "spawnTime": 13,
       "height": 900,
       "width": 200,
-      "speed": 5
+      "speed": 1
     },{
       "orientation":"TOP",
       "type": 1,
       "spawnTime": 14,
       "height": 500,
       "width": 300,
-      "speed": 5
+      "speed": 1
     },
     {
       "orientation":"BOTTOM",
@@ -108,7 +110,7 @@
       "spawnTime": 14,
       "height": 900,
       "width": 200,
-      "speed": 5
+      "speed": 1
     }
   ],
   "coins": [
@@ -116,67 +118,67 @@
       "value": 1,
       "y": 233,
       "spawnTime": 3,
-      "speed": 5
+      "speed": 1
     },
     {
       "value": 1,
       "y": 250,
       "spawnTime": 3.3,
-      "speed": 5
+      "speed": 1
     },{
       "value": 1,
       "y": 233,
       "spawnTime": 4,
-      "speed": 5
+      "speed": 1
     },
     {
       "value": 1,
       "y": 250,
       "spawnTime": 4.3,
-      "speed": 5
+      "speed": 1
     },{
       "value": 1,
       "y": 233,
       "spawnTime": 3,
-      "speed": 5
+      "speed": 1
     },
     {
       "value": 1,
       "y": 210,
       "spawnTime": 3.3,
-      "speed": 5
+      "speed": 1
     },{
       "value": 1,
       "y": 233,
       "spawnTime": 3,
-      "speed": 5
+      "speed": 1
     },
     {
       "value": 1,
       "y": 210,
       "spawnTime": 3.3,
-      "speed": 5
+      "speed": 1
     },{
       "value": 1,
       "y": 150,
       "spawnTime": 3,
-      "speed": 5
+      "speed": 1
     },
     {
       "value": 1,
       "y": 150,
       "spawnTime": 3.3,
-      "speed": 5
+      "speed": 1
     },{
       "value": 1,
       "y": 120,
       "spawnTime": 3.3,
-      "speed": 5
+      "speed": 1
     },{
       "value": 1,
       "y": 110,
       "spawnTime": 3.3,
-      "speed": 5
+      "speed": 1
     }
 
   ]

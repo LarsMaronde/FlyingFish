@@ -1,11 +1,11 @@
 package com.example.flyingfish.gameObjects;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.R;
@@ -13,35 +13,44 @@ import com.example.flyingfish.R;
 
 public class Fish extends GameObject implements CircleHitbox {
 
-    private Paint paint;
-    private Bitmap graphic;
+    private ImageView imageView;
     private Rect rectangle;
-    private final double velocityCap = -20; //sets the maximum value of velocity the player can make
+
+    private double velocityCap; //sets the maximum value of velocity the player can make
     private double velocity;
     private double gravity;
     private double lift;
-    private int color;
     private int x, y;
     private float width;
 
-    public Fish(int x, int y, double gravity, double lift) {
+    public Fish(int x, int y, double gravity, double lift, double velocityCap, ViewGroup container) {
 
-        this.color = Color.rgb(255, 255,0);
         this.x = x;
         this.y = y;
         this.velocity = 0;
+        this.velocityCap = velocityCap;
         this.gravity = gravity;
         this.lift = lift;
 
-        graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.fish1);
-        this.rectangle = new Rect(0,0, (int)(graphic.getWidth()*1.5), (int)(graphic.getHeight()*1.5));
-        this.width = (float) (this.graphic.getWidth()*1.5);
-        this.paint = new Paint();
+        Context context = container.getContext();
+        Drawable graphic = context.getResources().getDrawable(R.drawable.fish1);
+        this.imageView = new ImageView(context);
+        this.imageView.setImageDrawable(graphic);
+        container.addView(this.imageView);
+
+        this.width = graphic.getIntrinsicWidth()*2;
+        this.rectangle = new Rect(0,0, (int) this.width, graphic.getIntrinsicHeight()*2);
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        canvas.drawBitmap(graphic, null, this.rectangle, this.paint);
+    public void draw() {
+//        canvas.drawBitmap(graphic, null, this.rectangle, this.paint);
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.imageView.getLayoutParams();
+        params.width = this.rectangle.width();
+        params.height = this.rectangle.height();
+        params.leftMargin = this.rectangle.left;
+        params.topMargin = this.rectangle.top;
+        this.imageView.setLayoutParams(params);
 
     }
 
@@ -51,6 +60,7 @@ public class Fish extends GameObject implements CircleHitbox {
 //        if(this.velocity >= this.velocity*-1) {
 //            this.velocity = this.velocityCap*-1;
 //        }
+
         this.y += this.velocity;
         rectangle.set(x - rectangle.width()/2, y - rectangle.height()/2,
                 x + rectangle.width()/2, y + rectangle.height()/2);

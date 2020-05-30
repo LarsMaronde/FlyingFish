@@ -1,10 +1,9 @@
 package com.example.flyingfish;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.flyingfish.gameObjects.Fish;
 import com.example.flyingfish.gameObjects.Level;
@@ -13,53 +12,74 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
-public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
+public class GamePanel extends Activity {
 
+    private ViewGroup container;
     private long startingTime;
-    private long elapsedSeconds; //since start
-
-    private MainThread thread;
-
+    private double elapsedSeconds; //since start
 
     private Level currentLevel;
 
-    public GamePanel(Context context) {
-        super(context);
 
-        Constants.CURRENT_CONTEXT = context;
-        getHolder().addCallback(this);
+    public GamePanel(final ViewGroup container, MainActivity mainActivity) {
+        this.container = container;
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentLevel.getPlayerFish().swimUp();
+            }
+        });
 
-        this.loadLevel(context, 1);
-
-        this.thread = new MainThread(getHolder(), this);
-
-        this.startingTime = System.currentTimeMillis();
-
-
+        this.loadLevel(container.getContext(), 1);
         //place the player in the middle of the level
         this.currentLevel.setPlayerFish(new Fish(
                 Constants.SCREEN_WIDTH/5,
                 Constants.SCREEN_HEIGHT/2,
                 this.currentLevel.getGravity(),
-                this.currentLevel.getLift()));
+                this.currentLevel.getLift(),
+                this.currentLevel.getVelocityCap(),
+                container));
 
 
-        setFocusable(true);
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor.scheduleAtFixedRate(startMainLoop, 0, 5, TimeUnit.MILLISECONDS);
+        this.startingTime = System.currentTimeMillis();
+
     }
+
+
+
+
+    private Runnable startMainLoop = new Runnable() {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    update();
+                    draw();
+                }
+            });
+        }
+    };
 
 
     private void loadLevel(Context context, int levelNumber) {
         ObjectMapper om = new ObjectMapper();
-
         try {
-            String jsonLevel =  readFile(getResources().getAssets().open("level"+levelNumber+".json"));
+            String jsonLevel =  readFile(context.getResources().getAssets().open("level"+levelNumber+".json"));
             this.currentLevel = om.readValue(jsonLevel, Level.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.currentLevel.setRectangles();
+        this.currentLevel.setContext(context);
+        this.currentLevel.setContainer(this.container);
+        this.currentLevel.initializeObjects();
     }
 
      private String readFile(InputStream inputStream) {
@@ -79,54 +99,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return outputStream.toString();
     }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        this.thread = new MainThread(getHolder(), this);
-
-        thread.setRunning(true);
-        thread.start();
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        boolean retry = true;
-        while(retry) {
-            try {
-                this.thread.setRunning(false);
-                this.thread.join();
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
-            retry = false;
-        }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        System.out.println(event.getX()+"/"+event.getY());
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                this.currentLevel.getPlayerFish().swimUp();
-                break;
-        }
-
-        return true;
-    }
 
     public void update() {
         this.elapsedSeconds = (System.currentTimeMillis()-this.startingTime)/1000;
         this.currentLevel.update(this.elapsedSeconds);
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        canvas.drawRGB(62, 121, 221);
-        this.currentLevel.draw(canvas);
+    public void draw() {
+        this.currentLevel.draw();
     }
+
 }

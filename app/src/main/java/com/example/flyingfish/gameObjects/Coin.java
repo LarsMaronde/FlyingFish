@@ -1,11 +1,11 @@
 package com.example.flyingfish.gameObjects;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.R;
@@ -13,12 +13,12 @@ import com.example.flyingfish.R;
 
 public class Coin extends GameObject implements Interactable, CircleHitbox {
 
-    private Paint paint;
-    private Bitmap graphic;
+
+    private ImageView imageView;
+
     private int value;
     private int x, y;
     private double spawnTime;
-    private int color;
     private int width;
     private double speed;
     private boolean visible;
@@ -26,12 +26,17 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
     public Coin() {/*empty*/}
 
 
-    public void initialize() {
-        this.color = Color.rgb(122,122,122);
-        this.width = 80;
+    public void initialize(ViewGroup container) {
         this.visible = false;
         this.x = Constants.SCREEN_WIDTH+this.width/2;
-        this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.coin);
+
+        Context context = container.getContext();
+        Drawable graphic = context.getResources().getDrawable(R.drawable.coin);
+        this.width = 80;
+        this.imageView = new ImageView(context);
+        this.imageView.setImageDrawable(graphic);
+        this.imageView.setVisibility(View.GONE);
+        container.addView(this.imageView);
     }
 
     @Override
@@ -44,7 +49,7 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
 
                 return dist < (this.width/2 + ((CircleHitbox) obj).getWidth()/2);
 
-            }else if(obj instanceof RectHitbox){
+            }else if(obj instanceof RectHitbox) {
                 return false;
             }
         }
@@ -53,11 +58,20 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw() {
         if(this.visible){
+            this.imageView.setVisibility(View.VISIBLE);
             int r = this.width/2;
-            Rect bound = new Rect(this.x-r, this.y-r,this.x+r, this.y+r);
-            canvas.drawBitmap(graphic, null, bound, paint);
+//            Rect bound = new Rect(this.x-r, this.y-r,this.x+r, this.y+r);
+//            canvas.drawBitmap(graphic, null, bound, paint);
+
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.imageView.getLayoutParams();
+            params.width = this.width;
+            params.height = this.width;
+            params.leftMargin = this.x-r;
+            params.topMargin = this.y-r;
+            this.imageView.setLayoutParams(params);
+
         }
     }
 
@@ -98,13 +112,6 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
         this.x = x;
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
 
     public float getWidth() {
         return width;
@@ -125,6 +132,7 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+        this.imageView.setVisibility(View.GONE);
     }
 
     public boolean isVisible() {

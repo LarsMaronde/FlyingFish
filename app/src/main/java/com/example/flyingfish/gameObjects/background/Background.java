@@ -1,47 +1,71 @@
 package com.example.flyingfish.gameObjects.background;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.gameObjects.GameObject;
 
 public class Background extends GameObject {
 
-    private Bitmap graphic;
+    private Drawable graphic;
+    private ImageView imageView;
+    private ImageView imageView2;
     private int x, y, x2;
     private double speed;
 
-    public Background(Bitmap graphic, int x, int y, double speed) {
-        this.graphic = graphic;
+    public Background(Drawable graphic, int x, int y, double speed, ViewGroup container) {
         this.x = x;
         this.x2 = 10;
         this.y = y;
         this.speed = speed;
+        this.graphic = graphic;
+        this.imageView = new ImageView(container.getContext());
+        this.imageView2 = new ImageView(container.getContext());
+
+        this.imageView.setImageDrawable(graphic);
+        this.imageView2.setImageDrawable(graphic);
+
+        container.addView(this.imageView);
+        container.addView(this.imageView2);
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setAntiAlias(false);
+    public void draw() {
+        int width = this.graphic.getIntrinsicWidth();
+        int height = this.graphic.getIntrinsicHeight();
 
-        Rect bound = new Rect(this.x,this.y-this.graphic.getHeight(),this.x+this.graphic.getWidth(),this.y);
-        canvas.drawBitmap(this.graphic,null, bound, paint);
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.imageView.getLayoutParams();
+        params.width = width;
+        params.height = height;
+        params.leftMargin = this.x;
+        params.topMargin = this.y-height;
+        this.imageView.setLayoutParams(params);
 
-        Rect bound2 = new Rect(this.x2,this.y-this.graphic.getHeight(),this.x2+this.graphic.getWidth(),this.y);
-        canvas.drawBitmap(this.graphic,null, bound2, paint);
+
+        FrameLayout.LayoutParams params2 = (FrameLayout.LayoutParams) this.imageView2.getLayoutParams();
+        params2.width = width;
+        params2.height = height;
+        params2.leftMargin = this.x2;
+        params2.topMargin = this.y-height;
+        this.imageView2.setLayoutParams(params2);
+//        Rect bound = new Rect(this.x,this.y-this.graphic.getHeight(),this.x+this.graphic.getWidth(),this.y);
+//        canvas.drawBitmap(this.graphic,null, bound, paint);
+//
+//        Rect bound2 = new Rect(this.x2,this.y-this.graphic.getHeight(),this.x2+this.graphic.getWidth(),this.y);
+//        canvas.drawBitmap(this.graphic,null, bound2, paint);
     }
 
     @Override
     public void update() {
         this.x -= speed;
         this.x2 -= speed;
-        if(this.x+this.graphic.getWidth() < 0) {
+        if(this.x+this.graphic.getIntrinsicWidth()-20 < 0) {
             this.x = Constants.SCREEN_WIDTH;
         }
-        if(this.x2+this.graphic.getWidth() < 0) {
+        if(this.x2+this.graphic.getIntrinsicWidth()-20 < 0) {
             this.x2 = Constants.SCREEN_WIDTH;
         }
     }

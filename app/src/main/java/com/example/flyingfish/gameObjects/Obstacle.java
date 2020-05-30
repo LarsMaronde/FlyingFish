@@ -1,13 +1,16 @@
 package com.example.flyingfish.gameObjects;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.R;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Obstacle extends GameObject implements Interactable, RectHitbox {
 
@@ -16,8 +19,8 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         TOP, BOTTOM;
     }
 
-    private Bitmap graphic;
-    private Paint paint;
+    @JsonIgnore
+    private ImageView imageView;
     private Rect rectangle;
 
     private Orientation orientation;
@@ -55,34 +58,46 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
     }
 
 
-    public void initialize() {
+    public void initialize(ViewGroup container) {
+        Context context = container.getContext();
+        Drawable graphic = null;
         if(this.orientation.equals(Orientation.TOP)) {
             if(this.width <= 100) {
-                this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.obstacletop100px);
+                graphic = context.getResources().getDrawable(R.drawable.obstacletop100px);
             }else {
-                this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.obstacletop200px);
+                graphic = context.getResources().getDrawable(R.drawable.obstacletop200px);
             }
             this.rectangle = new Rect(Constants.SCREEN_WIDTH, 0, Constants.SCREEN_WIDTH+this.width, this.height);
+
         }else if(this.orientation.equals(Orientation.BOTTOM)) {
             if(this.width <= 100) {
-                this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.obstaclebottom100px);
+                graphic = context.getResources().getDrawable(R.drawable.obstaclebottom100px);
             }else {
-                this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.obstaclebottom200px);
+                graphic = context.getResources().getDrawable(R.drawable.obstaclebottom200px);
             }
             this.rectangle = new Rect(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-this.height, Constants.SCREEN_WIDTH+this.width, Constants.SCREEN_HEIGHT);
         }
-        this.visible = false;
 
-        this.paint = new Paint();
+        this.visible = false;
+        this.imageView = new ImageView(context);
+        this.imageView.setVisibility(View.VISIBLE);
+        this.imageView.setImageDrawable(graphic);
+        container.addView(this.imageView);
     }
 
 
-    @Override
-    public void draw(Canvas canvas) {
-        if(!this.visible){
+    public void draw() {
+        if(!this.visible) {
+            this.imageView.setVisibility(View.GONE);
             return;
         }
-        canvas.drawBitmap(graphic, null, this.rectangle, this.paint);
+        this.imageView.setVisibility(View.VISIBLE);
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.imageView.getLayoutParams();
+        params.width = this.width;
+        params.height = this.height;
+        params.leftMargin = this.rectangle.left;
+        params.topMargin = this.rectangle.top;
+        this.imageView.setLayoutParams(params);
     }
 
     @Override
@@ -148,12 +163,21 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         this.speed = speed;
     }
 
-
     public boolean isVisible() {
         return visible;
     }
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+        this.imageView.setVisibility(View.GONE);
     }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
+
 }
