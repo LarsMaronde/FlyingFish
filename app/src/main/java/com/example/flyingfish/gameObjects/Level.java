@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.example.flyingfish.Constants;
+import com.example.flyingfish.gameObjects.background.BackgroundManger;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Level {
 
+    private BackgroundManger backgroundManger;
     private Fish playerFish;
 
     private int number;
@@ -23,15 +25,17 @@ public class Level {
     private int collectedCoins;
 
 
-    public Level() {/*empty*/}
+    public Level() {
+        this.backgroundManger = new BackgroundManger();
+    }
 
 
     public void update (long elapsedSeconds) {
+        this.backgroundManger.updateBackgrounds();
         this.playerFish.update();
 
         this.updateObstacles(elapsedSeconds);
         this.updateCoins(elapsedSeconds);
-
     }
 
     private void updateCoins(long elapsedSeconds) {
@@ -45,9 +49,7 @@ public class Level {
                     it.remove();
                 }
                 if(co.collides(this.playerFish)) {
-                    co.setColor(Color.rgb(255,0,0));
                     this.collectedCoins++;
-                    co.setVisible(false);
                     it.remove();
                 }
             }
@@ -66,7 +68,7 @@ public class Level {
                 }
                 if(ob.collides(this.playerFish)) {
                     // TODO GAME OVER
-                    ob.setColor(Color.rgb(255,0,0));
+//                    ob.setColor(Color.rgb(255,0,0));
                 }
             }
         }
@@ -83,6 +85,7 @@ public class Level {
     }
 
     public void draw(Canvas canvas) {
+        this.backgroundManger.drawBackgrounds(canvas);
         for(Obstacle ob: obstacles) {
             ob.draw(canvas);
         }
@@ -100,9 +103,7 @@ public class Level {
         paint.setStyle(Paint.Style.FILL);
         paint.setTextSize(100);
 
-
         canvas.drawText(Integer.toString(this.collectedCoins), Constants.SCREEN_WIDTH/2, Constants.SCREEN_HEIGHT/9, paint);
-
     }
 
 

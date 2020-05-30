@@ -2,8 +2,6 @@ package com.example.flyingfish;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -29,6 +27,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public GamePanel(Context context) {
         super(context);
+
         Constants.CURRENT_CONTEXT = context;
         getHolder().addCallback(this);
 
@@ -127,7 +126,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        canvas.drawARGB(255, 171, 247, 255);
+        canvas.drawRGB(62, 121, 221);
         this.currentLevel.draw(canvas);
     }
 }

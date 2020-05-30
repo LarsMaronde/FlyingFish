@@ -7,7 +7,7 @@
       "orientation":"TOP",
       "type": 1,
       "spawnTime": 3,
-      "height": 500,
+      "height": 844,
       "width": 200,
       "speed": 5
     },
@@ -15,7 +15,7 @@
       "orientation":"BOTTOM",
       "type": 1,
       "spawnTime": 3,
-      "height": 900,
+      "height": 500,
       "width": 200,
       "speed": 5
     },
@@ -123,6 +123,61 @@
       "y": 250,
       "spawnTime": 3.3,
       "speed": 5
+    },{
+      "value": 1,
+      "y": 233,
+      "spawnTime": 4,
+      "speed": 5
+    },
+    {
+      "value": 1,
+      "y": 250,
+      "spawnTime": 4.3,
+      "speed": 5
+    },{
+      "value": 1,
+      "y": 233,
+      "spawnTime": 3,
+      "speed": 5
+    },
+    {
+      "value": 1,
+      "y": 210,
+      "spawnTime": 3.3,
+      "speed": 5
+    },{
+      "value": 1,
+      "y": 233,
+      "spawnTime": 3,
+      "speed": 5
+    },
+    {
+      "value": 1,
+      "y": 210,
+      "spawnTime": 3.3,
+      "speed": 5
+    },{
+      "value": 1,
+      "y": 150,
+      "spawnTime": 3,
+      "speed": 5
+    },
+    {
+      "value": 1,
+      "y": 150,
+      "spawnTime": 3.3,
+      "speed": 5
+    },{
+      "value": 1,
+      "y": 120,
+      "spawnTime": 3.3,
+      "speed": 5
+    },{
+      "value": 1,
+      "y": 110,
+      "spawnTime": 3.3,
+      "speed": 5
     }
+
   ]
 }

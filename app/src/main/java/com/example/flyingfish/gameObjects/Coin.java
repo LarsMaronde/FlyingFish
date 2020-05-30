@@ -1,14 +1,20 @@
 package com.example.flyingfish.gameObjects;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 import com.example.flyingfish.Constants;
+import com.example.flyingfish.R;
 
 
 public class Coin extends GameObject implements Interactable, CircleHitbox {
 
+    private Paint paint;
+    private Bitmap graphic;
     private int value;
     private int x, y;
     private double spawnTime;
@@ -22,23 +28,25 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
 
     public void initialize() {
         this.color = Color.rgb(122,122,122);
-        this.width = 50;
+        this.width = 80;
         this.visible = false;
         this.x = Constants.SCREEN_WIDTH+this.width/2;
+        this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.coin);
     }
 
     @Override
     public boolean collides(GameObject obj) {
+        if(obj != null) {
+            if(obj instanceof CircleHitbox) {
+                int x2 = ((CircleHitbox) obj).getX();
+                int y2 = ((CircleHitbox) obj).getY();
+                double dist = Math.sqrt(Math.pow(x2-this.x,2) + Math.pow(y2-this.y,2));
 
-        if(obj instanceof CircleHitbox) {
-            int x2 = ((CircleHitbox) obj).getX();
-            int y2 = ((CircleHitbox) obj).getY();
-            double dist = Math.sqrt(Math.pow(x2-this.x,2) + Math.pow(y2-this.y,2));
+                return dist < (this.width/2 + ((CircleHitbox) obj).getWidth()/2);
 
-            return dist < (this.width/2 + ((CircleHitbox) obj).getWidth()/2);
-
-        }else if(obj instanceof RectHitbox){
-            return false;
+            }else if(obj instanceof RectHitbox){
+                return false;
+            }
         }
         return false;
     }
@@ -47,10 +55,9 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
     @Override
     public void draw(Canvas canvas) {
         if(this.visible){
-            Paint paint = new Paint();
-            paint.setColor(this.color);
-            paint.setAntiAlias(false);
-            canvas.drawCircle(x, y, this.width/2, paint);
+            int r = this.width/2;
+            Rect bound = new Rect(this.x-r, this.y-r,this.x+r, this.y+r);
+            canvas.drawBitmap(graphic, null, bound, paint);
         }
     }
 
@@ -58,8 +65,6 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
     public void update() {
         this.x -= speed;
     }
-
-
 
     public int getValue() {
         return value;

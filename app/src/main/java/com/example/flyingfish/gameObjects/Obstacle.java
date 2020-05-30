@@ -1,11 +1,13 @@
 package com.example.flyingfish.gameObjects;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.example.flyingfish.Constants;
+import com.example.flyingfish.R;
 
 public class Obstacle extends GameObject implements Interactable, RectHitbox {
 
@@ -14,8 +16,9 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         TOP, BOTTOM;
     }
 
+    private Bitmap graphic;
+    private Paint paint;
     private Rect rectangle;
-    private int color;
 
     private Orientation orientation;
     private int type;
@@ -25,6 +28,7 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
     private double speed;
 
     private boolean visible;
+
 
 
     public Obstacle() {/*empty*/}
@@ -53,13 +57,23 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
 
     public void initialize() {
         if(this.orientation.equals(Orientation.TOP)) {
+            if(this.width <= 100) {
+                this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.obstacletop100px);
+            }else {
+                this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.obstacletop200px);
+            }
             this.rectangle = new Rect(Constants.SCREEN_WIDTH, 0, Constants.SCREEN_WIDTH+this.width, this.height);
-            this.color = Color.rgb(0,255,0);
         }else if(this.orientation.equals(Orientation.BOTTOM)) {
+            if(this.width <= 100) {
+                this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.obstaclebottom100px);
+            }else {
+                this.graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.obstaclebottom200px);
+            }
             this.rectangle = new Rect(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-this.height, Constants.SCREEN_WIDTH+this.width, Constants.SCREEN_HEIGHT);
-            this.color = Color.rgb(0,0,255);
         }
         this.visible = false;
+
+        this.paint = new Paint();
     }
 
 
@@ -68,13 +82,7 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         if(!this.visible){
             return;
         }
-        if(rectangle != null) {
-            Paint paint = new Paint();
-            paint.setColor(this.color);
-            canvas.drawRect(rectangle, paint);
-        }else {
-            System.err.println("Rectangle is null ");
-        }
+        canvas.drawBitmap(graphic, null, this.rectangle, this.paint);
     }
 
     @Override
@@ -84,26 +92,12 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
     }
 
 
-
-
-
-
-
-
     public Rect getRectangle() {
         return this.rectangle;
     }
 
     public void setRectangle(Rect rectangle) {
         this.rectangle = rectangle;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 
     public Orientation getOrientation() {

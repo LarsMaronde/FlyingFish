@@ -13,9 +13,10 @@ import com.example.flyingfish.R;
 
 public class Fish extends GameObject implements CircleHitbox {
 
+    private Paint paint;
     private Bitmap graphic;
     private Rect rectangle;
-    private final double velocityCap = -20;
+    private final double velocityCap = -20; //sets the maximum value of velocity the player can make
     private double velocity;
     private double gravity;
     private double lift;
@@ -32,21 +33,16 @@ public class Fish extends GameObject implements CircleHitbox {
         this.gravity = gravity;
         this.lift = lift;
 
-        BitmapFactory bf = new BitmapFactory();
-        graphic = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.fish1);
+        graphic = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.fish1);
         this.rectangle = new Rect(0,0, (int)(graphic.getWidth()*1.5), (int)(graphic.getHeight()*1.5));
         this.width = (float) (this.graphic.getWidth()*1.5);
+        this.paint = new Paint();
     }
 
     @Override
     public void draw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(this.color);
-        paint.setAntiAlias(false);
+        canvas.drawBitmap(graphic, null, this.rectangle, this.paint);
 
-        //drawing the collision box
-        canvas.drawCircle(this.x, this.y, this.width/2, paint);
-        canvas.drawBitmap(graphic, null, this.rectangle, paint);
     }
 
     @Override
