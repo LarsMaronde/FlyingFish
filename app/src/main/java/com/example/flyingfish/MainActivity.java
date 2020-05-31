@@ -1,11 +1,13 @@
 package com.example.flyingfish;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 
 public class MainActivity extends Activity {
+    private int level;
 
 
     @Override
@@ -20,7 +22,10 @@ public class MainActivity extends Activity {
         Constants.SCREEN_HEIGHT = dm.heightPixels;
         Constants.SCREEN_WIDTH = dm.widthPixels;
 
-        new GamePanel((ViewGroup) findViewById(R.id.container), this);
+        Intent intent = getIntent();
+        level = intent.getIntExtra(LevelMenueActivity.LEVEL_MESSAGE, 0);
+
+        new GamePanel((ViewGroup) findViewById(R.id.container), this, level);
     }
 
 }

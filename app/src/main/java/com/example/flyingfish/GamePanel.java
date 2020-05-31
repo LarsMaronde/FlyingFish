@@ -26,7 +26,7 @@ public class GamePanel extends Activity {
     private Level currentLevel;
 
 
-    public GamePanel(final ViewGroup container, MainActivity mainActivity) {
+    public GamePanel(final ViewGroup container, MainActivity mainActivity, int level) {
         this.container = container;
         container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +35,7 @@ public class GamePanel extends Activity {
             }
         });
 
-        this.loadLevel(container.getContext(), 1);
+        this.loadLevel(container.getContext(), level);
         //place the player in the middle of the level
         this.currentLevel.setPlayerFish(new Fish(
                 Constants.SCREEN_WIDTH/5,
