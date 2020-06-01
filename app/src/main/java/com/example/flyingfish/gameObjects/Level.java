@@ -3,19 +3,26 @@ package com.example.flyingfish.gameObjects;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.flyingfish.Constants;
+import com.example.flyingfish.R;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class Level {
 
     private BackgroundManger backgroundManger;
     private Fish playerFish;
-
+    private TextGameObject score;
     private int number;
     private double gravity;
     private double velocity;
@@ -24,8 +31,8 @@ public class Level {
     private double lift;
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Coin> coins;
-
-    private int collectedCoins;
+    public int collectedCoins;
+//    private TextView countertext;
 
     @JsonIgnore
     private ViewGroup container;
@@ -86,7 +93,7 @@ public class Level {
     }
 
     public void initializeObjects() {
-        this.backgroundManger = new BackgroundManger(this.container, this.globalSpeed);
+       this.backgroundManger = new BackgroundManger(this.container, this.globalSpeed);
         for(Obstacle ob: obstacles) {
             ob.initialize(container);
         }
@@ -94,6 +101,10 @@ public class Level {
         for(Coin co: coins) {
             co.initialize(this.container);
         }
+
+        this.score = new TextGameObject(this.container);
+        setCoinsCounter();
+
     }
 
     public void draw() {
@@ -105,19 +116,16 @@ public class Level {
             co.draw();
         }
         this.playerFish.draw();
-
-//        this.drawCoinsCounter();
+        score.draw();
+        score.setText(""+ collectedCoins);
     }
 
-    private void drawCoinsCounter(ViewGroup canvas) {
-        Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setTextSize(100);
-
-//        canvas.drawText(Integer.toString(this.collectedCoins), Constants.SCREEN_WIDTH/2, Constants.SCREEN_HEIGHT/9, paint);
-    }
-
+    private void setCoinsCounter() {
+        this.score.setPosition(Constants.SCREEN_WIDTH/2,120);
+        this.score.setTextColor(Color.rgb(255, 197, 57));
+        this.score.setTextSize(35);
+        score.setCentered(true);
+   }
 
     public BackgroundManger getBackgroundManger() {
         return backgroundManger;

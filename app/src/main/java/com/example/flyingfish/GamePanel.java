@@ -2,6 +2,7 @@ package com.example.flyingfish;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -49,7 +50,6 @@ public class GamePanel extends Activity {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(startMainLoop, 0, 5, TimeUnit.MILLISECONDS);
         this.startingTime = System.currentTimeMillis();
-
     }
 
 

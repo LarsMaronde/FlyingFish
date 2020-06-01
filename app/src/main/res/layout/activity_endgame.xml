@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/start"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+        <TextView
+            android:id="@+id/gameover_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/gameover"
+            android:textSize="32sp"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:id="@+id/start_iv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/fish1"
+            android:layout_below="@id/gameover_tv"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/gameover"
+        android:textSize="32sp"
+        android:layout_centerHorizontal="true"
+            android:layout_below="@id/start_iv"/>
+
+
+    </RelativeLayout>
+</FrameLayout>

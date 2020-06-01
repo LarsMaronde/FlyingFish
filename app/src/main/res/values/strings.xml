@@ -5,6 +5,8 @@
     <string name="leaderboard">Leaderboard</string>
     <string name="shop">Shop</string>
     <string name="quit">quit</string>
+    <string name="gameover">Game Over</string>
+    <string name="score">Score</string>
     <string name="leveleselection">Level Selection</string>
     <string name="level1">Level 1</string>
     <string name="level2">Level 2</string>

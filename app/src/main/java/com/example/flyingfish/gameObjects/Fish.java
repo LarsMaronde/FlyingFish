@@ -74,6 +74,7 @@ public class Fish extends GameObject implements CircleHitbox {
             this.y = 0;
             this.velocity = 0;
         }
+
     }
 
     public Rect getRectangle() {

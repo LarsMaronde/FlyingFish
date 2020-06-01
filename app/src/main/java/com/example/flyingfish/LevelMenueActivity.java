@@ -15,7 +15,6 @@ public class LevelMenueActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levelmenue);
-        Log.d("TEXT", "hallo");
     }
 
     public void startGame(View v){
