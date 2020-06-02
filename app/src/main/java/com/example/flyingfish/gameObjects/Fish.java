@@ -3,10 +3,12 @@ package com.example.flyingfish.gameObjects;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import com.example.flyingfish.Constants;
+import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.R;
 
 
@@ -80,6 +82,15 @@ public class Fish extends GameObject implements CircleHitbox {
         if (this.velocity < this.velocityCap) {
             this.velocity = this.velocityCap;
         }
+    }
+
+    public void die() {
+        this.gravity = 5;
+        this.velocity += this.gravity;
+        if (this.velocity > Constants.SCREEN_HEIGHT) {
+           this.velocity = Constants.SCREEN_HEIGHT -20 ;
+        }
+        GamePanel.getInstance().gameOver();
     }
 
     @Override

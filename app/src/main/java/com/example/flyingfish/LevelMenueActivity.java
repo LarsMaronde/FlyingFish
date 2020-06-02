@@ -8,7 +8,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LevelMenueActivity extends AppCompatActivity {
-    public static final String LEVEL_MESSAGE = "com.exampleflyingfish.MESSAGE" ;
+    public static final String LEVEL_MESSAGE = "com.exampleflyingfish.MESSAGE";
     private int level;
 
     @Override

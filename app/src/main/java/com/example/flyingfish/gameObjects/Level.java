@@ -2,21 +2,14 @@ package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.flyingfish.Constants;
-import com.example.flyingfish.R;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class Level {
 
@@ -31,8 +24,8 @@ public class Level {
     private double lift;
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Coin> coins;
-    public int collectedCoins;
-//    private TextView countertext;
+    private int collectedCoins;
+    public boolean levelfinished = false;
 
     @JsonIgnore
     private ViewGroup container;
@@ -86,6 +79,8 @@ public class Level {
                 }
                 if(ob.collides(this.playerFish)) {
                     // TODO GAME OVER
+                    this.playerFish.die();
+
 //                    ob.setColor(Color.rgb(255,0,0));
                 }
             }
@@ -125,6 +120,10 @@ public class Level {
         this.score.setTextColor(Color.rgb(255, 197, 57));
         this.score.setTextSize(35);
         score.setCentered(true);
+   }
+
+   public int getCollectedCoins(){
+        return this.collectedCoins;
    }
 
     public BackgroundManger getBackgroundManger() {
@@ -189,10 +188,6 @@ public class Level {
 
     public void setCoins(LinkedList<Coin> coins) {
         this.coins = coins;
-    }
-
-    public int getCollectedCoins() {
-        return collectedCoins;
     }
 
     public void setCollectedCoins(int collectedCoins) {

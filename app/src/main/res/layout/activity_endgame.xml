@@ -33,10 +33,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/gameover"
+        android:text="@string/score"
         android:textSize="32sp"
         android:layout_centerHorizontal="true"
             android:layout_below="@id/start_iv"/>
+        <Button
+            android:id="@+id/mainactivity_bt"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:onClick="mainActivity"
+            android:text="@string/home"
+            android:textSize="24sp"
+            android:layout_below="@id/score"/>
+        <Button
+            android:id="@+id/retry_bt"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mainactivity_bt"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:onClick="startGame"
+            android:text="@string/retry"
+            android:textSize="24sp" />
 
 
     </RelativeLayout>

@@ -22,9 +22,17 @@ public class GamePanel extends Activity {
     private long startingTime;
     private double elapsedSeconds; //since start
     private Level currentLevel;
+    private boolean gameOver = false;
+    private static GamePanel instance;
+    private Context context;
 
+    public static GamePanel getInstance () {
+        return instance;
+    }
 
     public GamePanel(final ViewGroup container, MainActivity mainActivity, int level) {
+        context = container.getContext();
+        instance = this;
         this.container = container;
         container.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -61,11 +69,13 @@ public class GamePanel extends Activity {
     private Runnable startMainLoop = new Runnable() {
         @Override
         public void run() {
-            runOnUiThread(new Runnable() {
+            ((Activity)context).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    update();
-                    draw();
+                        if(!gameOver){
+                            update();
+                        }
+                        draw();
                 }
             });
         }
@@ -108,6 +118,10 @@ public class GamePanel extends Activity {
 
     public void draw() {
         this.currentLevel.draw();
+    }
+
+    public void gameOver(){
+        this.gameOver = true;
     }
 
 }
