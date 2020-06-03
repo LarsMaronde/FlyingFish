@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -38,6 +39,13 @@ public class TextGameObject extends GameObject {
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public void setVisible(boolean value) {
+        score.setVisibility(View.GONE);
+        // score.setVisibility(value? View.VISIBLE:View.INVISIBLE);
+        score.setVisibility(value? View.VISIBLE:View.INVISIBLE);
     }
 
     public void setText(String text){

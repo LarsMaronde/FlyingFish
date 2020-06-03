@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         Intent intent = getIntent();
         level = intent.getIntExtra(LevelMenueActivity.LEVEL_MESSAGE, 0);
 
-        new GamePanel((ViewGroup) findViewById(R.id.container), this, level);
+        GamePanel gp = new GamePanel((ViewGroup) findViewById(R.id.container), this, level);
     }
 
 }

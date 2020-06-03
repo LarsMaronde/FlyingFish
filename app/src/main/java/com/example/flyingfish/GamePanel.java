@@ -2,6 +2,8 @@ package com.example.flyingfish;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +71,7 @@ public class GamePanel extends Activity {
     private Runnable startMainLoop = new Runnable() {
         @Override
         public void run() {
+            // final Handler handler = new Handler();
             ((Activity)context).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -122,6 +125,7 @@ public class GamePanel extends Activity {
 
     public void gameOver(){
         this.gameOver = true;
+        currentLevel.gameOver();
     }
 
 }

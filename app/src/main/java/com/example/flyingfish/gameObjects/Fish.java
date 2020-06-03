@@ -23,6 +23,8 @@ public class Fish extends GameObject implements CircleHitbox {
     private double lift;
     private int x, y;
     private float width;
+    private enum State {ALIVE, DEAD, ROTTEN};
+    private State state = State.ALIVE;
 
     public Fish(int x, int y, double gravity, double lift, double velocityCap, ViewGroup container) {
         this.x = x;
@@ -53,9 +55,6 @@ public class Fish extends GameObject implements CircleHitbox {
     @Override
     public void update() {
         this.velocity += this.gravity;
-//        if(this.velocity >= this.velocity*-1) {
-//            this.velocity = this.velocityCap*-1;
-//        }
 
         this.y += this.velocity;
         rectangle.set(x - rectangle.width() / 2, y - rectangle.height() / 2,
@@ -64,6 +63,10 @@ public class Fish extends GameObject implements CircleHitbox {
         if (this.y > Constants.SCREEN_HEIGHT - rectangle.height()) {
             this.y = Constants.SCREEN_HEIGHT - rectangle.height();
             this.velocity = 0;
+            if(state == State.DEAD){
+                state = State.ROTTEN;
+                GamePanel.getInstance().gameOver();
+            }
         }
 
         if (this.y < 0) {
@@ -78,6 +81,7 @@ public class Fish extends GameObject implements CircleHitbox {
     }
 
     public void swimUp() {
+        if(state != State.ALIVE) return;
         this.velocity -= this.lift;
         if (this.velocity < this.velocityCap) {
             this.velocity = this.velocityCap;
@@ -85,12 +89,10 @@ public class Fish extends GameObject implements CircleHitbox {
     }
 
     public void die() {
-        this.gravity = 5;
-        this.velocity += this.gravity;
-        if (this.velocity > Constants.SCREEN_HEIGHT) {
-           this.velocity = Constants.SCREEN_HEIGHT -20 ;
-        }
-        GamePanel.getInstance().gameOver();
+        if(state != State.ALIVE) return;
+        velocity = 0;
+        gravity = 0.06;
+        state = State.DEAD;
     }
 
     @Override

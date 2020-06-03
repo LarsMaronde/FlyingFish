@@ -25,7 +25,7 @@ public class Level {
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Coin> coins;
     private int collectedCoins;
-    public boolean levelfinished = false;
+    private GameObjectContainer gameEndPanel;
 
     @JsonIgnore
     private ViewGroup container;
@@ -38,6 +38,7 @@ public class Level {
     public void update (double elapsedSeconds) {
         this.backgroundManger.updateBackgrounds();
         this.playerFish.update();
+        gameEndPanel.update();
 
         this.updateObstacles(elapsedSeconds);
         this.updateCoins(elapsedSeconds);
@@ -80,8 +81,6 @@ public class Level {
                 if(ob.collides(this.playerFish)) {
                     // TODO GAME OVER
                     this.playerFish.die();
-
-//                    ob.setColor(Color.rgb(255,0,0));
                 }
             }
         }
@@ -100,6 +99,14 @@ public class Level {
         this.score = new TextGameObject(this.container);
         setCoinsCounter();
 
+        gameEndPanel = new GameObjectContainer();
+        TextGameObject tgo = new TextGameObject(container);
+        tgo.setText("Game Over");
+        tgo.setTextSize(40);
+        tgo.setTextColor(Color.rgb(255, 0, 0));
+        tgo.setPosition(Constants.SCREEN_WIDTH/2, 400);
+        gameEndPanel.addGameObject(tgo);
+        gameEndPanel.setVisible(false);
     }
 
     public void draw() {
@@ -111,8 +118,10 @@ public class Level {
             co.draw();
         }
         this.playerFish.draw();
+        gameEndPanel.draw();
         score.draw();
         score.setText(""+ collectedCoins);
+
     }
 
     private void setCoinsCounter() {
@@ -121,6 +130,10 @@ public class Level {
         this.score.setTextSize(35);
         score.setCentered(true);
    }
+
+    public void gameOver() {
+        gameEndPanel.setVisible(true);
+    }
 
    public int getCollectedCoins(){
         return this.collectedCoins;
@@ -225,4 +238,6 @@ public class Level {
     public void setGlobalSpeed(double globalSpeed) {
         this.globalSpeed = globalSpeed;
     }
+
+
 }

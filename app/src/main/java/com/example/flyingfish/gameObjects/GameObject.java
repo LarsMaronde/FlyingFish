@@ -13,6 +13,10 @@ public abstract class GameObject {
         return parent;
     }
 
+    public void setVisible(boolean value){
+
+    }
+
     protected void setParent(GameObjectContainer parent) {
         this.parent = parent;
     }

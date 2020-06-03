@@ -1,38 +1,44 @@
 package com.example.flyingfish.gameObjects;
 
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameObjectContainer extends GameObject {
 
-    private final List<GameObject> GameObjects;
+    private final List<GameObject> gameObjects;
     private final List<GameObject> GameObjectsToRemove;
     private final List<GameObject> GameObjectsToAdd;
+    private boolean visible = true;
 
     public GameObjectContainer(){
-        GameObjects = new ArrayList<GameObject>();
+        gameObjects = new ArrayList<GameObject>();
         GameObjectsToRemove = new ArrayList<GameObject>();
         GameObjectsToAdd = new ArrayList<GameObject>();
     }
 
     @Override
     public void draw() {
-        for (GameObject s: GameObjects) {
-            s.draw();
-        }
+
+            for (GameObject s: gameObjects) {
+                s.draw();
+            }
+
     }
 
     @Override
     public void update() {
-        for (GameObject s: GameObjects) {
+        for (GameObject s: gameObjects) {
             s.update();
         }
         for(GameObject s: GameObjectsToRemove){
-            GameObjects.remove(s);
+            gameObjects.remove(s);
         }
         GameObjectsToRemove.clear();
         for(GameObject s: GameObjectsToAdd){
-            GameObjects.add(s);
+            gameObjects.add(s);
+            s.setVisible(visible);
         }
         GameObjectsToAdd.clear();
     }
@@ -47,6 +53,14 @@ public class GameObjectContainer extends GameObject {
     }
 
     public int size(){
-        return GameObjects.size();
+        return gameObjects.size();
+    }
+
+    @Override
+    public void setVisible(boolean value) {
+        visible = value;
+        for (GameObject go: gameObjects ) {
+            go.setVisible(value);
+        }
     }
 }
