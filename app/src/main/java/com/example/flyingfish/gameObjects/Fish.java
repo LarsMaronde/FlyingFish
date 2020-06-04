@@ -3,10 +3,10 @@ package com.example.flyingfish.gameObjects;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.R;
@@ -15,7 +15,6 @@ import com.example.flyingfish.R;
 public class Fish extends GameObject implements CircleHitbox {
 
     private ImageView imageView;
-    private Drawable graphic1;
     private Rect rectangle;
     private double velocityCap; //sets the maximum value of velocity the player can make
     private double velocity;
@@ -23,7 +22,7 @@ public class Fish extends GameObject implements CircleHitbox {
     private double lift;
     private int x, y;
     private float width;
-    private enum State {ALIVE, DEAD, ROTTEN};
+    private enum State {ALIVE, ROTTEN, DEAD}
     private State state = State.ALIVE;
 
     public Fish(int x, int y, double gravity, double lift, double velocityCap, ViewGroup container) {
@@ -34,7 +33,7 @@ public class Fish extends GameObject implements CircleHitbox {
         this.gravity = gravity;
         this.lift = lift;
         Context context = container.getContext();
-        graphic1 = context.getResources().getDrawable(R.drawable.fish1);
+        Drawable graphic1 = context.getResources().getDrawable(R.drawable.fish1);
         this.imageView = new ImageView(context);
         this.imageView.setImageDrawable(graphic1);
         container.addView(this.imageView);

@@ -9,8 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class StartActivity extends AppCompatActivity {
 
+    private static StartActivity instance;
+    public static StartActivity getInstance () {
+        return instance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        instance = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
@@ -24,6 +30,10 @@ public class StartActivity extends AppCompatActivity {
     public void leaderboard(View v){
         Intent intent = new Intent(StartActivity.this, LeaderboardActivity.class);
         startActivity(intent);
+    }
+
+    public void startAcitivity(){
+        setContentView(R.layout.activity_start);
     }
 
     public void shop(View v){

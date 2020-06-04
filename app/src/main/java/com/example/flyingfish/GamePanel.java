@@ -2,8 +2,6 @@ package com.example.flyingfish;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,15 +25,16 @@ public class GamePanel extends Activity {
     private boolean gameOver = false;
     private static GamePanel instance;
     private Context context;
+    private ScheduledExecutorService executor;
 
-    public static GamePanel getInstance () {
+    public static GamePanel getInstance() {
         return instance;
     }
 
     public GamePanel(final ViewGroup container, MainActivity mainActivity, int level) {
         context = container.getContext();
-        instance = this;
         this.container = container;
+        instance = this;
         container.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -52,7 +51,7 @@ public class GamePanel extends Activity {
             }
         });
 
-        this.loadLevel(container.getContext(), level);
+        this.loadLevel(container.getContext(), 1);
         //place the player in the middle of the level
         this.currentLevel.setPlayerFish(new Fish(
                 Constants.SCREEN_WIDTH / 5,
@@ -63,7 +62,7 @@ public class GamePanel extends Activity {
                 container));
 
 
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(startMainLoop, 0, 5, TimeUnit.MILLISECONDS);
         this.startingTime = System.currentTimeMillis();
     }
@@ -75,10 +74,10 @@ public class GamePanel extends Activity {
             ((Activity)context).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                        if(!gameOver){
-                            update();
-                        }
-                        draw();
+                    if (!gameOver) {
+                        update();
+                    }
+                    draw();
                 }
             });
         }
@@ -123,9 +122,13 @@ public class GamePanel extends Activity {
         this.currentLevel.draw();
     }
 
-    public void gameOver(){
+    public void gameOver() {
         this.gameOver = true;
         currentLevel.gameOver();
+    }
+
+    public void stopRunning() {
+        executor.shutdown();
     }
 
 }
