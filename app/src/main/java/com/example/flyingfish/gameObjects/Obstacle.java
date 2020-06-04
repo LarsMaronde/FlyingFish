@@ -14,13 +14,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Obstacle extends GameObject implements Interactable, RectHitbox {
 
-
     private enum Orientation {
         TOP, BOTTOM;
     }
 
     @JsonIgnore
     private ImageView imageView;
+    @JsonIgnore
     private Rect rectangle;
 
     private Orientation orientation;
@@ -31,7 +31,6 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
     private double speed;
 
     private boolean visible;
-
 
 
     public Obstacle() {/*empty*/}
@@ -83,6 +82,7 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         this.imageView.setVisibility(View.VISIBLE);
         this.imageView.setImageDrawable(graphic);
         container.addView(this.imageView);
+
     }
 
 
@@ -98,6 +98,7 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         params.leftMargin = this.rectangle.left;
         params.topMargin = this.rectangle.top;
         this.imageView.setLayoutParams(params);
+
     }
 
     @Override

@@ -2,13 +2,10 @@ package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.example.flyingfish.Constants;
-import com.example.flyingfish.MainActivity;
-import com.example.flyingfish.R;
+import com.example.flyingfish.GameOverPanel;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,6 +13,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Level {
+
     private BackgroundManger backgroundManger;
     private Fish playerFish;
     private TextGameObject score;
@@ -28,25 +26,35 @@ public class Level {
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Coin> coins;
     private int collectedCoins;
-    private GameObjectContainer gameEndPanel;
-
 
     @JsonIgnore
     private ViewGroup container;
     @JsonIgnore
     private Context context;
 
-    public Level() {/*emty*/}
+    private GameOverPanel gameOverPanel;
 
+    public Level() {/*emty*/}
 
 
     public void update(double elapsedSeconds) {
         this.backgroundManger.updateBackgrounds();
         this.playerFish.update();
-        gameEndPanel.update();
+        this.gameOverPanel.update();
 
         this.updateObstacles(elapsedSeconds);
         this.updateCoins(elapsedSeconds);
+
+        this.checkIfLevelWon();
+    }
+
+    private void checkIfLevelWon() {
+        if(this.obstacles.size() == 0) {
+            System.out.println("won level");
+            //show coins screen
+            //save progress in database
+            //navigate to start screen
+        }
     }
 
     private void updateCoins(double elapsedSeconds) {
@@ -59,7 +67,6 @@ public class Level {
                 if (co.getX() + co.getWidth() / 2 <= 0) { //if rectangle is out of the screen
                     co.setVisible(false);
                     it.remove();
-                    co = null;
                     continue;
                 }
                 if (co.collides(this.playerFish)) {
@@ -80,16 +87,15 @@ public class Level {
                 if (ob.getRectangle().right <= 0) { //if rectangle is out of the screen
                     ob.setVisible(false);
                     it.remove();
-                    ob = null;
                     continue;
                 }
                 if (ob.collides(this.playerFish)) {
-                    // TODO GAME OVER
                     this.playerFish.die();
                 }
             }
         }
     }
+
     public void initializeObjects() {
         container.removeAllViews();
         this.backgroundManger = new BackgroundManger(this.container, this.globalSpeed);
@@ -104,31 +110,8 @@ public class Level {
         this.score = new TextGameObject(this.container);
         setCoinsCounter();
 
-        gameEndPanel = new GameObjectContainer();
-        ImageGameObject igo = new ImageGameObject((FrameLayout) container, container.getResources().getDrawable(R.drawable.gameover), 800);
-        igo.setCenteredPosition(300);
-        ImageGameObject retry = new ImageGameObject((FrameLayout) container, container.getResources().getDrawable(R.drawable.retry), 360);
-        retry.setPosition(560, 800);
-        ImageGameObject home = new ImageGameObject((FrameLayout) container, container.getResources().getDrawable(R.drawable.home), 360);
-        home.setPosition(180, 800);
-        gameEndPanel.addGameObject(igo);
-        gameEndPanel.addGameObject(retry);
-        gameEndPanel.addGameObject(home);
-        gameEndPanel.setVisible(false);
-        retry.getView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.getInstance().restart();
-            }
-        });
-        home.getView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO
-//                Intent i = new Intent(getBaseContext(), StartActivity.class);
-//                getBaseContext().startActivity(i);
-            }
-        });
+        this.gameOverPanel = new GameOverPanel(this.container);
+
     }
 
     public void draw() {
@@ -140,7 +123,7 @@ public class Level {
             co.draw();
         }
         this.playerFish.draw();
-        gameEndPanel.draw();
+        this.gameOverPanel.draw();
         score.draw();
         score.setText("" + collectedCoins);
 
@@ -149,12 +132,12 @@ public class Level {
     private void setCoinsCounter() {
         this.score.setPosition(Constants.SCREEN_WIDTH / 2, 120);
         this.score.setTextColor(Color.rgb(255, 197, 57));
-        this.score.setTextSize(35);
+        this.score.setTextSize(40);
         score.setCentered(true);
     }
 
     public void gameOver() {
-        gameEndPanel.setVisible(true);
+        this.gameOverPanel.setVisible(true);
     }
 
     public int getCollectedCoins() {

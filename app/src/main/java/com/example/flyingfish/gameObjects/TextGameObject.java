@@ -32,7 +32,6 @@ public class TextGameObject extends GameObject {
 
     }
 
-    @Override
     public void setVisible(boolean value) {
         text.setVisibility(View.GONE);
         text.setVisibility(value ? View.VISIBLE : View.INVISIBLE);

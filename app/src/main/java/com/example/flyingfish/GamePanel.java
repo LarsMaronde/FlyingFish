@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.flyingfish.activities.MainActivity;
 import com.example.flyingfish.gameObjects.Fish;
 import com.example.flyingfish.gameObjects.Level;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,14 +20,15 @@ import java.util.concurrent.TimeUnit;
 
 public class GamePanel extends Activity {
 
-    private ViewGroup container;
-    private long startingTime;
-    private double elapsedSeconds; //since start
-    private Level currentLevel;
-    private boolean gameOver = false;
     private static GamePanel instance;
+
+    private Level currentLevel;
+    private ViewGroup container;
     private Context context;
     private ScheduledExecutorService executor;
+    private long startingTime;
+    private double elapsedSeconds; //since start
+    private boolean gameOver = false;
 
     public static GamePanel getInstance() {
         return instance;
@@ -70,16 +73,15 @@ public class GamePanel extends Activity {
     private Runnable startMainLoop = new Runnable() {
         @Override
         public void run() {
-            // final Handler handler = new Handler();
-            ((Activity)context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (!gameOver) {
-                        update();
-                    }
-                    draw();
+        ((Activity)context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (!gameOver) {
+                    update();
                 }
-            });
+                draw();
+            }
+        });
         }
     };
 
@@ -115,11 +117,15 @@ public class GamePanel extends Activity {
 
     public void update() {
         this.elapsedSeconds = (System.currentTimeMillis() - this.startingTime) / 1000;
-        this.currentLevel.update(this.elapsedSeconds);
+        if(!this.gameOver){
+            this.currentLevel.update(this.elapsedSeconds);
+        }
     }
 
     public void draw() {
-        this.currentLevel.draw();
+        if(!this.gameOver){
+            this.currentLevel.draw();
+        }
     }
 
     public void gameOver() {

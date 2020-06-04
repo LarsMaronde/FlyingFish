@@ -1,11 +1,12 @@
-package com.example.flyingfish;
+package com.example.flyingfish.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.flyingfish.R;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -16,8 +17,8 @@ public class StartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        instance = this;
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_start);
 
     }
@@ -43,7 +44,7 @@ public class StartActivity extends AppCompatActivity {
 
     public void quit(View v){
         finish();
+        System.exit(0);
     }
-
 
 }

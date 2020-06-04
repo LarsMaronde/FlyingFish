@@ -1,10 +1,14 @@
-package com.example.flyingfish;
+package com.example.flyingfish.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
+
+import com.example.flyingfish.Constants;
+import com.example.flyingfish.GamePanel;
+import com.example.flyingfish.R;
 
 public class MainActivity extends Activity {
 
@@ -19,8 +23,8 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        instance = this;
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_main);
 
         //store the screen size in the Constants class

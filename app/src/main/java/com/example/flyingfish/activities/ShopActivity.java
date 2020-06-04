@@ -1,4 +1,4 @@
-package com.example.flyingfish;
+package com.example.flyingfish.activities;
 
 import android.os.Bundle;
 

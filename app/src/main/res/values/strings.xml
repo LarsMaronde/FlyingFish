@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FlyingFish</string>
     <string name="beginner">Beginner</string>
-    <string name="levelmenue">Level Menue</string>
+    <string name="levelmenue">Level Menu</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="shop">Shop</string>
     <string name="quit">quit</string>

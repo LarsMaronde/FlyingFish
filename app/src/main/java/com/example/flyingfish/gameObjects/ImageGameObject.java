@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.example.flyingfish.Constants;
 
 public class ImageGameObject extends GameObject {
+
     protected double vx;
     private double x, y;
     private final ImageView view;
@@ -17,7 +18,7 @@ public class ImageGameObject extends GameObject {
     private final double height;
 
 
-    public ImageGameObject(FrameLayout container, Drawable drawable, double width) {
+    public ImageGameObject(ViewGroup container, Drawable drawable, double width) {
         this.width = width;
         this.height = drawable.getIntrinsicHeight() * width / drawable.getIntrinsicWidth();
         view = new ImageView(container.getContext());
@@ -55,7 +56,6 @@ public class ImageGameObject extends GameObject {
         this.y = y;
     }
 
-    @Override
     public void setVisible(boolean value) {
         view.setVisibility(View.GONE);
         view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);

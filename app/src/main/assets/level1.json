@@ -9,7 +9,7 @@
       "orientation":"TOP",
       "type": 1,
       "spawnTime": 3,
-      "height": 844,
+      "height": 800,
       "width": 200,
       "speed": 1
     },
@@ -25,8 +25,8 @@
       "orientation":"TOP",
       "type": 1,
       "spawnTime": 5,
-      "height": 500,
-      "width": 300,
+      "height": 900,
+      "width": 100,
       "speed": 1
     },
     {

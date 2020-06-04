@@ -54,13 +54,17 @@ public class Fish extends GameObject implements CircleHitbox {
     @Override
     public void update() {
         this.velocity += this.gravity;
-
         this.y += this.velocity;
+
+        if(this.checkCollisionWithTopOrBottom()){
+            this.die();
+        }
+
         rectangle.set(x - rectangle.width() / 2, y - rectangle.height() / 2,
                 x + rectangle.width() / 2, y + rectangle.height() / 2);
 
         if (this.y > Constants.SCREEN_HEIGHT - rectangle.height()) {
-            this.y = Constants.SCREEN_HEIGHT - rectangle.height();
+//            this.y = Constants.SCREEN_HEIGHT - rectangle.height();
             this.velocity = 0;
             if(state == State.DEAD){
                 state = State.ROTTEN;
@@ -69,7 +73,7 @@ public class Fish extends GameObject implements CircleHitbox {
         }
 
         if (this.y < 0) {
-            this.y = 0;
+//            this.y = 0;
             this.velocity = 0;
         }
 
@@ -94,6 +98,11 @@ public class Fish extends GameObject implements CircleHitbox {
         state = State.DEAD;
     }
 
+    public boolean checkCollisionWithTopOrBottom() {
+        return this.y + this.width >=Constants.SCREEN_HEIGHT ||
+                this.y - this.width <= 0;
+    }
+
     @Override
     public int getX() {
         return this.x;
@@ -116,4 +125,5 @@ public class Fish extends GameObject implements CircleHitbox {
     public void setLook2() {
         this.imageView.setImageResource(R.drawable.fish3);
     }
+
 }

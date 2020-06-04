@@ -51,11 +51,7 @@ public class Background extends GameObject {
         params2.leftMargin = this.x2;
         params2.topMargin = this.y-height;
         this.imageView2.setLayoutParams(params2);
-//        Rect bound = new Rect(this.x,this.y-this.graphic.getHeight(),this.x+this.graphic.getWidth(),this.y);
-//        canvas.drawBitmap(this.graphic,null, bound, paint);
-//
-//        Rect bound2 = new Rect(this.x2,this.y-this.graphic.getHeight(),this.x2+this.graphic.getWidth(),this.y);
-//        canvas.drawBitmap(this.graphic,null, bound2, paint);
+
     }
 
     @Override
