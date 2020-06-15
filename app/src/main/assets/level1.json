@@ -8,110 +8,20 @@
     {
       "orientation":"TOP",
       "type": 1,
-      "spawnTime": 3,
+      "spawnTime": 5,
       "height": 800,
-      "width": 200,
-      "speed": 1
-    },
-    {
-      "orientation":"BOTTOM",
-      "type": 1,
-      "spawnTime": 3,
-      "height": 500,
-      "width": 200,
-      "speed": 1
-    },
-    {
-      "orientation":"TOP",
-      "type": 1,
-      "spawnTime": 5,
-      "height": 900,
-      "width": 100,
+      "width": 800,
       "speed": 1
     },
     {
       "orientation":"BOTTOM",
       "type": 1,
       "spawnTime": 5,
-      "height": 900,
-      "width": 200,
-      "speed": 1
-    },{
-      "orientation":"TOP",
-      "type": 1,
-      "spawnTime": 7,
       "height": 500,
-      "width": 300,
-      "speed": 1
-    },
-    {
-      "orientation":"BOTTOM",
-      "type": 1,
-      "spawnTime": 7,
-      "height": 900,
-      "width": 200,
-      "speed": 1
-    },{
-      "orientation":"TOP",
-      "type": 1,
-      "spawnTime": 9,
-      "height": 500,
-      "width": 300,
-      "speed": 1
-    },
-    {
-      "orientation":"BOTTOM",
-      "type": 1,
-      "spawnTime": 9,
-      "height": 900,
-      "width": 200,
-      "speed": 1
-    },{
-      "orientation":"TOP",
-      "type": 1,
-      "spawnTime": 11,
-      "height": 500,
-      "width": 300,
-      "speed": 1
-    },
-    {
-      "orientation":"BOTTOM",
-      "type": 1,
-      "spawnTime": 11,
-      "height": 900,
-      "width": 200,
-      "speed": 1
-    },{
-      "orientation":"TOP",
-      "type": 1,
-      "spawnTime": 13,
-      "height": 500,
-      "width": 300,
-      "speed": 1
-    },
-    {
-      "orientation":"BOTTOM",
-      "type": 1,
-      "spawnTime": 13,
-      "height": 900,
-      "width": 200,
-      "speed": 1
-    },{
-      "orientation":"TOP",
-      "type": 1,
-      "spawnTime": 14,
-      "height": 500,
-      "width": 300,
-      "speed": 1
-    },
-    {
-      "orientation":"BOTTOM",
-      "type": 1,
-      "spawnTime": 14,
-      "height": 900,
-      "width": 200,
+      "width": 500,
       "speed": 1
     }
+
   ],
   "coins": [
     {

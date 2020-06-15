@@ -1,7 +1,9 @@
 package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,12 +79,17 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
             this.rectangle = new Rect(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-this.height, Constants.SCREEN_WIDTH+this.width, Constants.SCREEN_HEIGHT);
         }
 
+
+        Bitmap bitmap = ((BitmapDrawable) graphic).getBitmap();
+        Drawable d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, this.width, this.height, true));
+
         this.visible = false;
         this.imageView = new ImageView(context);
         this.imageView.setVisibility(View.VISIBLE);
-        this.imageView.setImageDrawable(graphic);
-        container.addView(this.imageView);
+        this.imageView.setImageDrawable(d);
 
+        this.imageView.setAdjustViewBounds(true);
+        container.addView(this.imageView);
     }
 
 
@@ -91,6 +98,7 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
             this.imageView.setVisibility(View.GONE);
             return;
         }
+
         this.imageView.setVisibility(View.VISIBLE);
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.imageView.getLayoutParams();
         params.width = this.width;
@@ -98,7 +106,6 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         params.leftMargin = this.rectangle.left;
         params.topMargin = this.rectangle.top;
         this.imageView.setLayoutParams(params);
-
     }
 
     @Override
@@ -177,8 +184,5 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         return imageView;
     }
 
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
 
 }
