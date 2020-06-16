@@ -27,7 +27,8 @@ public class GamePanel extends Activity {
     private Context context;
     private ScheduledExecutorService executor;
     private long startingTime;
-    private double elapsedSeconds; //since start
+    private long elapsedTime; //since start in ms
+
     private boolean gameOver = false;
 
     public static GamePanel getInstance() {
@@ -116,9 +117,9 @@ public class GamePanel extends Activity {
     }
 
     public void update() {
-        this.elapsedSeconds = (System.currentTimeMillis() - this.startingTime) / 1000;
+        this.elapsedTime = System.currentTimeMillis() - this.startingTime;
         if(!this.gameOver){
-            this.currentLevel.update(this.elapsedSeconds);
+            this.currentLevel.update((float) this.elapsedTime/1000);
         }
     }
 

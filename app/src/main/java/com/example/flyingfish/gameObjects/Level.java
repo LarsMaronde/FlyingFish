@@ -37,13 +37,13 @@ public class Level {
     public Level() {/*emty*/}
 
 
-    public void update(double elapsedSeconds) {
+    public void update(float elapsedTime) {
         this.backgroundManger.updateBackgrounds();
         this.playerFish.update();
         this.gameOverPanel.update();
 
-        this.updateObstacles(elapsedSeconds);
-        this.updateCoins(elapsedSeconds);
+        this.updateObstacles(elapsedTime);
+        this.updateCoins(elapsedTime);
 
         this.checkIfLevelWon();
     }
@@ -57,11 +57,11 @@ public class Level {
         }
     }
 
-    private void updateCoins(double elapsedSeconds) {
+    private void updateCoins(float elapsedTime) {
         Iterator<Coin> it = coins.iterator();
         while (it.hasNext()) {
             Coin co = it.next();
-            if (co.getSpawnTime() <= elapsedSeconds) {
+            if (co.getSpawnTime() <= elapsedTime) {
                 co.setVisible(true);
                 co.update();
                 if (co.getX() + co.getWidth() / 2 <= 0) { //if rectangle is out of the screen
@@ -77,11 +77,11 @@ public class Level {
         }
     }
 
-    private void updateObstacles(double elapsedSeconds) {
+    private void updateObstacles(float elapsedTime) {
         Iterator<Obstacle> it = obstacles.iterator();
         while (it.hasNext()) {
             Obstacle ob = it.next();
-            if (ob.getSpawnTime() <= elapsedSeconds) {
+            if (ob.getSpawnTime() <= elapsedTime) {
                 ob.setVisible(true);
                 ob.update();
                 if (ob.getRectangle().right <= 0) { //if rectangle is out of the screen
