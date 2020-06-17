@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.R;
@@ -39,6 +38,7 @@ public class Fish extends GameObject implements CircleHitbox {
         container.addView(this.imageView);
         this.width = graphic1.getIntrinsicWidth() * 2;
         this.rectangle = new Rect(0, 0, (int) this.width, graphic1.getIntrinsicHeight() * 2);
+        update();
     }
 
     @Override

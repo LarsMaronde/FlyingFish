@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.flyingfish.activities.MainActivity;
 import com.example.flyingfish.gameObjects.Fish;
 import com.example.flyingfish.gameObjects.Level;
@@ -21,15 +20,14 @@ import java.util.concurrent.TimeUnit;
 public class GamePanel extends Activity {
 
     private static GamePanel instance;
-
     private Level currentLevel;
     private ViewGroup container;
     private Context context;
     private ScheduledExecutorService executor;
     private long startingTime;
     private long elapsedTime; //since start in ms
-
-    private boolean gameOver = false;
+    private enum GameState {GAME_OVER, FROZEN, RUNNING};
+    private GameState state = GameState.FROZEN;
 
     public static GamePanel getInstance() {
         return instance;
@@ -45,6 +43,7 @@ public class GamePanel extends Activity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     currentLevel.getPlayerFish().swimUp();
                     currentLevel.getPlayerFish().setLook2();
+                    startLevel();
                     return true;
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -58,14 +57,12 @@ public class GamePanel extends Activity {
         this.loadLevel(container.getContext(), 1);
         //place the player in the middle of the level
         this.currentLevel.setPlayerFish(new Fish(
-                Constants.SCREEN_WIDTH / 5,
-                Constants.SCREEN_HEIGHT / 2,
+                Constants.SCREEN_WIDTH / 4 ,
+                Constants.SCREEN_HEIGHT / 3,
                 this.currentLevel.getGravity(),
                 this.currentLevel.getLift(),
                 this.currentLevel.getVelocityCap(),
                 container));
-
-
         executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(startMainLoop, 0, 5, TimeUnit.MILLISECONDS);
         this.startingTime = System.currentTimeMillis();
@@ -77,7 +74,7 @@ public class GamePanel extends Activity {
         ((Activity)context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!gameOver) {
+                if (state == GameState.RUNNING) {
                     update();
                 }
                 draw();
@@ -118,24 +115,26 @@ public class GamePanel extends Activity {
 
     public void update() {
         this.elapsedTime = System.currentTimeMillis() - this.startingTime;
-        if(!this.gameOver){
+        if(state == GameState.RUNNING){
             this.currentLevel.update((float) this.elapsedTime/1000);
         }
     }
 
+    public void startLevel(){
+        state = GameState.RUNNING;
+    }
+
     public void draw() {
-        if(!this.gameOver){
+        if(state != GameState.GAME_OVER){
             this.currentLevel.draw();
         }
     }
 
     public void gameOver() {
-        this.gameOver = true;
+        state = GameState.GAME_OVER;
         currentLevel.gameOver();
     }
-
     public void stopRunning() {
         executor.shutdown();
     }
-
 }

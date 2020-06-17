@@ -2,13 +2,14 @@ package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GameOverPanel;
+import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -50,7 +51,9 @@ public class Level {
 
     private void checkIfLevelWon() {
         if(this.obstacles.size() == 0) {
-            System.out.println("won level");
+            // System.out.println("won level");
+            gameOver();
+            GamePanel.getInstance().gameOver();
             //show coins screen
             //save progress in database
             //navigate to start screen
@@ -89,9 +92,9 @@ public class Level {
                     it.remove();
                     continue;
                 }
-                if (ob.collides(this.playerFish)) {
-                    this.playerFish.die();
-                }
+//                if (ob.collides(this.playerFish)) {
+//                    this.playerFish.die();
+//                }
             }
         }
     }

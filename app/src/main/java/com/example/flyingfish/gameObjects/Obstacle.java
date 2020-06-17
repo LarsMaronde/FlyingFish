@@ -79,7 +79,6 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
             this.rectangle = new Rect(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-this.height, Constants.SCREEN_WIDTH+this.width, Constants.SCREEN_HEIGHT);
         }
 
-
         Bitmap bitmap = ((BitmapDrawable) graphic).getBitmap();
         Drawable d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, this.width, this.height, true));
 

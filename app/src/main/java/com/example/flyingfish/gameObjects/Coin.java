@@ -43,8 +43,8 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
     public boolean collides(GameObject obj) {
         if(obj != null) {
             if(obj instanceof CircleHitbox) {
-                int x2 = ((CircleHitbox) obj).getX();
-                int y2 = ((CircleHitbox) obj).getY();
+                double x2 = ((CircleHitbox) obj).getX();
+                double y2 = ((CircleHitbox) obj).getY();
                 double dist = Math.sqrt(Math.pow(x2-this.x,2) + Math.pow(y2-this.y,2));
 
                 return dist < (this.width/2 + ((CircleHitbox) obj).getWidth()/2);
