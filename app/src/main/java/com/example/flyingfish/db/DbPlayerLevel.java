@@ -11,10 +11,25 @@ import androidx.annotation.Nullable;
 
 public class DbPlayerLevel extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "PlayerLevels.db";
-    public static final String TABLE_NAME = "playerLevels_table";
+    public static final String TABLE_NAME = "PlayerLevels_table";
     public static final String COL_1 = "LEVEL_NUMBER";
     public static final String COL_2 = "PLAYER_ID";
     public static final String COL_3 = "COLLECTED_COINS";
+
+    public static final String TABLE_PLAYER = "Player_table";
+    public static final String COLP_1 = "PLAYER_ID";
+    public static final String COLP_2 = "USER_NAME";
+    public static final String COLP_3 = "CURRENT_AMOUNT_COINS";
+
+    public static final String TABLE_LEVEL = "Level_table";
+    public static final String COLL_1 = "LEVEL_NUMBER";
+    public static final String COLL_2 = "MAX_COIN_AMOUNT";
+
+    public static final String TABLE_ITEMS = "Items_table";
+    public static final String COLI_1 = "ITEM_ID";
+    public static final String COLI_2 = "PLAYER_ID";
+    public static final String COLI_3 = "PURCHASED";
+
 
     public DbPlayerLevel(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -22,7 +37,10 @@ public class DbPlayerLevel extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + " (LEVEL_NUMBER INT,  PLAYER_ID INT, COLLECTED_COINS INT)");
+        db.execSQL("create table " + TABLE_NAME + " (LEVEL_NUMBER INT PRIMARY KEY AUTOINCREMENT NOT NULL,  PLAYER_ID INT, COLLECTED_COINS INT)");
+        db.execSQL("create table " + TABLE_PLAYER + " (PLAYER_ID PRIMARY KEY AUTOINCREMENT NOT NULL,  USER_NAME STRING, CURRENT_AMOUNT_COINS INT)");
+        db.execSQL("create table " + TABLE_LEVEL + " (LEVEL_NUMBER INT, MAX_COIN_AMOUNT INT)");
+        db.execSQL("create table " + TABLE_ITEMS + " (ITEM_ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,  PLAYER_ID INT, PURCHASED String)");
     }
 
     @Override
@@ -31,7 +49,7 @@ public class DbPlayerLevel extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(int levelNUmber, int playerId, int coins){
+    public boolean insertPlayerLevelesData(int levelNUmber, int playerId, int coins){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, levelNUmber);
@@ -58,6 +76,66 @@ public class DbPlayerLevel extends SQLiteOpenHelper {
             cur.close();
         }
         return level;
+    }
+
+    public boolean insertPlayerLevelesData(String userName, int currentAmountCoins){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLP_1, userName);
+        contentValues.put(COLP_2, currentAmountCoins);
+        long result = db.insert(TABLE_PLAYER, null, contentValues);
+        if(result == -1){
+            return false;
+        }
+        else{
+            db.close();
+            return true;
+        }
+    }
+
+    public boolean insertLeveleData(String levelNumber, int maxAmountCoins){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLL_1, levelNumber);
+        contentValues.put(COLL_2, maxAmountCoins);
+        long result = db.insert(TABLE_LEVEL, null, contentValues);
+        if(result == -1){
+            return false;
+        }
+        else{
+            db.close();
+            return true;
+        }
+    }
+
+    public boolean insertPlayerData(String username, int currentAmountCoins){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLL_1, username);
+        contentValues.put(COLL_2, currentAmountCoins);
+        long result = db.insert(TABLE_LEVEL, null, contentValues);
+        if(result == -1){
+            return false;
+        }
+        else{
+            db.close();
+            return true;
+        }
+    }
+
+    public boolean insertItemsData(String playerId, int purchased){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLL_1, playerId);
+        contentValues.put(COLL_2, purchased);
+        long result = db.insert(TABLE_ITEMS, null, contentValues);
+        if(result == -1){
+            return false;
+        }
+        else{
+            db.close();
+            return true;
+        }
     }
 
 }

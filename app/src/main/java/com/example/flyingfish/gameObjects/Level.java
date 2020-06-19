@@ -2,20 +2,15 @@ package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GameOverPanel;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.activities.LevelMenueActivity;
-import com.example.flyingfish.activities.MainActivity;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -61,7 +56,7 @@ public class Level {
             // System.out.println("won level");
             gameOver();
             //save progress in database
-            LevelMenueActivity.getInstance().getPlayerDB().insertData(levelCount, 1, collectedCoins);
+            LevelMenueActivity.getInstance().getPlayerDB().insertPlayerLevelesData(levelCount, 1, collectedCoins);
         }
     }
 
@@ -77,10 +72,10 @@ public class Level {
                     it.remove();
                     continue;
                 }
-//                if (co.collides(this.playerFish)) {
-////                    this.collectedCoins++;
-////                    it.remove();
-////                }
+                if (co.collides(this.playerFish)) {
+                    this.collectedCoins++;
+                    it.remove();
+                }
             }
         }
     }
@@ -97,9 +92,9 @@ public class Level {
                     it.remove();
                     continue;
                 }
-//                if (ob.collides(this.playerFish)) {
-//                    this.playerFish.die();
-//                }
+                if (ob.collides(this.playerFish)) {
+                    this.playerFish.die();
+                }
             }
         }
     }
