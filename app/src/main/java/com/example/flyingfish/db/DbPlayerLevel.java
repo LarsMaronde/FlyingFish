@@ -1,4 +1,4 @@
-package com.example.flyingfish;
+package com.example.flyingfish.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -43,7 +43,10 @@ public class DbPlayerLevel extends SQLiteOpenHelper {
         if(result == -1){
             return false;
         }
-        else return true;
+        else{
+            db.close();
+            return true;
+        }
     }
 
     public int getMaxLevelNumber() {
@@ -51,13 +54,12 @@ public class DbPlayerLevel extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> array_list = new ArrayList<String>();
         Cursor cur = db.query(TABLE_NAME, new String [] {"MAX(LEVEL_NUMBER)"}, null, null, null, null, null);
-        Log.d("TEST765", "level765: ");
         if (cur != null){
             cur.moveToFirst();
             level = cur.getInt(0);
+            cur.close();
         }
         else return 0;
-        Log.d("SIZE", "hallo " + level);
         return level;
     }
 

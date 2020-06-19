@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GameOverPanel;
 import com.example.flyingfish.GamePanel;
+import com.example.flyingfish.activities.LevelMenueActivity;
 import com.example.flyingfish.activities.MainActivity;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -60,11 +61,11 @@ public class Level {
             // System.out.println("won level");
             gameOver();
             //save progress in database
-            boolean isInserted = MainActivity.getInstance().getPlayerDB().insertData(levelCount, 1, collectedCoins);
+            boolean isInserted = LevelMenueActivity.getInstance().getPlayerDB().insertData(levelCount, 1, collectedCoins);
             if (isInserted == true){
                 Toast.makeText(context, "Data inserted", Toast.LENGTH_LONG).show();
             }else Toast.makeText(context, "Data is not inserted", Toast.LENGTH_LONG).show();
-            int test = MainActivity.getInstance().getPlayerDB().getMaxLevelNumber();
+            int test = LevelMenueActivity.getInstance().getPlayerDB().getMaxLevelNumber();
             Log.d("TEST", "test " + test);
         }
     }
@@ -138,7 +139,6 @@ public class Level {
         this.gameOverPanel.draw();
         score.draw();
         score.setText("" + collectedCoins);
-
     }
 
     private void setCoinsCounter() {

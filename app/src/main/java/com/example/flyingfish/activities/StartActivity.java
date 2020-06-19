@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flyingfish.R;
+import com.example.flyingfish.db.DbPlayerLevel;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -20,7 +21,6 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         instance = this;
         setContentView(R.layout.activity_start);
-
     }
 
     public void levelMenue(View v){

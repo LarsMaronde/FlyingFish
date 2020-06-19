@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 
 import com.example.flyingfish.activities.MainActivity;
 import com.example.flyingfish.activities.StartActivity;
+import com.example.flyingfish.db.DbPlayerLevel;
 import com.example.flyingfish.gameObjects.ImageGameObject;
 
 public class GameOverPanel {
@@ -41,9 +42,7 @@ public class GameOverPanel {
         });
 
         this.setVisible(false);
-
     }
-
 
     public void update() {
         this.gameOverImage.update();

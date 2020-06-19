@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import com.example.flyingfish.Constants;
-import com.example.flyingfish.DbPlayerLevel;
+import com.example.flyingfish.db.DbPlayerLevel;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.R;
 
@@ -17,9 +16,12 @@ public class MainActivity extends Activity {
     private int level;
     private GamePanel gm;
     private static MainActivity instance;
-    protected static DbPlayerLevel dbPlayerLevel;
+
 
     public static MainActivity getInstance() {
+        if(instance == null){
+            throw new Error("main activity instance null");
+        }
         return instance;
     }
 
@@ -27,8 +29,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(instance != null){
+            throw new Error("singleton main.activity instantiated twice");
+        }
         instance = this;
-        dbPlayerLevel = new DbPlayerLevel(this);
         setContentView(R.layout.activity_main);
 
         //store the screen size in the Constants class
@@ -39,7 +43,6 @@ public class MainActivity extends Activity {
 
         Intent intent = getIntent();
         level = intent.getIntExtra(LevelMenueActivity.LEVEL_MESSAGE, 0);
-
         gm = new GamePanel((ViewGroup) findViewById(R.id.container),this, level);
     }
 
@@ -49,9 +52,5 @@ public class MainActivity extends Activity {
         Intent intent = getIntent();
         level = intent.getIntExtra(LevelMenueActivity.LEVEL_MESSAGE, 0);
         gm = new GamePanel((ViewGroup) findViewById(R.id.container),this, level);
-    }
-
-    public DbPlayerLevel getPlayerDB() {
-        return this.dbPlayerLevel;
     }
 }
