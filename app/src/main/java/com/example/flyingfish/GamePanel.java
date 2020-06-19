@@ -2,11 +2,11 @@ package com.example.flyingfish;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.flyingfish.activities.MainActivity;
-import com.example.flyingfish.gameObjects.Fish;
 import com.example.flyingfish.gameObjects.Level;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayOutputStream;
@@ -28,6 +28,7 @@ public class GamePanel extends Activity {
     private long elapsedTime; //since start in ms
     private enum GameState {GAME_OVER, FROZEN, RUNNING};
     private GameState state = GameState.FROZEN;
+    private int level;
 
     public static GamePanel getInstance() {
         return instance;
@@ -37,32 +38,33 @@ public class GamePanel extends Activity {
         context = container.getContext();
         this.container = container;
         instance = this;
+        this.level = 2;
         container.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    currentLevel.getPlayerFish().swimUp();
-                    currentLevel.getPlayerFish().setLook2();
+//                    currentLevel.getPlayerFish().swimUp();
+//                    currentLevel.getPlayerFish().setLook2();
                     startLevel();
                     return true;
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    currentLevel.getPlayerFish().setLook1();
+//                    currentLevel.getPlayerFish().setLook1();
                     return true;
                 }
                 return false;
             }
         });
 
-        this.loadLevel(container.getContext(), 1);
+        this.loadLevel(container.getContext(), level);
         //place the player in the middle of the level
-        this.currentLevel.setPlayerFish(new Fish(
-                Constants.SCREEN_WIDTH / 4 ,
-                Constants.SCREEN_HEIGHT / 3,
-                this.currentLevel.getGravity(),
-                this.currentLevel.getLift(),
-                this.currentLevel.getVelocityCap(),
-                container));
+//        this.currentLevel.setPlayerFish(new Fish(
+//                Constants.SCREEN_WIDTH / 4 ,
+//                Constants.SCREEN_HEIGHT / 3,
+//                this.currentLevel.getGravity(),
+//                this.currentLevel.getLift(),
+//                this.currentLevel.getVelocityCap(),
+//                container));
         executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(startMainLoop, 0, 5, TimeUnit.MILLISECONDS);
         this.startingTime = System.currentTimeMillis();
@@ -108,7 +110,6 @@ public class GamePanel extends Activity {
             outputStream.close();
             inputStream.close();
         } catch (IOException e) {
-
         }
         return outputStream.toString();
     }
@@ -136,5 +137,9 @@ public class GamePanel extends Activity {
     }
     public void stopRunning() {
         executor.shutdown();
+    }
+
+    public int getLevel(){
+        return level;
     }
 }

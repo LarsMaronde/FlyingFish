@@ -12,10 +12,10 @@ import com.example.flyingfish.gameObjects.ImageGameObject;
 public class GameOverPanel {
 
     ImageGameObject gameOverImage, retryImage, homeImage;
+    DbPlayerLevel myDb;
 
 
     public GameOverPanel(ViewGroup container) {
-
         gameOverImage = new ImageGameObject((FrameLayout) container, container.getResources().getDrawable(R.drawable.gameover), 800);
         gameOverImage.setCenteredPosition(300);
 

@@ -3,7 +3,6 @@ package com.example.flyingfish.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flyingfish.R;
@@ -23,6 +22,7 @@ public class LevelMenueActivity extends AppCompatActivity {
         Intent intent = new Intent(LevelMenueActivity.this, MainActivity.class);
         intent.putExtra(LEVEL_MESSAGE, level);
         startActivity(intent);
+
     }
 
     public int getLevel(View v) {

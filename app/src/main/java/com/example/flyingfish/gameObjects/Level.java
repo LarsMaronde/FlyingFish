@@ -4,19 +4,24 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GameOverPanel;
 import com.example.flyingfish.GamePanel;
+import com.example.flyingfish.activities.MainActivity;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Level {
 
     private BackgroundManger backgroundManger;
-    private Fish playerFish;
+    // private Fish playerFish;
     private TextGameObject score;
     private int number;
     private double gravity;
@@ -27,6 +32,7 @@ public class Level {
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Coin> coins;
     private int collectedCoins;
+    private boolean completed = false;
 
     @JsonIgnore
     private ViewGroup container;
@@ -34,15 +40,15 @@ public class Level {
     private Context context;
 
     private GameOverPanel gameOverPanel;
+    private int levelCount;
 
     public Level() {/*emty*/}
 
 
     public void update(float elapsedTime) {
         this.backgroundManger.updateBackgrounds();
-        this.playerFish.update();
+       // this.playerFish.update();
         this.gameOverPanel.update();
-
         this.updateObstacles(elapsedTime);
         this.updateCoins(elapsedTime);
 
@@ -53,10 +59,13 @@ public class Level {
         if(this.obstacles.size() == 0) {
             // System.out.println("won level");
             gameOver();
-            GamePanel.getInstance().gameOver();
-            //show coins screen
             //save progress in database
-            //navigate to start screen
+            boolean isInserted = MainActivity.getInstance().getPlayerDB().insertData(levelCount, 1, collectedCoins);
+            if (isInserted == true){
+                Toast.makeText(context, "Data inserted", Toast.LENGTH_LONG).show();
+            }else Toast.makeText(context, "Data is not inserted", Toast.LENGTH_LONG).show();
+            int test = MainActivity.getInstance().getPlayerDB().getMaxLevelNumber();
+            Log.d("TEST", "test " + test);
         }
     }
 
@@ -72,10 +81,10 @@ public class Level {
                     it.remove();
                     continue;
                 }
-                if (co.collides(this.playerFish)) {
-                    this.collectedCoins++;
-                    it.remove();
-                }
+//                if (co.collides(this.playerFish)) {
+////                    this.collectedCoins++;
+////                    it.remove();
+////                }
             }
         }
     }
@@ -101,6 +110,7 @@ public class Level {
 
     public void initializeObjects() {
         container.removeAllViews();
+        this.levelCount = GamePanel.getInstance().getLevel();
         this.backgroundManger = new BackgroundManger(this.container, this.globalSpeed);
         for (Obstacle ob : obstacles) {
             ob.initialize(container);
@@ -114,7 +124,6 @@ public class Level {
         setCoinsCounter();
 
         this.gameOverPanel = new GameOverPanel(this.container);
-
     }
 
     public void draw() {
@@ -125,7 +134,7 @@ public class Level {
         for (Coin co : coins) {
             co.draw();
         }
-        this.playerFish.draw();
+     //   this.playerFish.draw();
         this.gameOverPanel.draw();
         score.draw();
         score.setText("" + collectedCoins);
@@ -140,6 +149,7 @@ public class Level {
     }
 
     public void gameOver() {
+        this.setCompleted(true);
         this.gameOverPanel.setVisible(true);
     }
 
@@ -155,13 +165,13 @@ public class Level {
         this.backgroundManger = backgroundManger;
     }
 
-    public Fish getPlayerFish() {
-        return playerFish;
-    }
-
-    public void setPlayerFish(Fish playerFish) {
-        this.playerFish = playerFish;
-    }
+//    public Fish getPlayerFish() {
+//        return playerFish;
+//    }
+//
+//    public void setPlayerFish(Fish playerFish) {
+//        this.playerFish = playerFish;
+//    }
 
     public int getNumber() {
         return number;
@@ -245,5 +255,9 @@ public class Level {
 
     public void setGlobalSpeed(double globalSpeed) {
         this.globalSpeed = globalSpeed;
+    }
+
+    public void setCompleted(boolean value){
+        this.completed = value;
     }
 }

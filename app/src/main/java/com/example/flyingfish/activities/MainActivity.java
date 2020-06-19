@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.example.flyingfish.Constants;
+import com.example.flyingfish.DbPlayerLevel;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.R;
 
@@ -15,6 +17,7 @@ public class MainActivity extends Activity {
     private int level;
     private GamePanel gm;
     private static MainActivity instance;
+    protected static DbPlayerLevel dbPlayerLevel;
 
     public static MainActivity getInstance() {
         return instance;
@@ -25,6 +28,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
+        dbPlayerLevel = new DbPlayerLevel(this);
         setContentView(R.layout.activity_main);
 
         //store the screen size in the Constants class
@@ -47,5 +51,7 @@ public class MainActivity extends Activity {
         gm = new GamePanel((ViewGroup) findViewById(R.id.container),this, level);
     }
 
-
+    public DbPlayerLevel getPlayerDB() {
+        return this.dbPlayerLevel;
+    }
 }
