@@ -2,14 +2,12 @@ package com.example.flyingfish.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.flyingfish.R;
 import com.example.flyingfish.db.DbPlayerLevel;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +16,8 @@ public class LevelMenueActivity extends AppCompatActivity {
     public static final String LEVEL_MESSAGE = "com.exampleflyingfish.MESSAGE";
     private int level;
     protected static DbPlayerLevel dbPlayerLevel;
-    private int levelNumber;
-    private ArrayList buttons =new ArrayList<Button>();
+    private int maxUnlockedLevelNumber;
+    private ArrayList buttons = new ArrayList<Button>();
     private Button btl1;
     private Button btl2;
     private Button btl3;
@@ -28,7 +26,8 @@ public class LevelMenueActivity extends AppCompatActivity {
     private Button btl6;
 
     private static LevelMenueActivity instance;
-    public static LevelMenueActivity getInstance () {
+
+    public static LevelMenueActivity getInstance() {
         return instance;
     }
 
@@ -38,7 +37,7 @@ public class LevelMenueActivity extends AppCompatActivity {
         instance = this;
         setContentView(R.layout.activity_levelmenu);
         dbPlayerLevel = new DbPlayerLevel(this);
-        levelNumber = dbPlayerLevel.getMaxLevelNumber();
+        maxUnlockedLevelNumber = dbPlayerLevel.getMaxLevelNumber();
 
         btl1 = (Button) findViewById(R.id.level_1);
         btl2 = (Button) findViewById(R.id.level_2);
@@ -86,11 +85,11 @@ public class LevelMenueActivity extends AppCompatActivity {
         return dbPlayerLevel;
     }
 
-    public void setEnabledlevels(){
-        for (int i=0; i<buttons.size(); i++) {
-            if( i <= levelNumber ){
-              Button b = (Button) buttons.get(i);
-              b.setEnabled(true);
+    public void setEnabledlevels() {
+        for (int i = 0; i < buttons.size(); i++) {
+            if (i <= maxUnlockedLevelNumber) {
+                Button b = (Button) buttons.get(i);
+                b.setEnabled(true);
             }
         }
     }

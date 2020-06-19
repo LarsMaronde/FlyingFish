@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
@@ -59,7 +57,6 @@ public class DbPlayerLevel extends SQLiteOpenHelper {
             level = cur.getInt(0);
             cur.close();
         }
-        else return 0;
         return level;
     }
 

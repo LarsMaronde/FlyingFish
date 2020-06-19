@@ -22,7 +22,7 @@ import java.util.LinkedList;
 public class Level {
 
     private BackgroundManger backgroundManger;
-    // private Fish playerFish;
+    private Fish playerFish;
     private TextGameObject score;
     private int number;
     private double gravity;
@@ -48,7 +48,7 @@ public class Level {
 
     public void update(float elapsedTime) {
         this.backgroundManger.updateBackgrounds();
-       // this.playerFish.update();
+        this.playerFish.update();
         this.gameOverPanel.update();
         this.updateObstacles(elapsedTime);
         this.updateCoins(elapsedTime);
@@ -61,12 +61,7 @@ public class Level {
             // System.out.println("won level");
             gameOver();
             //save progress in database
-            boolean isInserted = LevelMenueActivity.getInstance().getPlayerDB().insertData(levelCount, 1, collectedCoins);
-            if (isInserted == true){
-                Toast.makeText(context, "Data inserted", Toast.LENGTH_LONG).show();
-            }else Toast.makeText(context, "Data is not inserted", Toast.LENGTH_LONG).show();
-            int test = LevelMenueActivity.getInstance().getPlayerDB().getMaxLevelNumber();
-            Log.d("TEST", "test " + test);
+            LevelMenueActivity.getInstance().getPlayerDB().insertData(levelCount, 1, collectedCoins);
         }
     }
 
@@ -135,7 +130,7 @@ public class Level {
         for (Coin co : coins) {
             co.draw();
         }
-     //   this.playerFish.draw();
+        this.playerFish.draw();
         this.gameOverPanel.draw();
         score.draw();
         score.setText("" + collectedCoins);
@@ -165,13 +160,13 @@ public class Level {
         this.backgroundManger = backgroundManger;
     }
 
-//    public Fish getPlayerFish() {
-//        return playerFish;
-//    }
-//
-//    public void setPlayerFish(Fish playerFish) {
-//        this.playerFish = playerFish;
-//    }
+    public Fish getPlayerFish() {
+        return playerFish;
+    }
+
+    public void setPlayerFish(Fish playerFish) {
+        this.playerFish = playerFish;
+    }
 
     public int getNumber() {
         return number;
