@@ -1,19 +1,13 @@
 <resources>
     <string name="app_name">FlyingFish</string>
     <string name="beginner">Beginner</string>
-    <string name="levelmenue">Level Menu</string>
-    <string name="leaderboard">Leaderboard</string>
-    <string name="shop">Shop</string>
-    <string name="quit">quit</string>
+    <string name="levelmenue">LEVEL MENU</string>
+    <string name="leaderboard">LEADERBOARD</string>
+    <string name="shop">SHOP</string>
+    <string name="quit">QUIT</string>
     <string name="gameover">Game Over</string>
     <string name="score">Score</string>
     <string name="home">Home</string>
     <string name="retry">Retry</string>
     <string name="leveleselection">Level Selection</string>
-    <string name="level1">Level 1</string>
-    <string name="level2">Level 2</string>
-    <string name="level3">Level 3</string>
-    <string name="level4">Level 4</string>
-    <string name="level5">Level 5</string>
-    <string name="level6">Level 6</string>
 </resources>

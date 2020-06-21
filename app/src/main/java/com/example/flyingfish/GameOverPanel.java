@@ -6,14 +6,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.example.flyingfish.activities.MainActivity;
-import com.example.flyingfish.activities.StartActivity;
-import com.example.flyingfish.db.DbPlayerLevel;
+import com.example.flyingfish.activities.MainMenuActivity;
 import com.example.flyingfish.gameObjects.ImageGameObject;
 
 public class GameOverPanel {
 
     ImageGameObject gameOverImage, retryImage, homeImage;
-    DbPlayerLevel myDb;
 
 
     public GameOverPanel(ViewGroup container) {
@@ -36,7 +34,7 @@ public class GameOverPanel {
         homeImage.getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.getInstance(), StartActivity.class);
+                Intent intent = new Intent(MainActivity.getInstance(), MainMenuActivity.class);
                 MainActivity.getInstance().startActivity(intent);
             }
         });

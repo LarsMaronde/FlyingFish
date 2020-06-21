@@ -18,10 +18,6 @@ public class EndGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_endgame);
 
-        String scoreText = getIntent().getExtras().get("score").toString();
-        score = findViewById(R.id.score);
-        score.setText( "Score: " + score);
-
     }
 
     public void mainActivity(View v){
@@ -30,7 +26,7 @@ public class EndGameActivity extends AppCompatActivity {
     }
 
     public void startGame(){
-        Intent intent = new Intent(EndGameActivity.this, LevelMenueActivity.class);
+        Intent intent = new Intent(EndGameActivity.this, LevelMenuActivity.class);
         startActivity(intent);
     }
 }

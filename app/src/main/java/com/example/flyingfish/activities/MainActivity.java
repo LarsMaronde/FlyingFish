@@ -27,9 +27,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (instance != null) {
-            throw new Error("singleton main.activity instantiated twice");
-        }
+
         instance = this;
         setContentView(R.layout.activity_main);
 
@@ -40,7 +38,7 @@ public class MainActivity extends Activity {
         Constants.SCREEN_WIDTH = dm.widthPixels;
 
         Intent intent = getIntent();
-        level = intent.getIntExtra(LevelMenueActivity.LEVEL_MESSAGE, 0);
+        level = intent.getIntExtra(LevelMenuActivity.LEVEL_MESSAGE, 0);
         gm = new GamePanel((ViewGroup) findViewById(R.id.container), this, level);
     }
 
@@ -48,7 +46,7 @@ public class MainActivity extends Activity {
         gm.stopRunning();
         gm.finish();
         Intent intent = getIntent();
-        level = intent.getIntExtra(LevelMenueActivity.LEVEL_MESSAGE, 0);
+        level = intent.getIntExtra(LevelMenuActivity.LEVEL_MESSAGE, 0);
         gm = new GamePanel((ViewGroup) findViewById(R.id.container), this, level);
     }
 }

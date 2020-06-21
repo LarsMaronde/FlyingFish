@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GameOverPanel;
 import com.example.flyingfish.GamePanel;
-import com.example.flyingfish.activities.LevelMenueActivity;
+import com.example.flyingfish.db.DatabaseManager;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,9 +16,13 @@ import java.util.LinkedList;
 
 public class Level {
 
+    @JsonIgnore
     private BackgroundManger backgroundManger;
+    @JsonIgnore
     private Fish playerFish;
+    @JsonIgnore
     private TextGameObject score;
+
     private int number;
     private double gravity;
     private double velocity;
@@ -28,15 +32,14 @@ public class Level {
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Coin> coins;
     private int collectedCoins;
-    private boolean completed = false;
 
     @JsonIgnore
     private ViewGroup container;
     @JsonIgnore
     private Context context;
 
+    @JsonIgnore
     private GameOverPanel gameOverPanel;
-    private int levelCount;
 
     public Level() {/*emty*/}
 
@@ -48,16 +51,22 @@ public class Level {
         this.updateObstacles(elapsedTime);
         this.updateCoins(elapsedTime);
 
-        this.checkIfLevelWon();
+        if(checkIfLevelWon()){
+            GamePanel.getInstance().setRunning(false);
+            return;
+        }
     }
 
-    private void checkIfLevelWon() {
+    private boolean checkIfLevelWon() {
         if(this.obstacles.size() == 0) {
-            // System.out.println("won level");
+            DatabaseManager.getInstance().addCoins(Constants.CURRENT_USERNAME, collectedCoins);
+            DatabaseManager.getInstance().updatePlayerLevel(this.number, Constants.CURRENT_USERNAME, collectedCoins);
+            DatabaseManager.getInstance().unlockNextLevel(Constants.CURRENT_USERNAME, this.number);
             gameOver();
-            //save progress in database
-            LevelMenueActivity.getInstance().getPlayerDB().insertPlayerLevelesData(levelCount, 1, collectedCoins);
+            return true;
         }
+        return false;
+
     }
 
     private void updateCoins(float elapsedTime) {
@@ -101,7 +110,6 @@ public class Level {
 
     public void initializeObjects() {
         container.removeAllViews();
-        this.levelCount = GamePanel.getInstance().getLevel();
         this.backgroundManger = new BackgroundManger(this.container, this.globalSpeed);
         for (Obstacle ob : obstacles) {
             ob.initialize(container);
@@ -135,17 +143,12 @@ public class Level {
         this.score.setPosition(Constants.SCREEN_WIDTH / 2, 120);
         this.score.setTextColor(Color.rgb(255, 197, 57));
         this.score.setTextSize(40);
-        score.setCentered(true);
     }
 
     public void gameOver() {
-        this.setCompleted(true);
         this.gameOverPanel.setVisible(true);
     }
 
-    public int getCollectedCoins() {
-        return this.collectedCoins;
-    }
 
     public BackgroundManger getBackgroundManger() {
         return backgroundManger;
@@ -161,6 +164,14 @@ public class Level {
 
     public void setPlayerFish(Fish playerFish) {
         this.playerFish = playerFish;
+    }
+
+    public TextGameObject getScore() {
+        return score;
+    }
+
+    public void setScore(TextGameObject score) {
+        this.score = score;
     }
 
     public int getNumber() {
@@ -187,6 +198,22 @@ public class Level {
         this.velocity = velocity;
     }
 
+    public double getVelocityCap() {
+        return velocityCap;
+    }
+
+    public void setVelocityCap(double velocityCap) {
+        this.velocityCap = velocityCap;
+    }
+
+    public double getGlobalSpeed() {
+        return globalSpeed;
+    }
+
+    public void setGlobalSpeed(double globalSpeed) {
+        this.globalSpeed = globalSpeed;
+    }
+
     public double getLift() {
         return lift;
     }
@@ -211,6 +238,10 @@ public class Level {
         this.coins = coins;
     }
 
+    public int getCollectedCoins() {
+        return collectedCoins;
+    }
+
     public void setCollectedCoins(int collectedCoins) {
         this.collectedCoins = collectedCoins;
     }
@@ -231,23 +262,11 @@ public class Level {
         this.context = context;
     }
 
-    public double getVelocityCap() {
-        return velocityCap;
+    public GameOverPanel getGameOverPanel() {
+        return gameOverPanel;
     }
 
-    public void setVelocityCap(double velocityCap) {
-        this.velocityCap = velocityCap;
-    }
-
-    public double getGlobalSpeed() {
-        return globalSpeed;
-    }
-
-    public void setGlobalSpeed(double globalSpeed) {
-        this.globalSpeed = globalSpeed;
-    }
-
-    public void setCompleted(boolean value){
-        this.completed = value;
+    public void setGameOverPanel(GameOverPanel gameOverPanel) {
+        this.gameOverPanel = gameOverPanel;
     }
 }

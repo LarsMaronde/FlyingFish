@@ -11,7 +11,6 @@ public class TextGameObject extends GameObject {
     private TextView text;
     private double x;
     private double y;
-    private boolean centered = false;
 
     public TextGameObject(ViewGroup container) {
         Context context = container.getContext();
@@ -48,10 +47,6 @@ public class TextGameObject extends GameObject {
 
     public void setBackgroundColor(int color) {
         this.text.setBackgroundColor(color);
-    }
-
-    public void setCentered(boolean centered) {
-        this.centered = centered;
     }
 
     public void setTextColor(int color) {

@@ -7,12 +7,11 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flyingfish.R;
-import com.example.flyingfish.db.DbPlayerLevel;
 
-public class StartActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity {
 
-    private static StartActivity instance;
-    public static StartActivity getInstance () {
+    private static MainMenuActivity instance;
+    public static MainMenuActivity getInstance () {
         return instance;
     }
 
@@ -20,31 +19,32 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_mainmenu);
     }
 
     public void levelMenue(View v){
-        Intent intent = new Intent(StartActivity.this, LevelMenueActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, LevelMenuActivity.class));
     }
 
     public void leaderboard(View v){
-        Intent intent = new Intent(StartActivity.this, LeaderboardActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, LeaderboardActivity.class));
     }
 
     public void startAcitivity(){
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_mainmenu);
     }
 
     public void shop(View v){
-        Intent intent = new Intent(StartActivity.this, ShopActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, ShopActivity.class));
     }
 
     public void quit(View v){
         finish();
         System.exit(0);
+    }
+
+    public void backToLogin(View v) {
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
 }

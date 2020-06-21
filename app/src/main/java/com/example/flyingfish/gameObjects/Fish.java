@@ -1,7 +1,9 @@
 package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -9,6 +11,8 @@ import android.widget.ImageView;
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.R;
+import com.example.flyingfish.db.DatabaseManager;
+import com.example.flyingfish.gameObjects.interfaces.CircleHitbox;
 
 
 public class Fish extends GameObject implements CircleHitbox {
@@ -24,6 +28,8 @@ public class Fish extends GameObject implements CircleHitbox {
     private enum State {ALIVE, ROTTEN, DEAD}
     private State state = State.ALIVE;
 
+    private Drawable look1, look2;
+
     public Fish(int x, int y, double gravity, double lift, double velocityCap, ViewGroup container) {
         this.x = x;
         this.y = y;
@@ -31,14 +37,29 @@ public class Fish extends GameObject implements CircleHitbox {
         this.velocityCap = velocityCap;
         this.gravity = gravity;
         this.lift = lift;
-        Context context = container.getContext();
-        Drawable graphic1 = context.getResources().getDrawable(R.drawable.fish1);
-        this.imageView = new ImageView(context);
-        this.imageView.setImageDrawable(graphic1);
-        container.addView(this.imageView);
-        this.width = graphic1.getIntrinsicWidth() * 2;
-        this.rectangle = new Rect(0, 0, (int) this.width, graphic1.getIntrinsicHeight() * 2);
+
+        setImageOfFish(container);
+
         update();
+    }
+
+    private void setImageOfFish(ViewGroup container) {
+        Context context = container.getContext();
+
+        String skin = DatabaseManager.getInstance().getSelectedFishSkin(Constants.CURRENT_USERNAME).toLowerCase().replace(" ", "_");
+        int resourceId = container.getResources().getIdentifier(skin+"_1", "drawable", context.getPackageName());
+        this.look1 = container.getResources().getDrawable(resourceId);;
+
+        int resourceId2 = container.getResources().getIdentifier(skin+"_2", "drawable", context.getPackageName());
+        this.look2 = container.getResources().getDrawable(resourceId2);
+
+
+        this.imageView = new ImageView(context);
+        this.imageView.setImageDrawable(this.look1);
+        container.addView(this.imageView);
+        this.width = this.look1.getIntrinsicWidth() * 2;
+
+        this.rectangle = new Rect(0, 0, (int) this.width, this.look1.getIntrinsicHeight() * 2);
     }
 
     @Override
@@ -119,11 +140,11 @@ public class Fish extends GameObject implements CircleHitbox {
     }
 
     public void setLook1() {
-        this.imageView.setImageResource(R.drawable.fish1);
+        this.imageView.setImageDrawable(look1);
     }
 
     public void setLook2() {
-        this.imageView.setImageResource(R.drawable.fish3);
+        this.imageView.setImageDrawable(look2);
     }
 
 }

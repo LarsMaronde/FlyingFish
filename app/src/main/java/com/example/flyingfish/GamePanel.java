@@ -2,7 +2,6 @@ package com.example.flyingfish;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +25,10 @@ public class GamePanel extends Activity {
     private Context context;
     private ScheduledExecutorService executor;
     private long startingTime;
-    private long elapsedTime; //since start in ms
-    private enum GameState {GAME_OVER, FROZEN, RUNNING};
-    private GameState state = GameState.FROZEN;
+
+    private boolean running;
+    private boolean firstStart;
+
     private int level;
 
     public static GamePanel getInstance() {
@@ -40,14 +40,20 @@ public class GamePanel extends Activity {
         this.container = container;
         this.container.removeAllViews();
         instance = this;
-        this.level = 2;
+        this.level = level;
+        this.firstStart = true;
+
         container.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!firstStart && !running){
+                    return false;
+                }
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     currentLevel.getPlayerFish().swimUp();
                     currentLevel.getPlayerFish().setLook2();
                     startLevel();
+                    firstStart = false;
                     return true;
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -78,10 +84,10 @@ public class GamePanel extends Activity {
         ((Activity)context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (state == GameState.RUNNING) {
-                    update();
-                }
-                draw();
+            if (running) {
+                update();
+            }
+            draw();
             }
         });
         }
@@ -117,24 +123,22 @@ public class GamePanel extends Activity {
     }
 
     public void update() {
-        this.elapsedTime = System.currentTimeMillis() - this.startingTime;
-        if(state == GameState.RUNNING){
-            this.currentLevel.update((float) this.elapsedTime/1000);
+        long elapsedTime = System.currentTimeMillis() - this.startingTime;
+        if(running){
+            this.currentLevel.update((float) elapsedTime/1000);
         }
     }
 
-    public void startLevel(){
-        state = GameState.RUNNING;
+    public void startLevel() {
+        this.running = true;
     }
 
     public void draw() {
-        if(state != GameState.GAME_OVER){
-            this.currentLevel.draw();
-        }
+        this.currentLevel.draw();
     }
 
     public void gameOver() {
-        state = GameState.GAME_OVER;
+        this.running = false;
         currentLevel.gameOver();
     }
     public void stopRunning() {
@@ -143,5 +147,9 @@ public class GamePanel extends Activity {
 
     public int getLevel(){
         return level;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 }

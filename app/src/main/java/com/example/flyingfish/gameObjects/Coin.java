@@ -9,6 +9,9 @@ import android.widget.ImageView;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.R;
+import com.example.flyingfish.gameObjects.interfaces.CircleHitbox;
+import com.example.flyingfish.gameObjects.interfaces.Interactable;
+import com.example.flyingfish.gameObjects.interfaces.RectHitbox;
 
 
 public class Coin extends GameObject implements Interactable, CircleHitbox {

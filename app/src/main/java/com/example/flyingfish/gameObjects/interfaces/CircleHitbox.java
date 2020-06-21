@@ -1,4 +1,4 @@
-package com.example.flyingfish.gameObjects;
+package com.example.flyingfish.gameObjects.interfaces;
 
 public interface CircleHitbox {
 
