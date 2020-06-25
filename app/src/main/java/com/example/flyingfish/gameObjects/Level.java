@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GameOverPanel;
 import com.example.flyingfish.GamePanel;
+import com.example.flyingfish.LevelOverPanel;
 import com.example.flyingfish.db.DatabaseManager;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,6 +23,8 @@ public class Level {
     private Fish playerFish;
     @JsonIgnore
     private TextGameObject score;
+    @JsonIgnore
+    private TextGameObject score2;
 
     private int number;
     private double gravity;
@@ -38,6 +41,8 @@ public class Level {
     @JsonIgnore
     private Context context;
 
+    @JsonIgnore
+    private LevelOverPanel levelOverPanel;
     @JsonIgnore
     private GameOverPanel gameOverPanel;
 
@@ -62,7 +67,9 @@ public class Level {
             DatabaseManager.getInstance().addCoins(Constants.CURRENT_USERNAME, collectedCoins);
             DatabaseManager.getInstance().updatePlayerLevel(this.number, Constants.CURRENT_USERNAME, collectedCoins);
             DatabaseManager.getInstance().unlockNextLevel(Constants.CURRENT_USERNAME, this.number);
-            gameOver();
+            this.levelOverPanel.setCollectedCoins(this.collectedCoins);
+            this.score.setVisible(false);
+            levelOver();
             return true;
         }
         return false;
@@ -101,9 +108,9 @@ public class Level {
                     it.remove();
                     continue;
                 }
-                if (ob.collides(this.playerFish)) {
-                    this.playerFish.die();
-                }
+//                if (ob.collides(this.playerFish)) {
+//                    this.playerFish.die();
+//                }
             }
         }
     }
@@ -123,6 +130,7 @@ public class Level {
         setCoinsCounter();
 
         this.gameOverPanel = new GameOverPanel(this.container);
+        this.levelOverPanel = new LevelOverPanel(this.container);
     }
 
     public void draw() {
@@ -135,6 +143,7 @@ public class Level {
         }
         this.playerFish.draw();
         this.gameOverPanel.draw();
+        this.levelOverPanel.draw();
         score.draw();
         score.setText("" + collectedCoins);
     }
@@ -147,6 +156,10 @@ public class Level {
 
     public void gameOver() {
         this.gameOverPanel.setVisible(true);
+    }
+
+    public void levelOver() {
+        this.levelOverPanel.setVisible(true);
     }
 
 
@@ -262,11 +275,15 @@ public class Level {
         this.context = context;
     }
 
+    public LevelOverPanel getLevelOverPanel() {
+        return levelOverPanel;
+    }
+
     public GameOverPanel getGameOverPanel() {
         return gameOverPanel;
     }
 
-    public void setGameOverPanel(GameOverPanel gameOverPanel) {
-        this.gameOverPanel = gameOverPanel;
+    public void setGameOverPanel(LevelOverPanel levelOverPanel) {
+        this.levelOverPanel = levelOverPanel;
     }
 }

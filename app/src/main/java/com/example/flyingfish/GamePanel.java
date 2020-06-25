@@ -139,7 +139,9 @@ public class GamePanel extends Activity {
 
     public void gameOver() {
         this.running = false;
+        currentLevel.getGameOverPanel().setCollectedCoins(this.currentLevel.getCollectedCoins());
         currentLevel.gameOver();
+        currentLevel.getScore().setVisible(false);
     }
     public void stopRunning() {
         executor.shutdown();

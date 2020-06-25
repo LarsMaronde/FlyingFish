@@ -59,7 +59,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EndGameActivity">
+        <activity android:name=".activities.EndGameActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
