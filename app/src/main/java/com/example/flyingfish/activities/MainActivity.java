@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.R;
+import com.example.flyingfish.gameObjects.SoundPlayer;
 
 public class MainActivity extends Activity {
 
@@ -30,6 +31,8 @@ public class MainActivity extends Activity {
 
         instance = this;
         setContentView(R.layout.activity_main);
+
+        new SoundPlayer(this);
 
         //store the screen size in the Constants class
         DisplayMetrics dm = new DisplayMetrics();

@@ -129,170 +129,56 @@
   "coins": [
     {
       "value": 1,
-      "y": 1115,
-      "spawnTime": 0.3,
+      "y": 985,
+      "spawnTime": 0,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 1265,
-      "spawnTime": 0.8,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1200,
-      "spawnTime": 1.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1315,
+      "y": 1275,
       "spawnTime": 1.2,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 1065,
-      "spawnTime": 1.1,
+      "y": 965,
+      "spawnTime": 1.8,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 1255,
-      "spawnTime": 1.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 675,
-      "spawnTime": 0.9,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 765,
-      "spawnTime": 1.2,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 555,
-      "spawnTime": 1.5,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 975,
-      "spawnTime": 3.3,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 765,
-      "spawnTime": 2.8,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 955,
+      "y": 1055,
       "spawnTime": 2.0,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 1820,
-      "spawnTime": 2.2,
+      "y": 1165,
+      "spawnTime": 3.3,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 450,
+      "y": 850,
       "spawnTime": 3.8,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 455,
-      "spawnTime": 3.5,
+      "y": 743,
+      "spawnTime": 4.3,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 260,
-      "spawnTime": 4.5,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 258,
-      "spawnTime": 4.7,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 550,
-      "spawnTime": 3.4,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 256,
-      "spawnTime": 3.3,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 650,
-      "spawnTime": 3.8,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 675,
-      "spawnTime": 3.5,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 643,
-      "spawnTime": 3.2,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 677,
-      "spawnTime": 3.3,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 608,
-      "spawnTime": 3.3,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1880,
-      "spawnTime": 6.5,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1580,
-      "spawnTime": 6.7,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1300,
+      "y": 1100,
       "spawnTime": 6.5,
       "speed": 1
     },
     {
       "value": 1,
       "y": 1210,
-      "spawnTime": 7.3,
+      "spawnTime": 7.2,
       "speed": 1
     },
     {
@@ -303,44 +189,14 @@
     },
     {
       "value": 1,
-      "y": 1120,
+      "y": 790,
       "spawnTime": 7,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 620,
-      "spawnTime": 9.8,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 650,
+      "y": 750,
       "spawnTime": 10,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 575,
-      "spawnTime": 10.5,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 665,
-      "spawnTime": 10.3,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 555,
-      "spawnTime": 10.2,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 820,
-      "spawnTime": 10.2,
       "speed": 1
     },
     {
@@ -351,20 +207,38 @@
     },
     {
       "value": 1,
-      "y": 1380,
-      "spawnTime": 10.5,
+      "y": 1180,
+      "spawnTime": 10.2,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 675,
-      "spawnTime": 13.1,
+      "y": 875,
+      "spawnTime": 13.6,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 765,
-      "spawnTime": 13.2,
+      "y": 865,
+      "spawnTime": 13.8,
+      "speed": 1
+    },
+    {
+      "value": 1,
+      "y": 855,
+      "spawnTime": 12.9,
+      "speed": 1
+    },
+    {
+      "value": 1,
+      "y": 975,
+      "spawnTime": 12,
+      "speed": 1
+    },
+    {
+      "value": 1,
+      "y": 955,
+      "spawnTime": 11.0,
       "speed": 1
     },
     {
@@ -381,23 +255,10 @@
     },
     {
       "value": 1,
-      "y": 765,
-      "spawnTime": 12.8,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 955,
-      "spawnTime": 12.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
       "y": 1820,
       "spawnTime": 12.2,
       "speed": 1
     },
-
     {
       "value": 1,
       "y": 1265,
@@ -407,31 +268,13 @@
     {
       "value": 1,
       "y": 955,
-      "spawnTime": 16.9,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1275,
-      "spawnTime": 16,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1065,
-      "spawnTime": 16.8,
+      "spawnTime": 15,
       "speed": 1
     },
     {
       "value": 1,
       "y": 1255,
       "spawnTime": 16.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1420,
-      "spawnTime": 17.2,
       "speed": 1
     },
     {
@@ -443,7 +286,7 @@
     {
       "value": 1,
       "y": 955,
-      "spawnTime": 17.0,
+      "spawnTime": 16.0,
       "speed": 1
     },
     {
@@ -467,20 +310,8 @@
     },
     {
       "value": 1,
-      "y": 620,
-      "spawnTime": 19.2,
-      "speed": 1
-    },
-    {
-      "value": 1,
       "y": 1235,
       "spawnTime": 22.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1420,
-      "spawnTime": 21.7,
       "speed": 1
     },
     {
@@ -497,13 +328,6 @@
     },
     {
       "value": 1,
-      "y": 920,
-      "spawnTime": 17.2,
-      "speed": 1
-    },
-
-    {
-      "value": 1,
       "y": 1035,
       "spawnTime": 24.0,
       "speed": 1
@@ -516,19 +340,13 @@
     },
     {
       "value": 1,
-      "y": 1065,
+      "y": 750,
       "spawnTime": 24.8,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 1275,
-      "spawnTime": 24.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 920,
+      "y": 1065,
       "spawnTime": 25.2,
       "speed": 1
     }

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import com.example.flyingfish.activities.MainActivity;
 import com.example.flyingfish.activities.MainMenuActivity;
 import com.example.flyingfish.gameObjects.ImageGameObject;

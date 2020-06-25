@@ -3,7 +3,6 @@ package com.example.flyingfish.gameObjects;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.ViewGroup;
-
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GameOverPanel;
 import com.example.flyingfish.GamePanel;
@@ -23,8 +22,6 @@ public class Level {
     private Fish playerFish;
     @JsonIgnore
     private TextGameObject score;
-    @JsonIgnore
-    private TextGameObject score2;
 
     private int number;
     private double gravity;
@@ -56,14 +53,14 @@ public class Level {
         this.updateObstacles(elapsedTime);
         this.updateCoins(elapsedTime);
 
-        if(checkIfLevelWon()){
+        if (checkIfLevelWon()) {
             GamePanel.getInstance().setRunning(false);
             return;
         }
     }
 
     private boolean checkIfLevelWon() {
-        if(this.obstacles.size() == 0) {
+        if (this.obstacles.size() == 0) {
             DatabaseManager.getInstance().addCoins(Constants.CURRENT_USERNAME, collectedCoins);
             DatabaseManager.getInstance().updatePlayerLevel(this.number, Constants.CURRENT_USERNAME, collectedCoins);
             DatabaseManager.getInstance().unlockNextLevel(Constants.CURRENT_USERNAME, this.number);
@@ -89,6 +86,8 @@ public class Level {
                     continue;
                 }
                 if (co.collides(this.playerFish)) {
+                    //Sound
+                    SoundPlayer.getInstance().playBell();
                     this.collectedCoins++;
                     it.remove();
                 }
@@ -108,9 +107,9 @@ public class Level {
                     it.remove();
                     continue;
                 }
-//                if (ob.collides(this.playerFish)) {
-//                    this.playerFish.die();
-//                }
+                if (ob.collides(this.playerFish)) {
+                    this.playerFish.die();
+                }
             }
         }
     }
