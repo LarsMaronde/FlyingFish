@@ -104,11 +104,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.execSQL(userQuery, new String[]{"testuser", "ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae", "120"}); //pw = test123
 
 
-        String levelInsertQuery = "INSERT INTO " + l_Levels + "(" + l_levelNumber + "," + l_maxCoinAmount + ") VALUES ( ?, ?)";
-        db.execSQL(levelInsertQuery, new String[]{"1", "42"});
-        db.execSQL(levelInsertQuery, new String[]{"2", "45"});
-        db.execSQL(levelInsertQuery, new String[]{"3", "50"});
-        db.execSQL(levelInsertQuery, new String[]{"4", "60"});
+//        String levelInsertQuery = "INSERT INTO " + l_Levels + "(" + l_levelNumber + "," + l_maxCoinAmount + ") VALUES ( ?, ?)";
+//        db.execSQL(levelInsertQuery, new String[]{"1", "42"});
+//        db.execSQL(levelInsertQuery, new String[]{"2", "45"});
+//        db.execSQL(levelInsertQuery, new String[]{"3", "50"});
+//        db.execSQL(levelInsertQuery, new String[]{"4", "60"});
 
         String itemInsertQuery = "INSERT INTO " + i_Items + "(" + i_itemName + "," + i_price + ") VALUES ( ?, ?)";
         db.execSQL(itemInsertQuery, new String[]{"Standard Fisch", "0"});
@@ -414,7 +414,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         LinkedList<User> users = new LinkedList<User>();
         Cursor cursor = db.rawQuery("SELECT SUM("+ul_collectedCoins+") as "+ul_collectedCoins
                 + " , "+ul_username+" FROM "+ul_UserLevels +
-                " GROUP BY "+ul_username+" ORDER BY "+ul_collectedCoins, null);
+                " GROUP BY "+ul_username+" ORDER BY "+ul_collectedCoins +" DESC", null);
         if(cursor.moveToFirst()){
             do{
                 String username = cursor.getString(cursor.getColumnIndex(ul_username));
@@ -465,5 +465,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         String userItemInsertQuery = "INSERT INTO " + ui_UserItems + "(" + i_itemName + "," + ui_username + "," + ui_equiped + ") VALUES ( ?, ?, ?)";
         db.execSQL(userItemInsertQuery, new String[]{"Standard Fisch", username, "true"});
+    }
+
+    public void insertOrUpdateLevel(int levelNum, int amountCoins) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL( "INSERT OR REPLACE INTO " + l_Levels + "(" + l_levelNumber + " , " + l_maxCoinAmount + ") VALUES ( "+levelNum+", "+amountCoins+")");
     }
 }

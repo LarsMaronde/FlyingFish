@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordField = findViewById(R.id.passwordField);
         String password = passwordField.getText().toString();
 
-        System.out.println(username + "/" + password);
 
         if(!username.isEmpty() || !password.isEmpty()) {
 
