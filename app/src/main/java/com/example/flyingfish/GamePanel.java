@@ -46,14 +46,17 @@ public class GamePanel extends Activity {
         container.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(!firstStart && !running){
+                if(!firstStart && !running) {
                     return false;
                 }
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     currentLevel.getPlayerFish().swimUp();
                     currentLevel.getPlayerFish().setLook2();
                     startLevel();
-                    firstStart = false;
+                    if(firstStart) {
+                        firstStart = false;
+                        startingTime = System.currentTimeMillis();
+                    }
                     return true;
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -123,8 +126,8 @@ public class GamePanel extends Activity {
     }
 
     public void update() {
-        long elapsedTime = System.currentTimeMillis() - this.startingTime;
         if(running){
+            long elapsedTime = System.currentTimeMillis() - this.startingTime;
             this.currentLevel.update((float) elapsedTime/1000);
         }
     }
