@@ -91,19 +91,19 @@
     },
     {
       "value": 1,
-      "y": 955,
+      "y": 855,
       "spawnTime": 2.0,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 1165,
+      "y": 765,
       "spawnTime": 3.3,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 1250,
+      "y": 853,
       "spawnTime": 4.1,
       "speed": 1
     },
@@ -121,7 +121,7 @@
     },
     {
       "value": 1,
-      "y": 1100,
+      "y": 1000,
       "spawnTime": 6.5,
       "speed": 1
     },
@@ -157,13 +157,13 @@
     },
     {
       "value": 1,
-      "y": 1280,
+      "y": 980,
       "spawnTime": 9.5,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 1180,
+      "y": 888,
       "spawnTime": 10.2,
       "speed": 1
     },
@@ -175,7 +175,7 @@
     },
     {
       "value": 1,
-      "y": 1265,
+      "y": 1065,
       "spawnTime": 13.8,
       "speed": 1
     },
