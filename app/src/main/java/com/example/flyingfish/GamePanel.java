@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.example.flyingfish.activities.MainActivity;
 import com.example.flyingfish.gameObjects.Fish;
 import com.example.flyingfish.gameObjects.Level;
+import com.example.flyingfish.gameObjects.SoundPlayer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,7 +26,6 @@ public class GamePanel extends Activity {
     private Context context;
     private ScheduledExecutorService executor;
     private long startingTime;
-
     private boolean running;
     private boolean firstStart;
 
@@ -36,6 +36,7 @@ public class GamePanel extends Activity {
     }
 
     public GamePanel(final ViewGroup container, MainActivity mainActivity, int level) {
+        SoundPlayer.getInstance().playBackground();
         context = container.getContext();
         this.container = container;
         this.container.removeAllViews();

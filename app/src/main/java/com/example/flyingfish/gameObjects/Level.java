@@ -69,7 +69,6 @@ public class Level {
             return true;
         }
         return false;
-
     }
 
     private void updateCoins(float elapsedTime) {
@@ -107,6 +106,9 @@ public class Level {
                     continue;
                 }
                 if (ob.collides(this.playerFish)) {
+                    if(this.playerFish.getState() == Fish.State.ALIVE){
+                        SoundPlayer.getInstance().playCollision();
+                    }
                     this.playerFish.die();
                 }
             }
@@ -153,13 +155,14 @@ public class Level {
     }
 
     public void gameOver() {
+        SoundPlayer.getInstance().playLevelLost();
         this.gameOverPanel.setVisible(true);
     }
 
     public void levelOver() {
+        SoundPlayer.getInstance().playLevelWin();
         this.levelOverPanel.setVisible(true);
     }
-
 
     public BackgroundManger getBackgroundManger() {
         return backgroundManger;

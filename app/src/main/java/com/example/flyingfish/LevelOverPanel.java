@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import com.example.flyingfish.activities.MainActivity;
 import com.example.flyingfish.activities.MainMenuActivity;
 import com.example.flyingfish.gameObjects.ImageGameObject;
+import com.example.flyingfish.gameObjects.SoundPlayer;
 import com.example.flyingfish.gameObjects.TextGameObject;
 
 public class LevelOverPanel {
@@ -31,6 +32,7 @@ public class LevelOverPanel {
         homeImage.getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundPlayer.getInstance().stopBackground();
                 Intent intent = new Intent(MainActivity.getInstance(), MainMenuActivity.class);
                 MainActivity.getInstance().startActivity(intent);
             }
