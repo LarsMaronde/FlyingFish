@@ -63,6 +63,11 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
 
 
     public void initialize(ViewGroup container) {
+        float widthRatio = (float) Constants.SCREEN_WIDTH/Constants.GOAL_WIDTH_RATIO;
+        float heightRatio = (float) Constants.SCREEN_HEIGHT/Constants.GOAL_HEIGHT_RATIO;
+        this.width = (int) (widthRatio * this.width);
+        this.height = (int) (heightRatio * this.height);
+
         Context context = container.getContext();
         Drawable graphic = null;
         if(this.orientation.equals(Orientation.TOP)) {

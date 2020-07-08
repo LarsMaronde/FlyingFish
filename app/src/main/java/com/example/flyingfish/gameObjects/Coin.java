@@ -33,9 +33,17 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
         this.visible = false;
         this.x = Constants.SCREEN_WIDTH+this.width/2;
 
+
+        float yRatio = (float) Constants.SCREEN_HEIGHT/Constants.GOAL_HEIGHT_RATIO;
+        this.y = (int) (this.y*yRatio);
+
         Context context = container.getContext();
         Drawable graphic = context.getResources().getDrawable(R.drawable.coin);
         this.width = 80;
+
+        //dynamic scaling for different sceen sizes
+        this.width = Constants.SCREEN_HEIGHT / 23;
+
         this.imageView = new ImageView(context);
         this.imageView.setImageDrawable(graphic);
         this.imageView.setVisibility(View.GONE);
@@ -46,11 +54,20 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
     public boolean collides(GameObject obj) {
         if(obj != null) {
             if(obj instanceof CircleHitbox) {
+
                 double x2 = ((CircleHitbox) obj).getX();
                 double y2 = ((CircleHitbox) obj).getY();
-                double dist = Math.sqrt(Math.pow(x2-this.x,2) + Math.pow(y2-this.y,2));
 
+                //accurate method but compute intensive
+                double dist = Math.sqrt(Math.pow(x2-this.x,2) + Math.pow(y2-this.y,2));
                 return dist < (this.width/2 + ((CircleHitbox) obj).getWidth()/2);
+
+
+                //works 2x faster but not as accurate
+//                double r = ((CircleHitbox) obj).getWidth()/2;
+//                boolean xinter = this.x > x2-r  && this.x < x2+r;
+//                boolean yinter = this.y < y2+r && this.y > y2-r;
+//                return xinter && yinter;
 
             }else if(obj instanceof RectHitbox) {
                 return false;
@@ -65,8 +82,6 @@ public class Coin extends GameObject implements Interactable, CircleHitbox {
         if(this.visible){
             this.imageView.setVisibility(View.VISIBLE);
             int r = this.width/2;
-//            Rect bound = new Rect(this.x-r, this.y-r,this.x+r, this.y+r);
-//            canvas.drawBitmap(graphic, null, bound, paint);
 
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.imageView.getLayoutParams();
             params.width = this.width;

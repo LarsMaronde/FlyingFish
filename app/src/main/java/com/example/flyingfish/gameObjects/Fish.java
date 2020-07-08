@@ -1,17 +1,14 @@
 package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GamePanel;
-import com.example.flyingfish.R;
 import com.example.flyingfish.db.DatabaseManager;
 import com.example.flyingfish.gameObjects.interfaces.CircleHitbox;
 
@@ -58,9 +55,12 @@ public class Fish extends GameObject implements CircleHitbox {
         this.imageView = new ImageView(context);
         this.imageView.setImageDrawable(this.look1);
         container.addView(this.imageView);
-        this.width = this.look1.getIntrinsicWidth() * 2;
+        this.width = this.look1.getIntrinsicHeight() * 2;
 
-        this.rectangle = new Rect(0, 0, (int) this.width, this.look1.getIntrinsicHeight() * 2);
+        //dynamic scaling for different sceen sizes
+        this.width = (float) (Constants.SCREEN_HEIGHT/10);
+
+        this.rectangle = new Rect(0, 0, (int) this.width, (int) this.width);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class Fish extends GameObject implements CircleHitbox {
         y = (int) (Math.cos(time * 0.005) * 50 + Constants.SCREEN_HEIGHT / 3);
         rectangle.set(x - rectangle.width() / 2, y - rectangle.height() / 2,
                 x + rectangle.width() / 2, y + rectangle.height() / 2);
-        Log.d("TEST", "time"+ y);
+//        Log.d("TEST", "time"+ y);
     }
 
     @Override

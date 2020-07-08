@@ -29,11 +29,12 @@ public class BackgroundManger {
         Drawable bg3 = context.getResources().getDrawable(R.drawable.background2);
         backgrounds.add(new Background(bg3, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-100, globalSpeed, container));
 
+
         Drawable bg4 = context.getResources().getDrawable(R.drawable.frontbottom);
-        backgrounds.add(new Background(bg4, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, globalSpeed, container));
+        backgrounds.add(new Background(bg4, Constants.SCREEN_WIDTH, (int) (Constants.SCREEN_HEIGHT), globalSpeed, container));
 
         Drawable bg5 = context.getResources().getDrawable(R.drawable.fronttop);
-        backgrounds.add(new Background(bg5, Constants.SCREEN_WIDTH, bg5.getIntrinsicHeight() , globalSpeed, container));
+        backgrounds.add(new Background(bg5, Constants.SCREEN_WIDTH, (int) (bg5.getIntrinsicHeight()), globalSpeed, container));
     }
 
     public void updateBackgrounds() {

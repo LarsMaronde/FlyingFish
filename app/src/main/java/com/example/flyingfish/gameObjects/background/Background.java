@@ -34,8 +34,13 @@ public class Background extends GameObject {
 
     @Override
     public void draw() {
-        int width = this.graphic.getIntrinsicWidth();
-        int height = this.graphic.getIntrinsicHeight();
+
+        float widthRatio = (float) Constants.SCREEN_WIDTH/Constants.GOAL_WIDTH_RATIO;
+        float heightRatio = (float) Constants.SCREEN_HEIGHT/Constants.GOAL_HEIGHT_RATIO;
+
+        int width = (int) (this.graphic.getIntrinsicWidth()*widthRatio);
+        int height = (int) (this.graphic.getIntrinsicHeight()*heightRatio);
+
 
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.imageView.getLayoutParams();
         params.width = width;

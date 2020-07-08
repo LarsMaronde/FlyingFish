@@ -12,8 +12,8 @@ import com.example.flyingfish.gameObjects.TextGameObject;
 
 public class GameOverPanel {
 
-    ImageGameObject gameOverImage, retryImage, homeImage;
-    TextGameObject collectedCoins;
+    private ImageGameObject gameOverImage, retryImage, homeImage;
+    private TextGameObject collectedCoins;
 
     public GameOverPanel(ViewGroup container) {
         gameOverImage = new ImageGameObject((FrameLayout) container, container.getResources().getDrawable(R.drawable.gameover), 650);
@@ -29,7 +29,10 @@ public class GameOverPanel {
         collectedCoins.setText("");
         collectedCoins.setTextColor(Color.rgb(255, 197, 57));
         collectedCoins.setTextSize(36);
-        collectedCoins.setPosition(320,620);
+
+        int width = this.collectedCoins.getWidth()/2;
+        System.out.println(width);
+        collectedCoins.setPosition(Constants.SCREEN_WIDTH/2-width,620);
 
         retryImage.getView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,5 +75,7 @@ public class GameOverPanel {
 
     public void setCollectedCoins(int collectedCoins){
         this.collectedCoins.setText("SCORE " + collectedCoins);
+        int width = this.collectedCoins.getWidth()/2;
+        this.collectedCoins.setPosition(Constants.SCREEN_WIDTH/2-width,620);
     }
 }

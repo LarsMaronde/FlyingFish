@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.flyingfish.Constants;
+
 public class TextGameObject extends GameObject {
 
     private TextView text;
@@ -57,4 +59,8 @@ public class TextGameObject extends GameObject {
         this.text.setTextSize(size);
     }
 
+    public int getWidth() {
+        text.measure(0,0);
+        return text.getMeasuredWidth();
+    }
 }
