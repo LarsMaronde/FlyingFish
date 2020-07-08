@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -85,7 +86,6 @@ public class Fish extends GameObject implements CircleHitbox {
                 x + rectangle.width() / 2, y + rectangle.height() / 2);
 
         if (this.y > Constants.SCREEN_HEIGHT - rectangle.height()) {
-//            this.y = Constants.SCREEN_HEIGHT - rectangle.height();
             this.velocity = 0;
             if(state == State.DEAD){
                 state = State.ROTTEN;
@@ -94,10 +94,8 @@ public class Fish extends GameObject implements CircleHitbox {
         }
 
         if (this.y < 0) {
-//            this.y = 0;
             this.velocity = 0;
         }
-
     }
 
     public Rect getRectangle() {
@@ -122,6 +120,14 @@ public class Fish extends GameObject implements CircleHitbox {
     public boolean checkCollisionWithTopOrBottom() {
         return this.y + this.width >=Constants.SCREEN_HEIGHT ||
                 this.y - this.width <= 0;
+    }
+
+    public void startUpdate(){
+        double time = System.currentTimeMillis();
+        y = (int) (Math.cos(time * 0.005) * 50 + Constants.SCREEN_HEIGHT / 3);
+        rectangle.set(x - rectangle.width() / 2, y - rectangle.height() / 2,
+                x + rectangle.width() / 2, y + rectangle.height() / 2);
+        Log.d("TEST", "time"+ y);
     }
 
     @Override

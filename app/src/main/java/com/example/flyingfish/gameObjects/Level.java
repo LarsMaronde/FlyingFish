@@ -52,7 +52,6 @@ public class Level {
         this.gameOverPanel.update();
         this.updateObstacles(elapsedTime);
         this.updateCoins(elapsedTime);
-
         if (checkIfLevelWon()) {
             GamePanel.getInstance().setRunning(false);
             return;

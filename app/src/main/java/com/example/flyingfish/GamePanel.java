@@ -90,6 +90,9 @@ public class GamePanel extends Activity {
             if (running) {
                 update();
             }
+            if(firstStart){
+                currentLevel.getPlayerFish().startUpdate();
+            }
             draw();
             }
         });
