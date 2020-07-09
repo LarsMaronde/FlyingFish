@@ -21,10 +21,10 @@ public class BackgroundManger {
         this.backgrounds = new LinkedList<Background>();
 
         Drawable bg1 = context.getResources().getDrawable(R.drawable.backbackground);
-        backgrounds.add(new Background(bg1, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-450, globalSpeed, container));
+        backgrounds.add(new Background(bg1, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-450, globalSpeed*-0.2, container));
 
         Drawable bg2 = context.getResources().getDrawable(R.drawable.middlebackround);
-        backgrounds.add(new Background(bg2, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-250, globalSpeed, container));
+        backgrounds.add(new Background(bg2, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-250, globalSpeed*-0.5, container));
 
         Drawable bg3 = context.getResources().getDrawable(R.drawable.background2);
         backgrounds.add(new Background(bg3, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-100, globalSpeed, container));

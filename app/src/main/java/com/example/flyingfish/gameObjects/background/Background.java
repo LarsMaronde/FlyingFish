@@ -1,6 +1,7 @@
 package com.example.flyingfish.gameObjects.background;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -13,7 +14,7 @@ public class Background extends GameObject {
     private Drawable graphic;
     private ImageView imageView;
     private ImageView imageView2;
-    private int x, y, x2;
+    private double x, y, x2;
     private double speed;
 
     public Background(Drawable graphic, int x, int y, double speed, ViewGroup container) {
@@ -45,16 +46,16 @@ public class Background extends GameObject {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.imageView.getLayoutParams();
         params.width = width;
         params.height = height;
-        params.leftMargin = this.x;
-        params.topMargin = this.y-height;
+        params.leftMargin = (int) this.x;
+        params.topMargin = (int) (this.y-height);
         this.imageView.setLayoutParams(params);
 
 
         FrameLayout.LayoutParams params2 = (FrameLayout.LayoutParams) this.imageView2.getLayoutParams();
         params2.width = width;
         params2.height = height;
-        params2.leftMargin = this.x2;
-        params2.topMargin = this.y-height;
+        params2.leftMargin = (int )this.x2;
+        params2.topMargin = (int) (this.y-height);
         this.imageView2.setLayoutParams(params2);
 
     }
@@ -67,6 +68,7 @@ public class Background extends GameObject {
             this.x = Constants.SCREEN_WIDTH;
         }
         if(this.x2+this.graphic.getIntrinsicWidth()-20 < 0) {
+
             this.x2 = Constants.SCREEN_WIDTH;
         }
     }

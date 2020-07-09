@@ -105,12 +105,12 @@ public class Level {
                     it.remove();
                     continue;
                 }
-                if (ob.collides(this.playerFish)) {
-                    if(this.playerFish.getState() == Fish.State.ALIVE){
-                        SoundPlayer.getInstance().playCollision();
-                    }
-                    this.playerFish.die();
-                }
+//                if (ob.collides(this.playerFish)) {
+//                    if(this.playerFish.getState() == Fish.State.ALIVE){
+//                        SoundPlayer.getInstance().playCollision();
+//                    }
+//                    this.playerFish.die();
+//                }
             }
         }
     }
