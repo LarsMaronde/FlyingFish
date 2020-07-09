@@ -19,7 +19,7 @@ public class Background extends GameObject {
 
     public Background(Drawable graphic, int x, int y, double speed, ViewGroup container) {
         this.x = x;
-        this.x2 = 10;
+        this.x2 = 0;
         this.y = y;
         this.speed = speed;
         this.graphic = graphic;
@@ -64,12 +64,17 @@ public class Background extends GameObject {
     public void update() {
         this.x -= speed;
         this.x2 -= speed;
-        if(this.x+this.graphic.getIntrinsicWidth()-20 < 0) {
-            this.x = Constants.SCREEN_WIDTH;
-        }
-        if(this.x2+this.graphic.getIntrinsicWidth()-20 < 0) {
 
-            this.x2 = Constants.SCREEN_WIDTH;
+        float widthRatio = (float) Constants.SCREEN_WIDTH/Constants.GOAL_WIDTH_RATIO;
+        int width = (int) (this.graphic.getIntrinsicWidth()*widthRatio);
+
+     //   if(this.x+this.graphic.getIntrinsicWidth()-20 < 0) {
+        if(x + width < 0) {
+            x = Constants.SCREEN_WIDTH - 1;     // 1 pixel overlap because of rounding errors
+        }
+     //   if(this.x2+this.graphic.getIntrinsicWidth()-20 < 0) {
+        if(x2 + width < 0) {
+            x2 = Constants.SCREEN_WIDTH - 1;
         }
     }
 }
