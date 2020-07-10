@@ -314,7 +314,9 @@ public class FirebaseManager implements DatabaseConnector {
                         if(doc.getType() == DocumentChange.Type.REMOVED) {
                             UserLevel ul = doc.getDocument().toObject(UserLevel.class);
                             User sourceUser = DataObjectManager.getInstance().getUserByName(ul.getUsername());
-                            sourceUser.removeLevelByNumber(ul.getLevelNumber());
+                            if(sourceUser != null){
+                                sourceUser.removeLevelByNumber(ul.getLevelNumber());
+                            }
                         }
                     }
                     DataObjectManager.getInstance().notifyUserChange();
