@@ -2,8 +2,6 @@ package com.example.flyingfish.db.dataObject;
 
 import androidx.annotation.NonNull;
 
-import com.example.flyingfish.db.dataObject.management.DataObject;
-
 import java.util.Map;
 
 public class UserLevel extends DataObject {

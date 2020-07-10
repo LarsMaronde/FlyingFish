@@ -14,7 +14,7 @@ import com.example.flyingfish.db.dataObject.Level;
 import com.example.flyingfish.db.dataObject.User;
 import com.example.flyingfish.db.dataObject.UserItem;
 import com.example.flyingfish.db.dataObject.UserLevel;
-import com.example.flyingfish.db.dataObject.management.DataObject;
+import com.example.flyingfish.db.dataObject.DataObject;
 import com.example.flyingfish.db.dataObject.management.DataObjectManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -241,7 +241,9 @@ public class FirebaseManager implements DatabaseConnector {
                         if(doc.getType() == DocumentChange.Type.REMOVED) {
                             UserItem ui = doc.getDocument().toObject(UserItem.class);
                             User sourceUser = DataObjectManager.getInstance().getUserByName(ui.getUsername());
-                            sourceUser.removeItemByName(ui.getName());
+                            if(sourceUser != null){
+                                sourceUser.removeItemByName(ui.getName());
+                            }
                         }
                    }
                     DataObjectManager.getInstance().notifyUserChange();

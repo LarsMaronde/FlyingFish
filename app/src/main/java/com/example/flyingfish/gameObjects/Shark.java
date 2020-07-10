@@ -53,12 +53,8 @@ public class Shark extends GameObject implements Interactable, RectHitbox {
         this.height = gif.getIntrinsicHeight();
 
         //dynamic scaling for different sceen sizes
-
         this.width = (int) (Constants.SCREEN_WIDTH / 1.9);
-
         this.height = (int) (Constants.SCREEN_HEIGHT / 8.4);
-
-        System.out.println("::: :::: ::::"+this.width +" /"+this.height+" /"+Constants.SCREEN_HEIGHT);
 
         this.rectangle = new Rect(Constants.SCREEN_WIDTH, y, Constants.SCREEN_WIDTH+this.width, this.height+y);
 
@@ -97,7 +93,7 @@ public class Shark extends GameObject implements Interactable, RectHitbox {
         // it is better so make the collision box smaller for a better user experience because
         // the shark image is shaped like an oval
         int margin = 80;
-        Rect newRect = new Rect(rectangle.left-margin, rectangle.top+margin, rectangle.right-margin, rectangle.bottom-margin);
+        Rect newRect = new Rect(rectangle.left+margin/2, rectangle.top+margin, rectangle.right-margin, rectangle.bottom-margin);
 
         if(obj instanceof CircleHitbox) {
             float radius = ((CircleHitbox) obj).getWidth()/2;

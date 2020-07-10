@@ -1,4 +1,4 @@
-package com.example.flyingfish.db.dataObject.management;
+package com.example.flyingfish.db.dataObject;
 
 import java.util.Map;
 

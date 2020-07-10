@@ -1,7 +1,5 @@
 package com.example.flyingfish.db.dataObject;
 
-import com.example.flyingfish.db.dataObject.management.DataObject;
-
 import java.util.Map;
 
 public class UserItem extends DataObject {

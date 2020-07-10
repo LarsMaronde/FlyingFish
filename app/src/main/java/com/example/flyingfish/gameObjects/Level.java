@@ -17,13 +17,6 @@ import java.util.LinkedList;
 
 public class Level {
 
-    @JsonIgnore
-    private BackgroundManger backgroundManger;
-    @JsonIgnore
-    private Fish playerFish;
-    @JsonIgnore
-    private TextGameObject score;
-
     private int number;
     private double gravity;
     private double velocity;
@@ -35,33 +28,36 @@ public class Level {
     private LinkedList<Shark> sharks;
     private int collectedCoins;
 
-    @JsonIgnore
-    private ViewGroup container;
-    @JsonIgnore
-    private Context context;
+    @JsonIgnore private BackgroundManger backgroundManger;
+    @JsonIgnore private Fish playerFish;
+    @JsonIgnore private TextGameObject score;
 
-    @JsonIgnore
-    private LevelOverPanel levelOverPanel;
-    @JsonIgnore
-    private GameOverPanel gameOverPanel;
+    @JsonIgnore private ViewGroup container;
+    @JsonIgnore private Context context;
+
+    @JsonIgnore private LevelOverPanel levelOverPanel;
+    @JsonIgnore private GameOverPanel gameOverPanel;
+
+    @JsonIgnore private long frameCount; //keeps track of the frame count
+    @JsonIgnore private final int updateAtFrame = 10; //defines at which frame the collision detection should be called (10 = every 10th frame)
 
     public Level() {/*emty*/}
 
 
     public void update(float elapsedTime) {
+        this.frameCount++;
         this.backgroundManger.updateBackgrounds();
         this.playerFish.update();
         this.gameOverPanel.update();
         this.updateObstacles(elapsedTime);
         this.updateCoins(elapsedTime);
 
-        if(sharks != null){
+        if(sharks != null) {
             this.updateSharks(elapsedTime);
         }
 
         if (checkIfLevelWon()) {
             GamePanel.getInstance().setRunning(false);
-            return;
         }
     }
 
@@ -93,7 +89,7 @@ public class Level {
                     it.remove();
                     continue;
                 }
-                if (shark.collides(this.playerFish)) {
+                if (frameCount % updateAtFrame == 0 && shark.collides(this.playerFish)) {
                     if(this.playerFish.getState() == Fish.State.ALIVE){
                         SoundPlayer.getInstance().playCollision();
                     }
@@ -115,7 +111,7 @@ public class Level {
                     it.remove();
                     continue;
                 }
-                if (co.collides(this.playerFish)) {
+                if (frameCount % updateAtFrame == 0 && co.collides(this.playerFish)) {
                     //Sound
                     SoundPlayer.getInstance().playBell();
                     this.collectedCoins++;
@@ -137,7 +133,7 @@ public class Level {
                     it.remove();
                     continue;
                 }
-                if (ob.collides(this.playerFish)) {
+                if (frameCount % updateAtFrame == 0 && ob.collides(this.playerFish)) {
                     if(this.playerFish.getState() == Fish.State.ALIVE){
                         SoundPlayer.getInstance().playCollision();
                     }
@@ -209,6 +205,16 @@ public class Level {
         SoundPlayer.getInstance().playLevelWin();
         this.levelOverPanel.setVisible(true);
     }
+
+
+
+
+
+
+
+    /**************************
+           GETTER SETTER
+     **************************/
 
     public BackgroundManger getBackgroundManger() {
         return backgroundManger;
