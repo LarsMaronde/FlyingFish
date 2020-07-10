@@ -7,7 +7,7 @@ import com.example.flyingfish.R;
 public class SoundPlayer {
 
     private static SoundPlayer instance;
-    private MediaPlayer mp;
+    private MediaPlayer backgroundmp;
     private Activity activity;
 
     public SoundPlayer(Activity activity) {
@@ -23,7 +23,7 @@ public class SoundPlayer {
     }
 
     public void playBell() {
-        mp = MediaPlayer.create(activity, R.raw.gloeckcheneinmal);
+        MediaPlayer mp = MediaPlayer.create(activity, R.raw.einsammeln);
         mp.start();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -31,6 +31,56 @@ public class SoundPlayer {
                 mp.release();
             }
         });
+    }
+
+    public void playCollision() {
+        MediaPlayer mp = MediaPlayer.create(activity, R.raw.schlag);
+            mp.start();
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.release();
+                }
+            });
+    }
+
+    public void playLevelWin() {
+        MediaPlayer mp = MediaPlayer.create(activity, R.raw.fanfare);
+        mp.start();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+    }
+
+    public void playLevelLost() {
+        MediaPlayer mp = MediaPlayer.create(activity, R.raw.youlose);
+        mp.start();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+    }
+
+    public void playBackground() {
+        backgroundmp = MediaPlayer.create(activity, R.raw.bubbles);
+        backgroundmp.start();
+        backgroundmp.setLooping(true);
+        backgroundmp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+    }
+
+    public void stopBackground() {
+        backgroundmp.stop();
+        backgroundmp.release();
     }
 }
 

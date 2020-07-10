@@ -57,7 +57,7 @@
       "orientation":"TOP",
       "type": 1,
       "spawnTime":11,
-      "height": 800,
+      "height": 700,
       "width": 150,
       "speed": 1
     },
@@ -65,7 +65,7 @@
       "orientation":"BOTTOM",
       "type": 1,
       "spawnTime": 11,
-      "height": 700,
+      "height": 600,
       "width": 150,
       "speed": 1
     },
@@ -89,7 +89,7 @@
       "orientation":"TOP",
       "type": 1,
       "spawnTime":17,
-      "height": 700,
+      "height": 800,
       "width": 150,
       "speed": 1
     },
@@ -171,12 +171,6 @@
     },
     {
       "value": 1,
-      "y": 990,
-      "spawnTime": 6.5,
-      "speed": 1
-    },
-    {
-      "value": 1,
       "y": 910,
       "spawnTime": 7.2,
       "speed": 1
@@ -243,20 +237,8 @@
     },
     {
       "value": 1,
-      "y": 655,
-      "spawnTime": 12.9,
-      "speed": 1
-    },
-    {
-      "value": 1,
       "y": 975,
       "spawnTime": 12,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1120,
-      "spawnTime": 12.2,
       "speed": 1
     },
     {
@@ -273,12 +255,6 @@
     },
     {
       "value": 1,
-      "y": 1055,
-      "spawnTime": 16.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
       "y": 1065,
       "spawnTime": 17.8,
       "speed": 1
@@ -291,13 +267,6 @@
     },
     {
       "value": 1,
-      "y": 1120,
-      "spawnTime": 17.2,
-      "speed": 1
-    },
-
-    {
-      "value": 1,
       "y": 865,
       "spawnTime": 18.8,
       "speed": 1
@@ -306,12 +275,6 @@
       "value": 1,
       "y": 955,
       "spawnTime": 19.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1135,
-      "spawnTime": 22.0,
       "speed": 1
     },
     {

@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.db.SQLDatabaseManager;
@@ -25,7 +24,7 @@ public class Fish extends GameObject implements CircleHitbox {
     private double lift;
     private int x, y;
     private float width;
-    private enum State {ALIVE, ROTTEN, DEAD}
+    public enum State {ALIVE, ROTTEN, DEAD}
     private State state = State.ALIVE;
 
     private Drawable look1, look2;
@@ -130,7 +129,10 @@ public class Fish extends GameObject implements CircleHitbox {
         y = (int) (Math.cos(time * 0.005) * 50 + Constants.SCREEN_HEIGHT / 3);
         rectangle.set(x - rectangle.width() / 2, y - rectangle.height() / 2,
                 x + rectangle.width() / 2, y + rectangle.height() / 2);
-//        Log.d("TEST", "time"+ y);
+    }
+
+    public State getState(){
+        return state;
     }
 
     @Override
@@ -155,5 +157,4 @@ public class Fish extends GameObject implements CircleHitbox {
     public void setLook2() {
         this.imageView.setImageDrawable(look2);
     }
-
 }
