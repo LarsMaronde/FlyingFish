@@ -29,6 +29,7 @@ public class MainMenuActivity extends AppCompatActivity {
         instance = this;
         setContentView(R.layout.activity_mainmenu);
 //        fillDatabaseWithLevelInformation();
+        FirebaseManager.getInstance().initializeListeners();
     }
 
 

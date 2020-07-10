@@ -3,11 +3,11 @@ package com.example.flyingfish.gameObjects;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.ViewGroup;
+
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GameOverPanel;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.LevelOverPanel;
-import com.example.flyingfish.db.SQLDatabaseManager;
 import com.example.flyingfish.db.dataObject.management.DataObjectManager;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -108,12 +108,12 @@ public class Level {
                     it.remove();
                     continue;
                 }
-//                if (ob.collides(this.playerFish)) {
-//                    if(this.playerFish.getState() == Fish.State.ALIVE){
-//                        SoundPlayer.getInstance().playCollision();
-//                    }
-//                    this.playerFish.die();
-//                }
+                if (ob.collides(this.playerFish)) {
+                    if(this.playerFish.getState() == Fish.State.ALIVE){
+                        SoundPlayer.getInstance().playCollision();
+                    }
+                    this.playerFish.die();
+                }
             }
         }
     }

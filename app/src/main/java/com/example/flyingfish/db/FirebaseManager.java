@@ -50,18 +50,25 @@ public class FirebaseManager implements DatabaseConnector {
 
         databaseListeners = new LinkedList<>();
 
+        initializeListeners();
+    }
+
+
+    public void initializeListeners() {
+        for(ListenerRegistration rl: databaseListeners){
+            rl.remove();
+        }
+        databaseListeners.clear();
         databaseListeners.add(addUserListener());
         databaseListeners.add(addItemListener());
         databaseListeners.add(addUserItemsListener());
         databaseListeners.add(addUserLevelsListener());
         databaseListeners.add(addLevelsListener());
-
     }
 
 
-
     public static FirebaseManager getInstance() {
-        if(fbManager != null){
+        if(fbManager != null) {
             return fbManager;
         }
         fbManager = new FirebaseManager();
@@ -136,8 +143,8 @@ public class FirebaseManager implements DatabaseConnector {
 
     /**************************************
                 DATABASE LISTENERS
-    *************************************
-     * @return*/
+    ***************************************/
+
 
     private ListenerRegistration addUserListener() {
         return fStore.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -177,7 +184,7 @@ public class FirebaseManager implements DatabaseConnector {
             public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException error) {
                 if(snapshot != null){
                     List<DocumentSnapshot> list = snapshot.getDocuments();
-                    System.out.println("NEW ITEM UPDATE "+list.size());
+                    // System.out.println("NEW ITEM UPDATE "+list.size());
                     for(DocumentSnapshot ds: list) {
                         Item i = ds.toObject(Item.class);
                         i.setId(ds.getId());

@@ -32,7 +32,7 @@ public class GameOverPanel {
         collectedCoins.setTextSize(36);
 
         int width = this.collectedCoins.getWidth()/2;
-        System.out.println(width);
+        // System.out.println(width);
         collectedCoins.setPosition(Constants.SCREEN_WIDTH/2-width,620);
 
         retryImage.getView().setOnClickListener(new View.OnClickListener() {
