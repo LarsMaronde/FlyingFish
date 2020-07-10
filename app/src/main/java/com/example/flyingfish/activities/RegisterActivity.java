@@ -1,11 +1,13 @@
 package com.example.flyingfish.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -13,8 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.R;
-import com.example.flyingfish.dataObject.User;
-import com.example.flyingfish.db.DatabaseManager;
+import com.example.flyingfish.db.FirebaseManager;
+import com.example.flyingfish.db.callbacks.ErrorCallback;
+import com.example.flyingfish.db.callbacks.SuccessCallback;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -26,27 +29,21 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void register(View v) {
+        final View button = findViewById(R.id.signupButton);
+        button.setEnabled(false);
         EditText usernameField = findViewById(R.id.usernameField);
         EditText passwordField = findViewById(R.id.passwordField);
         EditText passwordConfirmField = findViewById(R.id.passwordConfirmField);
 
-        String username = usernameField.getText().toString();
+        final String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
         String passwordConfirm = passwordConfirmField.getText().toString();
 
         if(!username.isEmpty() || !password.isEmpty() || !passwordConfirm.isEmpty()) {
-
-            //ceck if username is taken
-            String u = DatabaseManager.getInstance().getUser(username);
-            if(u != null) {
-                usernameField.setTextColor(Color.rgb(255,0,0));
-                return;
-            }
 
             usernameField.setTextColor(Color.rgb(255,255,255));
             //CHECK IF PASSWORD IS MATCHING
@@ -64,19 +61,32 @@ public class RegisterActivity extends AppCompatActivity {
                 passwordField.setTextColor(Color.rgb(255,255,255));
                 passwordConfirmField.setTextColor(Color.rgb(255,255,255));
 
-                //SAVE IN DB
-                DatabaseManager.getInstance().createUser(username, passwordHash);
 
-                Constants.CURRENT_USERNAME = username;
-                startActivity(new Intent(this, MainMenuActivity.class));
+                //SAVE IN DB
+                FirebaseManager.getInstance().registerUser(username, passwordHash, this, new SuccessCallback() {
+                    @Override
+                    public void run(Object... obj) {
+                        Context con = (Context) obj[0];
+                        Toast.makeText(con, "User created", Toast.LENGTH_LONG).show();
+                        Constants.CURRENT_USERNAME = username;
+                        con.startActivity(new Intent(con, MainMenuActivity.class));
+                    }
+                }, new ErrorCallback() {
+                    //when username is already taken
+                    @Override
+                    public void run(Context con, String errorMsg) {
+                        Toast.makeText(con, "Ein Fehler ist aufgetreten: "+errorMsg, Toast.LENGTH_LONG).show();
+                        button.setEnabled(true);
+                    }
+                });
+
+
+
             }else {
                 passwordField.setTextColor(Color.rgb(255,0,0));
                 passwordConfirmField.setTextColor(Color.rgb(255,0,0));
             }
         }
-
-
-
     }
 
 

@@ -1,7 +1,6 @@
 package com.example.flyingfish.activities;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,12 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.R;
-import com.example.flyingfish.dataObject.Item;
-import com.example.flyingfish.db.DatabaseManager;
+import com.example.flyingfish.db.dataObject.Item;
+import com.example.flyingfish.db.dataObject.Level;
+import com.example.flyingfish.db.dataObject.User;
+import com.example.flyingfish.db.dataObject.management.DataObjectManager;
+import com.example.flyingfish.db.dataObject.management.Observer;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ShopActivity extends AppCompatActivity {
+public class ShopActivity extends AppCompatActivity implements Observer {
 
 
     @Override
@@ -31,20 +34,61 @@ public class ShopActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
+
+        //listen for changes
+        DataObjectManager.getInstance().addObserver(this);
+
+
+        //initialize with the current values the manager has
         updateCoins();
-        fillShopList();
+        fillShopList(getShopList());
+    }
+
+    private List<Item> getShopList() {
+        ArrayList<Item> newList = new ArrayList<>();
+
+        List<Item> allItems = DataObjectManager.getInstance().getItemList();
+        List<Item> userItems = DataObjectManager.getInstance().getItemListOfUser(Constants.CURRENT_USERNAME);
+
+        for(int i = 0; i < allItems.size(); i++) {
+            Item item = allItems.get(i);
+            newList.add(new Item(item.getName(), item.getPrice(), false, false));
+        }
+
+        for(int i = 0; i < newList.size(); i++) {
+            Item item = newList.get(i);
+            if(userItems != null){
+                for(int j = 0; j < userItems.size(); j++){
+                    Item userItem = userItems.get(j);
+                    if(item.getName().equals(userItem.getName())){
+                        item.setBought(true);
+                        item.setEquiped(userItem.isEquiped());
+                    }
+                }
+            }
+        }
+
+        DataObjectManager.bubbleSort(newList, true);
+
+        return newList;
     }
 
     private void updateCoins() {
-         int currentCoins = DatabaseManager.getInstance().getCurrentUserCoins(Constants.CURRENT_USERNAME);
-         TextView cV = findViewById(R.id.userCoinCount);
-         cV.setText(Integer.toString(currentCoins));
+        int coins = DataObjectManager.getInstance().getUserCurrentCoins(Constants.CURRENT_USERNAME);
+        TextView cV = findViewById(R.id.userCoinCount);
+        cV.setText(Integer.toString(coins));
     }
 
-    private void fillShopList() {
+
+    public void backToMainMenu(View v) {
+        DataObjectManager.getInstance().removeObserver(this);
+        startActivity(new Intent(this, MainMenuActivity.class));
+    }
+
+
+    private void fillShopList(List<Item> allItems) {
         LinearLayout shopList = findViewById(R.id.shopList);
         shopList.removeAllViews();
-        LinkedList<Item> allItems = DatabaseManager.getInstance().getAllItems(Constants.CURRENT_USERNAME);
 
         for(final Item i: allItems) {
             final LinearLayout row = new LinearLayout(this);
@@ -60,11 +104,7 @@ public class ShopActivity extends AppCompatActivity {
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    System.out.println(i.getName());
-                    if(DatabaseManager.getInstance().buyItemAndEquip(Constants.CURRENT_USERNAME, i.getName())) {
-                        updateCoins();
-                        fillShopList();
-                    }
+                    DataObjectManager.getInstance().buyItemAndEquip(Constants.CURRENT_USERNAME, i.getName());
                 }
             });
 
@@ -115,14 +155,21 @@ public class ShopActivity extends AppCompatActivity {
                 row.addView(itemPrice);
                 row.addView(coinsIcon);
             }
-
-
         }
-
-
     }
 
-    public void backToMainMenu(View v) {
-        startActivity(new Intent(this, MainMenuActivity.class));
+    @Override
+    public void updateUsers(ArrayList<User> users) {
+        updateCoins();
+    }
+
+    @Override
+    public void updateItems(ArrayList<Item> items) {
+        fillShopList(getShopList());
+    }
+
+    @Override
+    public void updateLevel(ArrayList<Level> levels) {
+
     }
 }

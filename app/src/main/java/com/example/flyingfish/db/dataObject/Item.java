@@ -1,10 +1,21 @@
-package com.example.flyingfish.dataObject;
+package com.example.flyingfish.db.dataObject;
 
-public class Item {
+import com.example.flyingfish.db.dataObject.management.DataObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Item extends DataObject {
+
     private String name;
     private int price;
     private boolean equiped;
     private boolean bought;
+    private String username;
+
+    public Item() {
+        //empty
+    }
 
     public Item(String name, int price, boolean equiped, boolean bought) {
         this.name = name;
@@ -18,6 +29,10 @@ public class Item {
         this.price = price;
     }
 
+    public Item(String name, boolean equiped){
+        this.name = name;
+        this.equiped = equiped;
+    }
 
     public String getName() {
         return name;
@@ -49,5 +64,22 @@ public class Item {
 
     public void setBought(boolean bought) {
         this.bought = bought;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("equiped", equiped);
+        map.put("name", name);
+        map.put("username", username);
+        return map;
     }
 }

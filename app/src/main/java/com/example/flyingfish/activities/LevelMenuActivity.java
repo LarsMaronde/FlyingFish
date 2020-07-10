@@ -8,16 +8,20 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
-import com.example.flyingfish.Constants;
-import com.example.flyingfish.R;
-import com.example.flyingfish.dataObject.Level;
-import com.example.flyingfish.db.DatabaseManager;
-
-import java.util.LinkedList;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LevelMenuActivity extends AppCompatActivity {
+import com.example.flyingfish.Constants;
+import com.example.flyingfish.R;
+import com.example.flyingfish.db.dataObject.Item;
+import com.example.flyingfish.db.dataObject.Level;
+import com.example.flyingfish.db.dataObject.User;
+import com.example.flyingfish.db.dataObject.management.DataObjectManager;
+import com.example.flyingfish.db.dataObject.management.Observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class LevelMenuActivity extends AppCompatActivity implements Observer {
     public static final String LEVEL_MESSAGE = "com.exampleflyingfish.MESSAGE";
 
 
@@ -26,14 +30,46 @@ public class LevelMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levelmenu);
 
-        createLevelButtons();
+        //listen for changes
+        DataObjectManager.getInstance().addObserver(this);
+
+        //initialize with the current values the manager has
+        createLevelButtons(getLevels());
 
     }
 
-    private void createLevelButtons() {
-        GridLayout levelSelection = findViewById(R.id.levelSelectionList);
+    private List<Level> getLevels() {
+        ArrayList<Level> newList = new ArrayList<>();
 
-        LinkedList<Level> levels = DatabaseManager.getInstance().getAllLevelsFromUser(Constants.CURRENT_USERNAME);
+        List<Level> allLevels = DataObjectManager.getInstance().getAllLevels();
+        List<Level> userLevels = DataObjectManager.getInstance().getLevelsOfUser(Constants.CURRENT_USERNAME);
+
+        for(int i = 0; i < allLevels.size(); i++) {
+            Level c = allLevels.get(i);
+            newList.add(new Level(c.getLevelNumber(), c.getMaxCoinAmount()));
+        }
+
+        for(int i = 0; i < newList.size(); i++) {
+            Level level = newList.get(i);
+            if(userLevels != null){
+                for(int j = 0; j < userLevels.size(); j++) {
+                    Level userLevel = userLevels.get(j);
+                    if(level.getLevelNumber() == userLevel.getLevelNumber()){
+                        level.setCollectedCoins(userLevel.getCollectedCoins());
+                        level.setUnlocked(true);
+                    }
+                }
+            }
+        }
+
+        DataObjectManager.bubbleSort(newList, true);
+        return newList;
+    }
+
+    private void createLevelButtons(List<Level> levels) {
+        GridLayout levelSelection = findViewById(R.id.levelSelectionList);
+        levelSelection.removeAllViews();
+
         for(final Level l: levels) {
             final Button levelButton = new Button(this);
 
@@ -50,11 +86,11 @@ public class LevelMenuActivity extends AppCompatActivity {
             levelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startGame(v, l.getNumber());
+                    startGame(v, l.getLevelNumber());
                 }
             });
 
-            String buttonText = Integer.toString(l.getNumber())+"\n";
+            String buttonText = Integer.toString(l.getLevelNumber())+"\n";
 
             if(l.isUnlocked()) {
                 levelButton.setEnabled(true);
@@ -79,6 +115,23 @@ public class LevelMenuActivity extends AppCompatActivity {
 
 
     public void backToMainMenu(View v) {
+        DataObjectManager.getInstance().removeObserver(this);
         startActivity(new Intent(this, MainMenuActivity.class));
+    }
+
+
+    @Override
+    public void updateUsers(ArrayList<User> users) {
+        createLevelButtons(getLevels());
+    }
+
+    @Override
+    public void updateItems(ArrayList<Item> items) {
+
+    }
+
+    @Override
+    public void updateLevel(ArrayList<Level> levels) {
+        createLevelButtons(getLevels());
     }
 }

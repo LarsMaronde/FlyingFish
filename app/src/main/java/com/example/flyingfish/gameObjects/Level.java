@@ -7,7 +7,8 @@ import com.example.flyingfish.Constants;
 import com.example.flyingfish.GameOverPanel;
 import com.example.flyingfish.GamePanel;
 import com.example.flyingfish.LevelOverPanel;
-import com.example.flyingfish.db.DatabaseManager;
+import com.example.flyingfish.db.SQLDatabaseManager;
+import com.example.flyingfish.db.dataObject.management.DataObjectManager;
 import com.example.flyingfish.gameObjects.background.BackgroundManger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -60,9 +61,11 @@ public class Level {
 
     private boolean checkIfLevelWon() {
         if (this.obstacles.size() == 0) {
-            DatabaseManager.getInstance().addCoins(Constants.CURRENT_USERNAME, collectedCoins);
-            DatabaseManager.getInstance().updatePlayerLevel(this.number, Constants.CURRENT_USERNAME, collectedCoins);
-            DatabaseManager.getInstance().unlockNextLevel(Constants.CURRENT_USERNAME, this.number);
+
+            DataObjectManager.getInstance().addCoins(Constants.CURRENT_USERNAME, collectedCoins);
+            DataObjectManager.getInstance().updatePlayerLevel(this.number, Constants.CURRENT_USERNAME, collectedCoins);
+            DataObjectManager.getInstance().unlockNextLevel(Constants.CURRENT_USERNAME, this.number);
+
             this.levelOverPanel.setCollectedCoins(this.collectedCoins);
             this.score.setVisible(false);
             levelOver();

@@ -8,7 +8,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flyingfish.R;
-import com.example.flyingfish.db.DatabaseManager;
+import com.example.flyingfish.db.FirebaseManager;
 import com.example.flyingfish.gameObjects.Level;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,7 +28,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         instance = this;
         setContentView(R.layout.activity_mainmenu);
-        this.fillDatabaseWithLevelInformation();
+//        fillDatabaseWithLevelInformation();
     }
 
 
@@ -62,7 +62,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     Level l = om.readValue(jsonLevel, Level.class);
                     int levelNum = Integer.parseInt(levels[i].split("level")[1].split(".json")[0]);
                     int amountCoins = l.getCoins().size();
-                    DatabaseManager.getInstance().insertOrUpdateLevel(levelNum, amountCoins);
+//                    DataObjectManager.getInstance().updateLevel(levelNum, amountCoins);
                 }
             }
         } catch (IOException e) {
@@ -86,12 +86,13 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(new Intent(this, ShopActivity.class));
     }
 
-    public void quit(View v){
+    public void quit(View v) {
         finish();
         System.exit(0);
     }
 
     public void backToLogin(View v) {
+        FirebaseManager.getInstance().logout();
         startActivity(new Intent(this, LoginActivity.class));
     }
 

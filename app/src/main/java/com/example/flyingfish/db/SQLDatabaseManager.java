@@ -2,19 +2,18 @@ package com.example.flyingfish.db;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.example.flyingfish.dataObject.Item;
-import com.example.flyingfish.dataObject.Level;
-import com.example.flyingfish.dataObject.User;
+import com.example.flyingfish.db.dataObject.Item;
+import com.example.flyingfish.db.dataObject.Level;
+import com.example.flyingfish.db.dataObject.User;
 
 import java.util.LinkedList;
 
-public class DatabaseManager extends SQLiteOpenHelper {
+public class SQLDatabaseManager extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "FlyingFish.db";
 
@@ -41,14 +40,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String ui_username = "username";
     private static final String ui_equiped = "equiped";
 
-    private static DatabaseManager dbManger;
+    private static SQLDatabaseManager dbManger;
 
-    public DatabaseManager(@Nullable Context context) {
+    public SQLDatabaseManager(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 23);
         dbManger = this;
     }
 
-    public static DatabaseManager getInstance() {
+    public static SQLDatabaseManager getInstance() {
         if(dbManger != null){
             return dbManger;
         }
@@ -231,6 +230,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return null;
     }
 
+
     public boolean buyItemAndEquip(String username, String itemName) {
 
         SQLiteDatabase db= this.getWritableDatabase();
@@ -330,7 +330,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     private Level getLevel(LinkedList<Level> levels, int levelNumber) {
         for(Level l: levels) {
-            if(l.getNumber() == levelNumber){
+            if(l.getLevelNumber() == levelNumber){
                 return l;
             }
         }
@@ -471,4 +471,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL( "INSERT OR REPLACE INTO " + l_Levels + "(" + l_levelNumber + " , " + l_maxCoinAmount + ") VALUES ( "+levelNum+", "+amountCoins+")");
     }
+
+
 }
