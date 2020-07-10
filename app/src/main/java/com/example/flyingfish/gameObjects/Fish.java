@@ -6,10 +6,9 @@ import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import com.example.flyingfish.Constants;
 import com.example.flyingfish.GamePanel;
-import com.example.flyingfish.db.SQLDatabaseManager;
-import com.example.flyingfish.db.dataObject.management.DataObject;
 import com.example.flyingfish.db.dataObject.management.DataObjectManager;
 import com.example.flyingfish.gameObjects.interfaces.CircleHitbox;
 
@@ -45,7 +44,6 @@ public class Fish extends GameObject implements CircleHitbox {
     private void setImageOfFish(ViewGroup container) {
         Context context = container.getContext();
 
-//        String skin = SQLDatabaseManager.getInstance().getSelectedFishSkin(Constants.CURRENT_USERNAME).toLowerCase().replace(" ", "_");
         String skin = DataObjectManager.getInstance().getSelectedFishSkin(Constants.CURRENT_USERNAME).toLowerCase().replace(" ", "_");
         int resourceId = container.getResources().getIdentifier(skin+"_1", "drawable", context.getPackageName());
         this.look1 = container.getResources().getDrawable(resourceId);;

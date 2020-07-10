@@ -184,7 +184,6 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
-        this.imageView.setVisibility(View.GONE);
     }
 
     public ImageView getImageView() {

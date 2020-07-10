@@ -32,6 +32,7 @@ public class Level {
     private double lift;
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Coin> coins;
+    private LinkedList<Shark> sharks;
     private int collectedCoins;
 
     @JsonIgnore
@@ -53,11 +54,17 @@ public class Level {
         this.gameOverPanel.update();
         this.updateObstacles(elapsedTime);
         this.updateCoins(elapsedTime);
+
+        if(sharks != null){
+            this.updateSharks(elapsedTime);
+        }
+
         if (checkIfLevelWon()) {
             GamePanel.getInstance().setRunning(false);
             return;
         }
     }
+
 
     private boolean checkIfLevelWon() {
         if (this.obstacles.size() == 0) {
@@ -72,6 +79,28 @@ public class Level {
             return true;
         }
         return false;
+    }
+
+    private void updateSharks(float elapsedTime) {
+        Iterator<Shark> it = sharks.iterator();
+        while (it.hasNext()) {
+            Shark shark = it.next();
+            if (shark.getSpawnTime() <= elapsedTime) {
+                shark.setVisible(true);
+                shark.update();
+                if (shark.getRectangle().right <= 0) { //if rectangle is out of the screen
+                    shark.setVisible(false);
+                    it.remove();
+                    continue;
+                }
+                if (shark.collides(this.playerFish)) {
+                    if(this.playerFish.getState() == Fish.State.ALIVE){
+                        SoundPlayer.getInstance().playCollision();
+                    }
+                    this.playerFish.die();
+                }
+            }
+        }
     }
 
     private void updateCoins(float elapsedTime) {
@@ -129,6 +158,12 @@ public class Level {
             co.initialize(this.container);
         }
 
+        if(sharks != null){
+            for(Shark sh: sharks){
+                sh.initialize(this.container);
+            }
+        }
+
         this.score = new TextGameObject(this.container);
         setCoinsCounter();
 
@@ -141,9 +176,17 @@ public class Level {
         for (Obstacle ob : obstacles) {
             ob.draw();
         }
+
         for (Coin co : coins) {
             co.draw();
         }
+
+        if(sharks != null){
+            for(Shark sh: sharks){
+                sh.draw();
+            }
+        }
+
         this.playerFish.draw();
         this.gameOverPanel.draw();
         this.levelOverPanel.draw();
@@ -289,5 +332,13 @@ public class Level {
 
     public void setGameOverPanel(LevelOverPanel levelOverPanel) {
         this.levelOverPanel = levelOverPanel;
+    }
+
+    public LinkedList<Shark> getSharks() {
+        return sharks;
+    }
+
+    public void setSharks(LinkedList<Shark> sharks) {
+        this.sharks = sharks;
     }
 }
