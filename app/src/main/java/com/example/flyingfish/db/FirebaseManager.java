@@ -9,12 +9,12 @@ import androidx.annotation.RequiresApi;
 
 import com.example.flyingfish.db.callbacks.ErrorCallback;
 import com.example.flyingfish.db.callbacks.SuccessCallback;
+import com.example.flyingfish.db.dataObject.DataObject;
 import com.example.flyingfish.db.dataObject.Item;
 import com.example.flyingfish.db.dataObject.Level;
 import com.example.flyingfish.db.dataObject.User;
 import com.example.flyingfish.db.dataObject.UserItem;
 import com.example.flyingfish.db.dataObject.UserLevel;
-import com.example.flyingfish.db.dataObject.DataObject;
 import com.example.flyingfish.db.dataObject.management.DataObjectManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,10 +43,19 @@ public class FirebaseManager implements DatabaseConnector {
     private FirebaseFirestore fStore;
     private LinkedList<ListenerRegistration> databaseListeners;
 
+    //makes sure the data is loaded in the correct order
+    private boolean userDataLoaded;
+    private boolean levelDataLoaded;
+    private boolean itemDataLoaded;
+
     public FirebaseManager() {
         this.fAuth = FirebaseAuth.getInstance();
         this.fStore = FirebaseFirestore.getInstance();
         fbManager = this;
+
+        userDataLoaded = false;
+        levelDataLoaded = false;
+        itemDataLoaded = false;
 
         databaseListeners = new LinkedList<>();
 
@@ -59,11 +68,21 @@ public class FirebaseManager implements DatabaseConnector {
             rl.remove();
         }
         databaseListeners.clear();
+
         databaseListeners.add(addUserListener());
-        databaseListeners.add(addItemListener());
-        databaseListeners.add(addUserItemsListener());
-        databaseListeners.add(addUserLevelsListener());
-        databaseListeners.add(addLevelsListener());
+
+        if(userDataLoaded) {
+            databaseListeners.add(addItemListener());
+        }
+
+        if(itemDataLoaded && userDataLoaded) {
+            databaseListeners.add(addLevelsListener());
+        }
+
+        if(levelDataLoaded && userDataLoaded && itemDataLoaded) {
+            databaseListeners.add(addUserLevelsListener());
+            databaseListeners.add(addUserItemsListener());
+        }
     }
 
 
@@ -173,6 +192,14 @@ public class FirebaseManager implements DatabaseConnector {
                         }
                     }
                     DataObjectManager.getInstance().notifyUserChange();
+                    if(!userDataLoaded) {
+                        userDataLoaded = true;
+                        initializeListeners();
+                    }
+                }
+                if(!userDataLoaded) {
+                    userDataLoaded = true;
+                    initializeListeners();
                 }
             }
         });
@@ -204,6 +231,14 @@ public class FirebaseManager implements DatabaseConnector {
                         }
                     }
                     DataObjectManager.getInstance().notifyItemChange();
+                    if(!itemDataLoaded){
+                        itemDataLoaded = true;
+                        initializeListeners();
+                    }
+                }
+                if(!itemDataLoaded){
+                    itemDataLoaded = true;
+                    initializeListeners();
                 }
             }
         });
@@ -276,7 +311,15 @@ public class FirebaseManager implements DatabaseConnector {
                             sourceLevel.setId(ds.getId());
                         }
                     }
-                     DataObjectManager.getInstance().notifyLevelChange();
+                    DataObjectManager.getInstance().notifyLevelChange();
+                    if(!levelDataLoaded){
+                        levelDataLoaded = true;
+                        initializeListeners();
+                    }
+                }
+                if(!levelDataLoaded){
+                    levelDataLoaded = true;
+                    initializeListeners();
                 }
             }
         });
