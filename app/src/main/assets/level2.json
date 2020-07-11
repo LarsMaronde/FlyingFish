@@ -300,18 +300,6 @@
       "y": 920,
       "spawnTime": 24.7,
       "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 750,
-      "spawnTime": 24.8,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1065,
-      "spawnTime": 25.2,
-      "speed": 1
     }
   ],
     "sharks": [
