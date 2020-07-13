@@ -1,3 +1,8 @@
+/**
+ * defines an observer that listens to updated form the database
+ * each observer has to override the method below
+ * inside those methods the view can be updated with the new data
+ */
 package com.example.flyingfish.db.dataObject.management;
 
 import com.example.flyingfish.db.dataObject.Item;

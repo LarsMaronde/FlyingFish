@@ -1,3 +1,6 @@
+/**
+ * Represents the UserLevel document in the database
+ */
 package com.example.flyingfish.db.dataObject;
 
 import androidx.annotation.NonNull;

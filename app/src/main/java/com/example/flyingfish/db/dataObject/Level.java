@@ -1,3 +1,6 @@
+/**
+ *  Represents the Level document in the database
+ */
 package com.example.flyingfish.db.dataObject;
 
 import java.util.HashMap;

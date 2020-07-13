@@ -34,10 +34,8 @@ public class ShopActivity extends AppCompatActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
-
         //listen for changes
         DataObjectManager.getInstance().addObserver(this);
-
 
         //initialize with the current values the manager has
         updateCoins();

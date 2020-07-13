@@ -1,3 +1,7 @@
+/**
+ * this class was used for testing purposes as a database to store user data
+ * in production, firestore is used as database
+ */
 package com.example.flyingfish.db;
 
 import android.content.Context;

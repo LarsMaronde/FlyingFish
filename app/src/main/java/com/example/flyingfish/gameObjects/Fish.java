@@ -1,3 +1,7 @@
+/**
+ * The fish represents the player of the game.
+ * the fish is created by the GamePanel class and it also sets the properties
+ */
 package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
@@ -41,6 +45,11 @@ public class Fish extends GameObject implements CircleHitbox {
         update();
     }
 
+    /**
+     * sets the image of the fish
+     * this method is called when tapping the screen to change the appearance of the fish
+     * @param container the parent container of this imageview
+     */
     private void setImageOfFish(ViewGroup container) {
         Context context = container.getContext();
 
@@ -63,6 +72,9 @@ public class Fish extends GameObject implements CircleHitbox {
         this.rectangle = new Rect(0, 0, (int) this.width, (int) this.width);
     }
 
+    /**
+     * updates the imageviews position on the screen
+     */
     @Override
     public void draw() {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.imageView.getLayoutParams();
@@ -73,6 +85,11 @@ public class Fish extends GameObject implements CircleHitbox {
         this.imageView.setLayoutParams(params);
     }
 
+
+    /**
+     * updates the fish properties
+     * applies gravity and checks the state
+     */
     @Override
     public void update() {
         this.velocity += this.gravity;
@@ -102,6 +119,9 @@ public class Fish extends GameObject implements CircleHitbox {
         return this.rectangle;
     }
 
+    /**
+     * appplies upward force depending on the level
+     */
     public void swimUp() {
         if(state != State.ALIVE) return;
         this.velocity -= this.lift;
@@ -117,6 +137,10 @@ public class Fish extends GameObject implements CircleHitbox {
         state = State.DEAD;
     }
 
+    /**
+     * checks if the fish collides with the top or bottom of the screen
+     * @return
+     */
     public boolean checkCollisionWithTopOrBottom() {
         return this.y + this.width >=Constants.SCREEN_HEIGHT ||
                 this.y - this.width <= 0;

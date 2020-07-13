@@ -1,3 +1,6 @@
+/**
+ * A shark is an obstacle when colliding with it, the game is over
+ */
 package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
@@ -39,8 +42,6 @@ public class Shark extends GameObject implements Interactable, RectHitbox {
     }
 
     public void initialize(ViewGroup container) {
-
-
         Context context = container.getContext();
 
         try {
@@ -65,6 +66,9 @@ public class Shark extends GameObject implements Interactable, RectHitbox {
 
     }
 
+    /**
+     * moves the imageview to the updated position of the rectangle
+     */
     @Override
     public void draw() {
         if(!this.visible) {
@@ -80,6 +84,10 @@ public class Shark extends GameObject implements Interactable, RectHitbox {
         this.imageView.setLayoutParams(params);
     }
 
+
+    /**
+     * moves the rectangle hitbox to the left of the screen
+     */
     @Override
     public void update() {
         rectangle.left -= speed;
@@ -90,8 +98,8 @@ public class Shark extends GameObject implements Interactable, RectHitbox {
     public boolean collides(GameObject obj) {
 
         // because the collision box of the shark is a rectangle,
-        // it is better so make the collision box smaller for a better user experience because
-        // the shark image is shaped like an oval
+        // it is better to make the collision box smaller for a better user experience because
+        // the shark image is shaped like an oval and the front side of the shark because it is a gif
         int margin = 80;
         Rect newRect = new Rect(rectangle.left+margin/2, rectangle.top+margin, rectangle.right-margin, rectangle.bottom-margin);
 
@@ -100,6 +108,7 @@ public class Shark extends GameObject implements Interactable, RectHitbox {
             float x = ((CircleHitbox) obj).getX();
             float y = ((CircleHitbox) obj).getY();
 
+            //checks if the circumference of the circle is inside of the rectangle hitbox
             for(int i = 0; i < 360; i++) {
                 double cX = Math.cos(i) * radius + x;
                 double cY = Math.sin(i) * radius + y;
@@ -109,6 +118,7 @@ public class Shark extends GameObject implements Interactable, RectHitbox {
             }
             return false;
         }else if(obj instanceof RectHitbox) {
+            //checks if the rectangles are intersecting
             return Rect.intersects(newRect, ((RectHitbox) obj).getRectangle());
         }
         return false;

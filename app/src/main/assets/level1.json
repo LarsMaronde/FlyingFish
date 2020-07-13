@@ -182,7 +182,7 @@
   ],
    "sharks": [
     {
-      "y": 400,
+      "y": 350,
       "spawnTime": 1,
       "speed": 2
     }

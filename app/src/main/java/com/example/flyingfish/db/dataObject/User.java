@@ -1,3 +1,7 @@
+/**
+ * Represents the user document in the database
+ * each user has a connection to levels and items which are also referenced in this class
+ */
 package com.example.flyingfish.db.dataObject;
 
 import java.util.ArrayList;

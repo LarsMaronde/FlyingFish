@@ -1,3 +1,8 @@
+/** the activity of the game which is called from the level selection activity
+ * from this class the level is loaded from the JSON and started
+ */
+
+
 package com.example.flyingfish;
 
 import android.app.Activity;
@@ -44,6 +49,8 @@ public class GamePanel extends Activity {
         this.level = level;
         this.firstStart = true;
 
+
+        //on each touch on the screen the playerfish swims up or the game starts intially
         container.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -68,6 +75,8 @@ public class GamePanel extends Activity {
             }
         });
 
+
+        //loads the level from the asset folder
         this.loadLevel(container.getContext(), level);
         //place the player in the middle of the level
         this.currentLevel.setPlayerFish(new Fish(
@@ -100,6 +109,13 @@ public class GamePanel extends Activity {
         }
     };
 
+    /**
+     * loads the given level by number from the assets folder and converts it to a java object
+     * all game objects are then initialized
+     * the levels context is also set to the given context of this method
+     * @param context the context in which the level is in
+     * @param levelNumber the number of the level to load
+     */
     private void loadLevel(Context context, int levelNumber) {
         ObjectMapper om = new ObjectMapper();
         try {
@@ -113,6 +129,11 @@ public class GamePanel extends Activity {
         this.currentLevel.initializeObjects();
     }
 
+    /**
+     * reads a file from the given inputstream and returns the content as string
+     * @param inputStream
+     * @return contents of the file as String
+     */
     private String readFile(InputStream inputStream) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -129,6 +150,9 @@ public class GamePanel extends Activity {
         return outputStream.toString();
     }
 
+    /**
+     * updates the game/level while the game is running , this method is called from the executor service
+     */
     public void update() {
         if(running){
             long elapsedTime = System.currentTimeMillis() - this.startingTime;
@@ -144,6 +168,9 @@ public class GamePanel extends Activity {
         this.currentLevel.draw();
     }
 
+    /**
+     * stops the running game and shows the gameover screen
+     */
     public void gameOver() {
         this.running = false;
         currentLevel.getGameOverPanel().setCollectedCoins(this.currentLevel.getCollectedCoins());

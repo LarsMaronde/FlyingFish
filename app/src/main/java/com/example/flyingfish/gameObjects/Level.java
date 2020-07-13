@@ -1,3 +1,10 @@
+/**
+ * This class representes the playable level and keeps track of all
+ * obstacles, coins, sharks and the fish as well as the current score
+ * This level gets loaded by the GamePanel class from a JSON File
+ */
+
+
 package com.example.flyingfish.gameObjects;
 
 import android.content.Context;

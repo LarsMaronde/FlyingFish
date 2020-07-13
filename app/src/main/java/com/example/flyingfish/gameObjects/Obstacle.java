@@ -1,3 +1,9 @@
+/**
+ * An obstacle that the player has to dodge
+ * the obstacle is either on the top or bottom of the screen and has a
+ * flexible height and width, the imageview is automatically scaled
+ * to fit the size of this obstacle
+ */
 package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
@@ -19,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Obstacle extends GameObject implements Interactable, RectHitbox {
 
+    //defines if the obstacle is on top of the screen or bottom
     private enum Orientation {
         TOP, BOTTOM;
     }
@@ -40,6 +47,11 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
 
     public Obstacle() {/*empty*/}
 
+    /**
+     * checks if the given object collides with this obstacle
+     * @param obj the object to check
+     * @return true if collision false otherwise
+     */
     @Override
     public boolean collides(GameObject obj) {
         if(obj instanceof CircleHitbox) {
@@ -62,6 +74,11 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
     }
 
 
+    /**
+     * initializes this obstacle, sets the graphic and width, height
+     * and adds the view to the parent viewgroup container of the gamepanel
+     * @param container parent container to which this view is added
+     */
     public void initialize(ViewGroup container) {
         float widthRatio = (float) Constants.SCREEN_WIDTH/Constants.GOAL_WIDTH_RATIO;
         float heightRatio = (float) Constants.SCREEN_HEIGHT/Constants.GOAL_HEIGHT_RATIO;
@@ -69,6 +86,8 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         this.height = (int) (heightRatio * this.height);
 
         Context context = container.getContext();
+
+        //loads the correct graphic
         Drawable graphic = null;
         if(this.orientation.equals(Orientation.TOP)) {
             if(this.width <= 100) {
@@ -87,6 +106,7 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
             this.rectangle = new Rect(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT-this.height, Constants.SCREEN_WIDTH+this.width, Constants.SCREEN_HEIGHT);
         }
 
+        //scales the bitmap to fit the size of the rectangle
         Bitmap bitmap = ((BitmapDrawable) graphic).getBitmap();
         Drawable d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, this.width, this.height, true));
 
@@ -100,6 +120,10 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
     }
 
 
+    /**
+     * moves the imageview to the updated position of the rectangle hitbox
+     */
+    @Override
     public void draw() {
         if(!this.visible) {
             this.imageView.setVisibility(View.GONE);
@@ -115,6 +139,9 @@ public class Obstacle extends GameObject implements Interactable, RectHitbox {
         this.imageView.setLayoutParams(params);
     }
 
+    /**
+     * moves the rectangle hitbox to the left of the screen
+     */
     @Override
     public void update() {
         rectangle.left -= speed;

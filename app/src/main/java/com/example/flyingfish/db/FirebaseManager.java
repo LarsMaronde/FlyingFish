@@ -1,3 +1,8 @@
+/**
+ * this class represents the connection to the Firebase Firestore database
+ * at initialisation it registers eventlisteners to update to changes on
+ * the database if changes occur the data inside of the DataObjectManager object are updated
+ */
 package com.example.flyingfish.db;
 
 import android.content.Context;
@@ -63,6 +68,9 @@ public class FirebaseManager implements DatabaseConnector {
     }
 
 
+    /**
+     * initializes all listeners to listen to changes
+     */
     public void initializeListeners() {
         for(ListenerRegistration rl: databaseListeners){
             rl.remove();
@@ -95,6 +103,16 @@ public class FirebaseManager implements DatabaseConnector {
     }
 
 
+    /**
+     * tries to register a user, if possible the given successcallback is executed
+     * and the user is saved into the database
+     * if it is not possible, the errorcallback is executed with the error as parameter
+     * @param username the username
+     * @param password the hashed password
+     * @param con the context of the caller
+     * @param successCallback the callback to execute when registration is successfull
+     * @param errorCallback the error callback to execute when registration failed
+     */
     public void registerUser(final String username, final String password, final Context con, final SuccessCallback successCallback, final ErrorCallback errorCallback) {
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
         fAuth.createUserWithEmailAndPassword(username+"@flyingfish.com", password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -110,10 +128,24 @@ public class FirebaseManager implements DatabaseConnector {
         });
     }
 
+    /**
+     * logs the user out of the firebase
+     */
     public void logout() {
         this.fAuth.signOut();
     }
 
+
+    /**
+     * tries to log the user in, checks the firebase authentication via FirebaseAuth
+     * if the login was successfull, the successcallback is executed
+     * if the login failed, the errorcallback is executed and the error message is passed in as parameter
+     * @param username the username
+     * @param password the hashed password
+     * @param con the context of the caller
+     * @param successCallback the callback to execute when login is successfull
+     * @param errorCallback the callback to execute when registration failed
+     */
     public void login(final String username, final String password, final Context con, final SuccessCallback successCallback, final ErrorCallback errorCallback) {
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
         fAuth.signInWithEmailAndPassword(username+"@flyingfish.com", password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -128,6 +160,12 @@ public class FirebaseManager implements DatabaseConnector {
         });
     }
 
+    /**
+     * saves a new user in the database
+     * the initial fish skin also added to the user and the first level is unlocked for the user
+     * @param username the username to store
+     * @param password the hashed password to store
+     */
     private void saveNewUser(String username, String password) {
         final User u = new User(username, password, 0);
         DataObjectManager.getInstance().addUser(u);
@@ -372,6 +410,12 @@ public class FirebaseManager implements DatabaseConnector {
     }
 
 
+    /**
+     * updates the given DataObject inside the given collection, document
+     * @param collection the collection in which the document is in
+     * @param document the id of the document to update
+     * @param obj the object that has to be updated
+     */
     public void updateDocument(final String collection, final String document, final DataObject obj) {
         fStore.collection(collection).document(document).update(obj.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -387,6 +431,11 @@ public class FirebaseManager implements DatabaseConnector {
         });
     }
 
+    /**
+     * creates a new document in the given collection with the DataObject as data
+     * @param collection the collection
+     * @param obj the DataObject containing the information to store
+     */
     public void createDocument(final String collection, final DataObject obj) {
         fStore.collection(collection).add(obj.toMap()).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -407,10 +456,18 @@ public class FirebaseManager implements DatabaseConnector {
         });
     }
 
+    /**
+     * returns the logged in user
+     * @return
+     */
     public FirebaseUser currentUser() {
          return this.fAuth.getCurrentUser();
     }
 
+    /**
+     * returns the username of the current logged in user
+     * @return
+     */
     public String getCurrentUsername() {
          return this.fAuth.getCurrentUser().getEmail().split("@")[0];
     }

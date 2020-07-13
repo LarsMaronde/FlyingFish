@@ -1,3 +1,9 @@
+/**
+ * This class manages all the data coming from the database
+ * and also manages the data from the app to the database
+ * it automatically sends notifications to all observers that
+ * need realtime updates from the database when changes happen
+ */
 package com.example.flyingfish.db.dataObject.management;
 
 import com.example.flyingfish.db.FirebaseManager;
@@ -18,12 +24,15 @@ public class DataObjectManager {
 
     public static DataObjectManager manager;
 
+    //stores a list of all users in the database
     private ArrayList<User> users;
+    //stores a list of all levels in the database
     private ArrayList<Level> levels;
+    //stores a list of all items in the database
     private ArrayList<Item> items;
 
 
-    //Observer Lists
+    //stores all observers that need updates of the data
     private ArrayList<Observer> observers;
 
 
@@ -45,30 +54,47 @@ public class DataObjectManager {
         DataObjectManager.manager = this;
     }
 
+    /**
+     * notify all observers to all changes
+     */
     public void notifyAllChange() {
         notifyItemChange();
         notifyUserChange();
         notifyLevelChange();
     }
 
+    /**
+     * notifiys the observers that a change in the user collection occured
+     */
     public void notifyUserChange() {
         for(Observer o: observers){
             o.updateUsers(this.users);
         }
     }
 
+    /**
+     * notifiys the observers that a change in the items collection occured
+     */
     public void notifyItemChange() {
         for(Observer o: observers){
             o.updateItems(this.items);
         }
     }
 
+    /**
+     * notifiys the observers that a change in the levels collection occured
+     */
     public void notifyLevelChange() {
         for(Observer o: observers){
             o.updateLevel(this.levels);
         }
     }
 
+    /**
+     * finds a user by name and returns the user data object
+     * @param username
+     * @return
+     */
     public User getUserByName(String username) {
         for(int i = 0; i < users.size(); i++) {
             if(users.get(i).getUsername().equals(username)){
@@ -78,6 +104,11 @@ public class DataObjectManager {
         return null;
     }
 
+    /**
+     * finds a item by name and returns the item data object
+     * @param name
+     * @return
+     */
     public Item getItemByName(String name) {
         for(int i = 0; i < items.size(); i++) {
             if(items.get(i).getName().equals(name)){
@@ -138,6 +169,11 @@ public class DataObjectManager {
     **************************************/
 
 
+    /**
+     * return the currently selected skin of a player and returns the name of it
+     * @param username
+     * @return
+     */
     public String getSelectedFishSkin(String username) {
         User u = getUserByName(username);
         if(u != null){
@@ -150,6 +186,11 @@ public class DataObjectManager {
         return null;
     }
 
+    /**
+     * return the current coin balance of the given user
+     * @param username
+     * @return
+     */
     public int getUserCurrentCoins(String username) {
         User u = this.getUserByName(username);
         if(u != null){
@@ -218,6 +259,13 @@ public class DataObjectManager {
               DATABASE QUERY UPDATES
     **************************************/
 
+    /**
+     * buys the given item from the given user and equips it directly
+     * if successful, all observers are notified
+     * if the user does not have enough coins to buy it this method does nothing
+     * @param username of the user that buys the item
+     * @param itemname the name of the item the user wants to buy
+     */
     public void buyItemAndEquip(String username, String itemname) {
 
         User user = getUserByName(username);
@@ -262,6 +310,12 @@ public class DataObjectManager {
         }
     }
 
+    /**
+     * adds the given coin amount to the balance of the given user
+     * all observers are then notified
+     * @param username
+     * @param collectedCoins
+     */
     public void addCoins(String username, int collectedCoins) {
         User u = getUserByName(username);
         if(u != null){
@@ -271,6 +325,13 @@ public class DataObjectManager {
         }
     }
 
+    /**
+     * updates the given level by number from the user with the given coins
+     * all observers are then notified
+     * @param currentLevelNumber
+     * @param username
+     * @param collectedCoins
+     */
     public void updatePlayerLevel(int currentLevelNumber, String username, int collectedCoins) {
         User user = getUserByName(username);
         Level l = user.getLevelByNumber(currentLevelNumber);
@@ -293,6 +354,12 @@ public class DataObjectManager {
         }
     }
 
+    /**
+     * unlocks the next level of for the given user
+     * all observers are then notified
+     * @param username
+     * @param currentLevelNumber
+     */
     public void unlockNextLevel(String username, int currentLevelNumber) {
         User user = getUserByName(username);
         if(user != null){
@@ -339,6 +406,11 @@ public class DataObjectManager {
         return temp;
     }
 
+    /**
+     * sorts the given list
+     * @param list the list to sort with items or levels
+     * @param desc sort descending or ascending
+     */
     public static void bubbleSort(List list, boolean desc) {
         int n = list.size();
         for (int i = 0; i < n-1; i++) {
