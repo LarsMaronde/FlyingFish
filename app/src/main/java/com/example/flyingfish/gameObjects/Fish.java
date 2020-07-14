@@ -96,6 +96,9 @@ public class Fish extends GameObject implements CircleHitbox {
         this.y += this.velocity;
 
         if(this.checkCollisionWithTopOrBottom()){
+            if(this.state == State.ALIVE){
+                SoundPlayer.getInstance().playCollision();
+            }
             this.die();
         }
 

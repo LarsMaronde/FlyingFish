@@ -49,6 +49,10 @@ public class MainMenuActivity extends AppCompatActivity {
         return outputStream.toString();
     }
 
+    /**
+     * only needed when using SQL Database,
+     * reads the coins from each level and updates the database
+     */
     private void fillDatabaseWithLevelInformation() {
 
         AssetManager mgr = getResources().getAssets();
@@ -87,9 +91,17 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(new Intent(this, ShopActivity.class));
     }
 
+    /**
+     * quits the app, does not log the user out so
+     * the user does not have to log in each time he starts the app
+     * @param v
+     */
     public void quit(View v) {
-        finish();
-        System.exit(0);
+        Intent _intentOBJ= new Intent(Intent.ACTION_MAIN);
+        _intentOBJ.addCategory(Intent.CATEGORY_HOME);
+        _intentOBJ.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        _intentOBJ.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(_intentOBJ);
     }
 
     public void backToLogin(View v) {
