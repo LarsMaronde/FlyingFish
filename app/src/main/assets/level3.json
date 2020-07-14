@@ -25,7 +25,7 @@
       "orientation":"TOP",
       "type": 1,
       "spawnTime": 5,
-      "height": 700,
+      "height": 600,
       "width": 150,
       "speed": 1
     },
@@ -49,7 +49,7 @@
       "orientation":"BOTTOM",
       "type": 1,
       "spawnTime": 8,
-      "height": 600,
+      "height": 500,
       "width": 150,
       "speed": 1
     },
@@ -65,18 +65,15 @@
       "orientation":"BOTTOM",
       "type": 1,
       "spawnTime": 11,
-      "height": 700,
+      "height": 600,
       "width": 150,
       "speed": 1
     },
-
-
-
     {
       "orientation":"BOTTOM",
       "type": 1,
       "spawnTime": 14,
-      "height": 1000,
+      "height": 800,
       "width": 150,
       "speed": 1
     },
@@ -144,26 +141,14 @@
     },
     {
       "value": 1,
-      "y": 965,
+      "y": 665,
       "spawnTime": 1.8,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 955,
+      "y": 855,
       "spawnTime": 2.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1165,
-      "spawnTime": 3.3,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1250,
-      "spawnTime": 4.1,
       "speed": 1
     },
     {
@@ -180,14 +165,8 @@
     },
     {
       "value": 1,
-      "y": 1100,
+      "y": 1000,
       "spawnTime": 6.5,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1210,
-      "spawnTime": 7.2,
       "speed": 1
     },
     {
@@ -216,37 +195,25 @@
     },
     {
       "value": 1,
-      "y": 1280,
-      "spawnTime": 9.5,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1180,
-      "spawnTime": 10.2,
-      "speed": 1
-    },
-    {
-      "value": 1,
       "y": 875,
       "spawnTime": 13.6,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 865,
+      "y": 565,
       "spawnTime": 13.8,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 855,
+      "y": 555,
       "spawnTime": 12.9,
       "speed": 1
     },
     {
       "value": 1,
-      "y": 975,
+      "y": 875,
       "spawnTime": 12,
       "speed": 1
     },
@@ -276,47 +243,10 @@
     },
     {
       "value": 1,
-      "y": 1820,
-      "spawnTime": 12.2,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1265,
-      "spawnTime": 16.9,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 955,
-      "spawnTime": 15,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1255,
+      "y": 755,
       "spawnTime": 16.0,
       "speed": 1
     },
-    {
-      "value": 1,
-      "y": 1265,
-      "spawnTime": 17.8,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 955,
-      "spawnTime": 16.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
-      "y": 1820,
-      "spawnTime": 17.2,
-      "speed": 1
-    },
-
     {
       "value": 1,
       "y": 865,
@@ -337,12 +267,6 @@
     },
     {
       "value": 1,
-      "y": 1235,
-      "spawnTime": 22.0,
-      "speed": 1
-    },
-    {
-      "value": 1,
       "y": 1065,
       "spawnTime": 22.8,
       "speed": 1
@@ -359,17 +283,10 @@
       "spawnTime": 17.2,
       "speed": 1
     },
-
-    {
-      "value": 1,
-      "y": 1035,
-      "spawnTime": 24.0,
-      "speed": 1
-    },
     {
       "value": 1,
       "y": 920,
-      "spawnTime": 24.7,
+      "spawnTime": 23.7,
       "speed": 1
     },
     {
