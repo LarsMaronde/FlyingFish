@@ -1,3 +1,7 @@
+/** a new LevelOverPanel is created every time the player
+ * wins the current level
+ */
+
 package com.example.flyingfish;
 
 import android.content.Intent;
@@ -40,12 +44,18 @@ public class LevelOverPanel {
         this.setVisible(false);
     }
 
+    /**
+     * updates the level over panel with achieved score
+     */
     public void update() {
         this.gameOverImage.update();
         this.homeImage.update();
         this.collectedCoins.update();
     }
 
+    /**
+     * draws the panel to the game screen
+     */
     public void draw() {
         this.gameOverImage.draw();
         this.homeImage.draw();

@@ -45,6 +45,9 @@ public class MainActivity extends Activity {
         gm = new GamePanel((ViewGroup) findViewById(R.id.container), this, level);
     }
 
+    /**
+     *  restarts a lost game
+     */
     public void restart() {
         gm.stopRunning();
         gm.finish();

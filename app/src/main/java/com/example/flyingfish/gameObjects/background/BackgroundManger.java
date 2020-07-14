@@ -1,3 +1,6 @@
+/** the background manager controls the parallax scroll layers
+ */
+
 package com.example.flyingfish.gameObjects.background;
 
 import android.content.Context;
@@ -37,12 +40,18 @@ public class BackgroundManger {
         backgrounds.add(new Background(bg5, Constants.SCREEN_WIDTH, (int) (bg5.getIntrinsicHeight()), globalSpeed, container));
     }
 
+    /**
+     *  method updated background
+     */
     public void updateBackgrounds() {
         for(Background bg: backgrounds){
             bg.update();
         }
     }
 
+    /**
+     *  draws background layers on the game screen
+     */
     public void drawBackgrounds() {
         for(Background bg: backgrounds) {
             bg.draw();

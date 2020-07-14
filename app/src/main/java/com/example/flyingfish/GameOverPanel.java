@@ -1,3 +1,7 @@
+/** a new GameOverPanel is created every time the player
+ * loses the current level
+ */
+
 package com.example.flyingfish;
 
 import android.content.Intent;
@@ -32,8 +36,8 @@ public class GameOverPanel {
         collectedCoins.setTextSize(36);
 
         int width = this.collectedCoins.getWidth()/2;
-        // System.out.println(width);
         collectedCoins.setPosition(Constants.SCREEN_WIDTH/2-width,620);
+
 
         retryImage.getView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +57,9 @@ public class GameOverPanel {
         this.setVisible(false);
     }
 
+    /**
+     * updates the game over panel with achieved score
+     */
     public void update() {
         this.gameOverImage.update();
         this.retryImage.update();
@@ -60,6 +67,9 @@ public class GameOverPanel {
         collectedCoins.update();
     }
 
+    /**
+     * draws the game over panel to the game screen
+     */
     public void draw() {
         this.gameOverImage.draw();
         this.retryImage.draw();

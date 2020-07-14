@@ -101,7 +101,7 @@ public class GamePanel extends Activity {
                 update();
             }
             if(firstStart){
-                currentLevel.getPlayerFish().startUpdate();
+                currentLevel.getPlayerFish().updateSwinging();
             }
             draw();
             }
@@ -151,7 +151,7 @@ public class GamePanel extends Activity {
     }
 
     /**
-     * updates the game/level while the game is running , this method is called from the executor service
+     * updates the game/level while the game is running, this method is called from the executor service
      */
     public void update() {
         if(running){

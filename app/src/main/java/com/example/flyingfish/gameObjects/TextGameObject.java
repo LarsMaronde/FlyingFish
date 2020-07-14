@@ -1,3 +1,9 @@
+/**
+ * a positionable graphical object (sprite) displaying a string object as a text on game screen,
+ * size and color of the text are configurable,
+ * background of the text is translucent
+ */
+
 package com.example.flyingfish.gameObjects;
 
 import android.content.Context;
@@ -5,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
-import com.example.flyingfish.Constants;
 
 public class TextGameObject extends GameObject {
 
@@ -47,10 +51,6 @@ public class TextGameObject extends GameObject {
         this.y = y;
     }
 
-    public void setBackgroundColor(int color) {
-        this.text.setBackgroundColor(color);
-    }
-
     public void setTextColor(int color) {
         this.text.setTextColor(color);
     }
@@ -60,7 +60,7 @@ public class TextGameObject extends GameObject {
     }
 
     public int getWidth() {
-        text.measure(0,0);
+        text.measure(0, 0);
         return text.getMeasuredWidth();
     }
 }

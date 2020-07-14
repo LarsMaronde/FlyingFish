@@ -11,8 +11,6 @@ import com.example.flyingfish.R;
 
 public class EndGameActivity extends AppCompatActivity {
 
-    private TextView score;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

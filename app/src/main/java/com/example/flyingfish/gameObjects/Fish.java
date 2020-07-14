@@ -130,6 +130,9 @@ public class Fish extends GameObject implements CircleHitbox {
         }
     }
 
+    /**
+     *  puts the fish into dead state
+     */
     public void die() {
         if(state != State.ALIVE) return;
         velocity = 0;
@@ -146,9 +149,14 @@ public class Fish extends GameObject implements CircleHitbox {
                 this.y - this.width <= 0;
     }
 
-    public void startUpdate(){
+    /**
+     * updates position of the fish while swinging, before the game starts
+     * @return
+     */
+    public void updateSwinging(){
         double time = System.currentTimeMillis();
-        y = (int) (Math.cos(time * 0.005) * 50 + Constants.SCREEN_HEIGHT / 3);
+        // the swinging is a sine as a function of time
+        y = (int) (Math.sin(time * 0.005) * 50 + Constants.SCREEN_HEIGHT / 3);
         rectangle.set(x - rectangle.width() / 2, y - rectangle.height() / 2,
                 x + rectangle.width() / 2, y + rectangle.height() / 2);
     }

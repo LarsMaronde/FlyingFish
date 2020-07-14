@@ -1,3 +1,7 @@
+/** this class makes sure that the sounds loaded here
+ *  are available in the whole project
+ */
+
 package com.example.flyingfish.gameObjects;
 
 import android.app.Activity;
@@ -22,9 +26,11 @@ public class SoundPlayer {
         return instance;
     }
 
+    // plays sound for collecting the coins
     public void playBell() {
         MediaPlayer mp = MediaPlayer.create(activity, R.raw.einsammeln);
         mp.start();
+        // avoids memory leaks through unreleased resources
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -33,6 +39,7 @@ public class SoundPlayer {
         });
     }
 
+    // plays sound when collision occurs
     public void playCollision() {
         MediaPlayer mp = MediaPlayer.create(activity, R.raw.schlag);
             mp.start();
@@ -44,6 +51,7 @@ public class SoundPlayer {
             });
     }
 
+    // plays sound when level is won
     public void playLevelWin() {
         MediaPlayer mp = MediaPlayer.create(activity, R.raw.fanfare);
         mp.start();
@@ -55,6 +63,7 @@ public class SoundPlayer {
         });
     }
 
+    // plays sound when level is lost
     public void playLevelLost() {
         MediaPlayer mp = MediaPlayer.create(activity, R.raw.youlose);
         mp.start();
@@ -66,6 +75,7 @@ public class SoundPlayer {
         });
     }
 
+    // plays sound when level is won
     public void playBackground() {
         backgroundmp = MediaPlayer.create(activity, R.raw.bubbles);
         backgroundmp.start();
@@ -78,6 +88,7 @@ public class SoundPlayer {
         });
     }
 
+    // stops background music
     public void stopBackground() {
         backgroundmp.stop();
         backgroundmp.release();
