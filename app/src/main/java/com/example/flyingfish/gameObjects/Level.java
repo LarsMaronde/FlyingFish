@@ -96,12 +96,12 @@ public class Level {
                     it.remove();
                     continue;
                 }
-//                if (frameCount % updateAtFrame == 0 && shark.collides(this.playerFish)) {
-//                    if(this.playerFish.getState() == Fish.State.ALIVE){
-//                        SoundPlayer.getInstance().playCollision();
-//                    }
-//                    this.playerFish.die();
-//                }
+                if (frameCount % updateAtFrame == 0 && shark.collides(this.playerFish)) {
+                    if(this.playerFish.getState() == Fish.State.ALIVE){
+                        SoundPlayer.getInstance().playCollision();
+                    }
+                    this.playerFish.die();
+                }
             }
         }
     }
@@ -140,12 +140,12 @@ public class Level {
                     it.remove();
                     continue;
                 }
-//                if (frameCount % updateAtFrame == 0 && ob.collides(this.playerFish)) {
-//                    if(this.playerFish.getState() == Fish.State.ALIVE){
-//                        SoundPlayer.getInstance().playCollision();
-//                    }
-//                    this.playerFish.die();
-//                }
+                if (frameCount % updateAtFrame == 0 && ob.collides(this.playerFish)) {
+                    if(this.playerFish.getState() == Fish.State.ALIVE){
+                        SoundPlayer.getInstance().playCollision();
+                    }
+                    this.playerFish.die();
+                }
             }
         }
     }
